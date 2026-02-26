@@ -1,0 +1,44 @@
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+*.idx
+*.ilg
+*.ind
+*.nav
+*.snm
+*.vrb
+*.xdv
+*.fmt
+
+# Generated PDFs (keep source images, ignore compiled docs)
+dissertation.pdf
+synopsis.pdf
+presentation.pdf
+presentation_handout.pdf
+*_lowdpi.pdf
+*_cmyk.pdf
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary / cache
+Disser/images/cache/*.pdf
