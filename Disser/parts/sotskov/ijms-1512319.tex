@@ -1,0 +1,720 @@
+
+      %  LaTeX support: latex@mdpi.com 
+%  For support, please attach all files needed for compiling as well as the log file, and specify your operating system, LaTeX version, and LaTeX editor.
+
+%=================================================================
+\documentclass[ijms,article,accept,moreauthors,pdftex]{Definitions/mdpi} 
+
+% For posting an early version of this manuscript as a preprint, you may use "preprints" as the journal and change "submit" to "accept". The document class line would be, e.g., \documentclass[preprints,article,accept,moreauthors,pdftex]{mdpi}. This is especially recommended for submission to arXiv, where line numbers should be removed before posting. For preprints.org, the editorial staff will make this change immediately prior to posting.
+
+%--------------------
+% Class Options:
+%--------------------
+%----------
+% journal
+%----------
+% Choose between the following MDPI journals:
+% acoustics, actuators, addictions, admsci, adolescents, aerospace, agriculture, agriengineering, agronomy, ai, algorithms, allergies, analytica, animals, antibiotics, antibodies, antioxidants, appliedchem, applmech, applmicrobiol, applnano, applsci, arts, asi, atmosphere, atoms, audiolres, automation, axioms, batteries, bdcc, behavsci, beverages, biochem, bioengineering, biologics, biology, biomechanics, biomedicines, biomedinformatics, biomimetics, biomolecules, biophysica, biosensors, biotech, birds, bloods, brainsci, buildings, businesses, cancers, carbon, cardiogenetics, catalysts, cells, ceramics, challenges, chemengineering, chemistry, chemosensors, chemproc, children, civileng, cleantechnol, climate, clinpract, clockssleep, cmd, coatings, colloids, compounds, computation, computers, condensedmatter, conservation, constrmater, cosmetics, crops, cryptography, crystals, curroncol, cyber, dairy, data, dentistry, dermato, dermatopathology, designs, diabetology, diagnostics, digital, disabilities, diseases, diversity, dna, drones, dynamics, earth, ebj, ecologies, econometrics, economies, education, ejihpe, electricity, electrochem, electronicmat, electronics, encyclopedia, endocrines, energies, eng, engproc, entropy, environments, environsciproc, epidemiologia, epigenomes, fermentation, fibers, fire, fishes, fluids, foods, forecasting, forensicsci, forests, fractalfract, fuels, futureinternet, futuretransp, futurepharmacol, futurephys, galaxies, games, gases, gastroent, gastrointestdisord, gels, genealogy, genes, geographies, geohazards, geomatics, geosciences, geotechnics, geriatrics, hazardousmatters, healthcare, hearts, hemato, heritage, highthroughput, histories, horticulturae, humanities, hydrogen, hydrology, hygiene, idr, ijerph, ijfs, ijgi, ijms, ijns, ijtm, ijtpp, immuno, informatics, information, infrastructures, inorganics, insects, instruments, inventions, iot, j, jcdd, jcm, jcp, jcs, jdb, jfb, jfmk, jimaging, jintelligence, jlpea, jmmp, jmp, jmse, jne, jnt, jof, joitmc, jor, journalmedia, jox, jpm, jrfm, jsan, jtaer, jzbg, kidney, land, languages, laws, life, liquids, literature, livers, logistics, lubricants, machines, macromol, magnetism, magnetochemistry, make, marinedrugs, materials, materproc, mathematics, mca, measurements, medicina, medicines, medsci, membranes, metabolites, metals, metrology, micro, microarrays, microbiolres, micromachines, microorganisms, minerals, mining, modelling, molbank, molecules, mps, mti, nanoenergyadv, nanomanufacturing, nanomaterials, ncrna, network, neuroglia, neurolint, neurosci, nitrogen, notspecified, nri, nursrep, nutrients, obesities, oceans, ohbm, onco, oncopathology, optics, oral, organics, osteology, oxygen, parasites, parasitologia, particles, pathogens, pathophysiology, pediatrrep, pharmaceuticals, pharmaceutics, pharmacy, philosophies, photochem, photonics, physchem, physics, physiolsci, plants, plasma, pollutants, polymers, polysaccharides, proceedings, processes, prosthesis, proteomes, psych, psychiatryint, publications, quantumrep, quaternary, qubs, radiation, reactions, recycling, regeneration, religions, remotesensing, reports, reprodmed, resources, risks, robotics, safety, sci, scipharm, sensors, separations, sexes, signals, sinusitis, smartcities, sna, societies, socsci, soilsystems, solids, sports, standards, stats, stresses, surfaces, surgeries, suschem, sustainability, symmetry, systems, taxonomy, technologies, telecom, textiles, thermo, tourismhosp, toxics, toxins, transplantology, traumas, tropicalmed, universe, urbansci, uro, vaccines, vehicles, vetsci, vibration, viruses, vision, water, wevj, women, world 
+
+%---------
+% article
+%---------
+% The default type of manuscript is "article", but can be replaced by: 
+% abstract, addendum, article, book, bookreview, briefreport, casereport, comment, commentary, communication, conferenceproceedings, correction, conferencereport, entry, expressionofconcern, extendedabstract, datadescriptor, editorial, essay, erratum, hypothesis, interestingimage, obituary, opinion, projectreport, reply, retraction, review, perspective, protocol, shortnote, studyprotocol, systematicreview, supfile, technicalnote, viewpoint, guidelines, registeredreport, tutorial
+% supfile = supplementary materials
+
+%----------
+% submit
+%----------
+% The class option "submit" will be changed to "accept" by the Editorial Office when the paper is accepted. This will only make changes to the frontpage (e.g., the logo of the journal will get visible), the headings, and the copyright information. Also, line numbering will be removed. Journal info and pagination for accepted papers will also be assigned by the Editorial Office.
+
+%------------------
+% moreauthors
+%------------------
+% If there is only one author the class option oneauthor should be used. Otherwise use the class option moreauthors.
+
+%---------
+% pdftex
+%---------
+% The option pdftex is for use with pdfLaTeX. If eps figures are used, remove the option pdftex and use LaTeX and dvi2pdf.
+
+%=================================================================
+% MDPI internal commands
+\firstpage{1} 
+\makeatletter 
+\setcounter{page}{\@firstpage} 
+\makeatother
+\pubvolume{1}
+\issuenum{1}
+\articlenumber{0}
+\pubyear{2022}
+\copyrightyear{2022}
+\externaleditor{Academic Editor: \hl{Firstname Lastname} %Please add Academic Editor.
+} % For journal Automation, please change Academic Editor to "Communicated by"
+\datereceived{} 
+\dateaccepted{} 
+\datepublished{} 
+\hreflink{https://doi.org/} % If needed use \linebreak
+%------------------------------------------------------------------
+% The following line should be uncommented if the LaTeX file is uploaded to arXiv.org
+%\pdfoutput=1
+
+%=================================================================
+% Add packages and commands here. The following packages are loaded in our class file: fontenc, inputenc, calc, indentfirst, fancyhdr, graphicx, epstopdf, lastpage, ifthen, lineno, float, amsmath, setspace, enumitem, mathpazo, booktabs, titlesec, etoolbox, tabto, xcolor, soul, multirow, microtype, tikz, totcount, changepage, paracol, attrib, upgreek, cleveref, amsthm, hyphenat, natbib, hyperref, footmisc, url, geometry, newfloat, caption
+
+%=================================================================
+%% Please use the following mathematics environments: Theorem, Lemma, Corollary, Proposition, Characterization, Property, Problem, Example, ExamplesandDefinitions, Hypothesis, Remark, Definition, Notation, Assumption
+%% For proofs, please use the proof environment (the amsthm package is loaded by the MDPI class).
+
+%=================================================================
+% Full title of the paper (Capitalized)
+\Title{Calcium Imaging Reveals Fast Tuning Dynamics of Hippocampal Place Cells and CA1 Population Activity during Free Exploration Task in Mice}
+
+% MDPI internal command: Title for citation in the left column
+\TitleCitation{Calcium Imaging Reveals Fast Tuning Dynamics of Hippocampal Place Cells and CA1 Population Activity during Free Exploration Task in Mice}
+
+% Author Orchid ID: enter ID or remove command
+\newcommand{\orcidauthorA}{0000-0002-1729-5744} % Add \orcidA{} behind the author's name 
+\newcommand{\orcidauthorB}{0000-0001-6637-2120} % Add \orcidB{} behind the author's name
+\newcommand{\orcidauthorC}{0000-0001-9784-8283} % Add \orcidC{} behind the author's name
+\newcommand{\orcidauthorD}{0000-0003-4437-6002} % Add \orcidD{} behind the author's name
+
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+% Authors, for the paper (add full first names)
+\Author{\hl{Vladimir P. Sotskov} %Please carefully check the accuracy of names and affiliations. Changes will not be possible after proofreading.
+ $^{1}$\orcidA{}, Nikita A. Pospelov $^{1}$\orcidB{}, Viktor V. Plusnin $^{2,3}$\orcidC{} and Konstantin V. Anokhin $^{1,4,}$*\orcidD{}}
+
+% MDPI internal command: Authors, for metadata in PDF
+\AuthorNames{Vladimir Sotskov, Nikita Pospelov, Viktor Plusnin and Konstantin Anokhin}
+
+% MDPI internal command: Authors, for citation in the left column
+\AuthorCitation{Sotskov, V.P.; Pospelov, N.A.; Plusnin, V.V.; Anokhin, K.V.}
+% If this is a Chicago style journal: Lastname, Firstname, Firstname Lastname, and Firstname Lastname.
+
+% Affiliations / Addresses (Add [1] after \address if there is only one affiliation.) 
+\address{%
+$^{1}$ \quad \hl{Lomonosov Moscow State University}%Please add post code. (or zip code in the US).
+, \hl{119991} %Newly added information, please confirm. %This post code is valid, thank you.
+ Moscow, Russia; vsotskov@list.ru (V.P.S.); \mbox{nik-pos@yandex.ru (N.A.P.)}\\
+$^{2}$ \quad National Research Center ``Kurchatov Institute'', \hl{123098 Moscow}%Please add post code. (or zip code in the US).
+, Russia; witkax@mail.ru\\
+$^{3}$ \quad Moscow Institute of Physics and Technology, \hl{141700 Dolgoprudny}, Russia\\
+$^{4}$ \quad P.K. Anokhin Institute of Normal Physiology RAS, \hl{125315 Moscow}, Russia}
+
+% Contact information of the corresponding author
+\corres{\hl{Correspondence:} %Correspondence author is different from Redmine. Please confirm. %Fixed, thank you.
+ vsotskov@list.ru, k.anokhin@gmail.com}
+%; Tel.: (optional; include country code; if there are multiple corresponding authors, add author initials) +xx-xxxx-xxx-xxxx (F.L.)}
+
+% Current address and/or shared authorship
+%\firstnote{Current address: Affiliation 3} 
+
+% The commands \thirdnote{} till \eighthnote{} are available for further notes
+
+%\simplesumm{} % Simple summary
+
+%\conference{} % An extended version of a conference paper
+
+% Abstract (Do not insert blank lines, i.e. \\) 
+\abstract{Hippocampal place cells are a well-known object in neuroscience, but their place field formation in the first moments of navigating in a novel environment remains an ill-defined process. To address these dynamics, we performed in vivo imaging of neuronal activity in the CA1 field of the mouse hippocampus using genetically encoded green calcium indicators, including the novel NCaMP7 and FGCaMP7, designed specifically for in vivo calcium imaging. Mice were injected with a viral vector encoding calcium sensor, head-mounted with an NVista HD miniscope, and allowed to explore a completely novel environment (circular track surrounded by visual cues) without any reinforcement stimuli, in order to avoid potential interference from reward-related behavior. First, we calculated the average time required for each CA1 cell to acquire its place field. We found that 25\% of CA1 place fields were formed at the first arrival in the corresponding place, while the average tuning latency for all place fields in a novel environment equaled 247 s. After 24 h, when the environment was familiar to the animals, place fields formed faster, independent of retention of cognitive maps during this session. No cumulation of selectivity score was observed between these two sessions. Using dimensionality reduction, we demonstrated that the population activity of rapidly tuned CA1 place cells allowed the reconstruction of the geometry of the navigated circular maze; the distribution of reconstruction error between the mice was consistent with the distribution of the average place field selectivity score in them. Our data thus show that neuronal activity recorded with genetically encoded calcium sensors revealed fast behavior-dependent plasticity in the mouse hippocampus, resulting in the rapid formation of place fields and population activity that allowed the reconstruction of the geometry of the navigated maze.}
+
+% Keywords
+\keyword{Ca2+ indicators; calcium in vivo imaging; place cells; place fields;  cognitive maps} 
+
+% The fields PACS, MSC, and JEL may be left empty or commented out if not applicable
+%\PACS{J0101}
+%\MSC{}
+%\JEL{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Diversity
+%\LSID{\url{http://}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Applied Sciences:
+%\featuredapplication{Authors are encouraged to provide a concise description of the specific application or a potential application of the work. This section is not mandatory.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Data:
+%\dataset{DOI number or link to the deposited data set in cases where the data set is published or set to be published separately. If the data set is submitted and will be published as a supplement to this paper in the journal Data, this field will be filled by the editors of the journal. In this case, please make sure to submit the data set as a supplement when entering your manuscript into our manuscript editorial system.}
+
+%\datasetlicense{license under which the data set is made available (CC0, CC-BY, CC-BY-SA, CC-BY-NC, etc.)}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Toxins
+%\keycontribution{The breakthroughs or highlights of the manuscript. Authors can write one or two sentences to describe the most important part of the paper.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Encyclopedia
+%\encyclopediadef{Instead of the abstract}
+%\entrylink{The Link to this entry published on the encyclopedia platform.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\section{Introduction}
+It is well known that neurons in the CA1 field of the hippocampus form a representation (also referred to as a cognitive map) of a novel context, while animals explore a novel environment~\cite {Okeefe1, Okeefe2}. The long-term dynamics of such cognitive maps have been well explored in studies \cite {Ziv, Rubin, kinsky}, revealing that the place code can be stable for weeks, though subserved by a drifting population of CA1 neurons. Moreover, it is known that multiple cognitive maps can coexist in the hippocampus in a stable manner and switch between different navigating sessions and even within the same navigating session \cite {barnes, Sheintuch}. 
+
+However, the short-term dynamics of place field emergence and initial tuning are still ill-defined. In particular, it is unclear whether place fields are established at the first moment at which the animal arrives in a novel place, or whether several repeated visits are necessary for place cells to become tuned. A recent study of head-restrained mice in a virtual navigation task demonstrated “immediate” place cells that appear and fire in a stable manner from the first lap in a novel virtual environment \cite{dong}. However, it is unclear how rapidly the place codes emerge in real conditions of animal free navigation.
+
+Many of the previous studies on place cell registration used rewarded approaches with pre-trained animals \cite {Sheintuch, Mehta}. However, since goal-directed behavior may confound the factor of spatial navigation \cite {Aoki, poucet}, we used a reward-free task where mice were allowed to explore a completely novel environment in the shape of an elevated circular track with proximal and distal visual cues (Figure~\ref{fig1}). 
+
+\begin{figure}[H]
+\includegraphics[width=13.5 cm]{Definitions/Fig1}
+\caption{(\textbf{A},\textbf{B}). Mouse with an attached NVista HD miniscope exploring the circular track. (\textbf{C}). A scheme of calcium sensor injection and GRIN lens implantation. (\textbf{D}). A coronal brain section with a footprint of a GRIN lens and calcium sensor expression. (\textbf{E}). The timeline of surgical preparations and imaging.\label{fig1}}
+\end{figure}  
+
+To record place cell activity, we used head-mounted NVista HD miniscopes \cite {Ghosh}, which are capable of capturing calcium signals from hundreds of neurons in freely moving animals. To image cells, we used a set of genetically encoded calcium indicators: both conventional GCaMP6s and GCaMP7f, as well as novel ones, NCaMP7 and FGCaMP7. NCaMP7 is a new calcium indicator with enhanced brightness, containing a mNeonGreen fluorescent protein, while FGCaMP7 is a novel calcium sensor based on fungi calmodulin with lowered affinity to the intracellular environment and designed specifically for in vivo miniscopic calcium imaging \cite {NCaMP7, FGCaMP7}. In these papers, we described in detail their dynamic parameters, such as mean amplitude, and rise and decay times of typical calcium transients. Importantly, we showed that there is no notable difference in such parameters between these new calcium indicators and a conventional one, GCaMP6s. Moreover, the applicability of these sensors for the analysis of in vivo neural functions in awake mice was directly demonstrated by calcium imaging of hippocampal place cells. 
+
+Using these tools, we set out to investigate the dynamics of the initial place field formation in the mouse hippocampus, not only at the level of individual place cells, but also at the level of a whole imaged CA1 population. The activity of large populations of neurons is often well embraced by low-dimensional dynamics  \cite{yu, gallego1, gallego2}. This makes it possible to describe computations performed by groups of cells using the dynamics of a small number of underlying ``latent factors'', each of which corresponds to a separate pattern of neuronal coactivation. However, it is not possible to observe the latent factors directly, because they are often related to the initial variables in a non-obvious and non-linear way. In this paper, we utilize the tools from manifold learning to construct an underlying low-dimensional “neural manifold” from rapidly tuned place cell activity and to explore its representational~power.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Materials and Methods}
+
+\subsection{Animals and Surgical Procedures}
+Nine C57Bl/6J mice aged from 2 to 3 months at the beginning of the experiment were used for this study. All surgical protocols were described in detail in our previous papers \cite {ntnc, ytnc, NCaMP7, FGCaMP7}.
+First, a viral vector encoding one of the calcium sensors (GCaMP6s/GCaMP7f/NCaMP7/FGCaMP7) was delivered to the CA1 field of the hippocampus of the mice. Animals were anesthetized with a zoletil--xylazine mixture (40 and 5~mg/kg, respectively) and fixed in a stereotaxic holder (Stoelting Inc.). Then, a circular 2-mm-diameter craniotomy was made (Bregma: \hl{-}%Please confirm it should be endash or minus sign. %It should be minus sign.
+1.9 mm AP, \hl{-}1.4 mm ML), and 500~nL of AAV viral particles (AAV-DJ-CAG-GCaMP6s, AAV-DJ-CAG-GCaMP7f, AAV-DJ-CAG-NCaMP7 or AAV-DJ-CAG-FGCaMP7) was injected to a depth of 1.25 mm from the brain surface. Injections were performed through a glass micropipette with a 50 µm tip diameter (\hl{Drummond Scientific Comp., Broomall, PA}%Please state city and country.
+) by UltraMicroPump with a Micro4 Controller (\hl{WPI Inc., Sarasota, FL}) at a rate of 100~nL/min. After the injection, all exposed surfaces of the brain tissue were sealed with KWIK-SIL silicone adhesive (WPI Inc.). 
+Two weeks later, the animals were anesthetized and fixed in the stereotaxis again, the silicone cap was removed, and the dura mater was perforated and gently removed from the craniotomy site. Then, a column of cortex tissue superficial to the hippocampus was gently aspirated by a blunt needle tip connected to a vacuum source and the hippocampus was exposed and washed with sterile saline. After this, a 1.0-mm-diameter GRIN lens probe (\hl{Inscopix Inc., Palo Alto, CA}) was lowered slowly to a depth of 1.1~mm while constantly washing the craniotomy site with sterile saline. Next, all the exposed brain tissue was sealed with KWIK-SIL, and the lens probe was fixed to the skull surface with dental acrylic (\hl{Stoelting Inc., Wood Dale, IL}). After another two weeks, the animals were checked for fluorescent calcium signal under light anesthesia ($\frac{1}{2}$ of the dose described above).  The mice were fixed in the stereotaxis, and an NVista HD miniature microscope (\hl{Inscopix Inc.}) was lowered upon the GRIN lens probe and the optimal field of view was chosen. Then, a baseplate for chronic imaging was affixed to the skull surface with dental acrylic.
+\subsection{Miniscope Imaging in Freely Behaving Mice}
+Finally, after a one-week recovery period, awake mice with an attached NVista HD miniscope were placed for 15 min into a custom-made circular O-shaped track (50 cm diameter, 5 cm width, with 5 cm height borders) with proximal (different border material) and distal (placed on a surrounding curtain 20 cm apart from the track) visual cues. Mice were allowed to explore the environment in arbitrary directions and were not forced to move. The imaging session was repeated for 8 of 9 mice on the next day after 24 h and for 3 mice on the third day after 48 h from the first imaging session. 
+The neural activity was recorded at 20 frames per second at resolution 1440 $\times$ 1080 px with an NVista HD miniscope. Screenshots and video samples of raw calcium signal can be seen in Figure \ref{figA1} of \hl{Appendix A and in Supplementary videos S1-S3}.The video of mouse behavior was captured with a Sony HDR CX-405 (\hl{Sony Corp., Tokyo, Japan}) camera at 25 frames per second.
+
+At the end of the experiments, animals were perfused transcardially with 1\% paraformaldehyde in 0.1 mM CaCl$_{2}$, and then brains were extracted and postfixed for 24 h in the same solution. Thin (50 µm) floating sections were prepared with a Leica 1200VT (\hl{Leica Microsystems GmbH, Wetzlar, Germany}) vibratome, stained with Hoechst dye (\hl{Hoechst AG, Frankfurt, Germany}) and imaged with an Olympus FluoView 1000 (\hl{Olympus Corp., Tokyo, Japan}) confocal microscope with a UMPlanFLN 10\hl{x} %Is this should be $\times$? Please confirm. %Yes, we meant the magnification of the objective.
+ NA 0.30 W objective. All sections were inspected and checked for consistency of calcium sensor expression site and GRIN lens implantation locations to the field CA1 of the hippocampus. Samples of such sections can be seen in Figure \ref{fig1}D and in Figure \ref{figA1} of \hl{Appendix A}.
+\subsection{Neural and Behavioral Data Processing}
+Image processing was performed with the NoRMCorre \cite {normcorre} and MIN1PIPE \cite {min1pipe} pipelines and custom MATLAB and Python scripts. First, all movies were downsampled spatially by a factor 2 to increase the computation speed. Then, the NoRMCorre routine was applied to spatially align movies and to correct motion artifacts. Next, the MIN1PIPE routine was applied to corrected movies, and locations and activity traces of putative cell units were extracted and manually inspected (Figure~\ref{fig2}A,B). Then, significant calcium events were detected in the activity traces. 
+
+\begin{figure}[H]
+\includegraphics[width=13.5 cm]{Definitions/Fig2}
+\caption{(\textbf{A},\textbf{B}) Selected neuron locations (\textbf{A}) and their traces (\textbf{B}) extracted by MIN1PIPE routine. (\textbf{C}) Scheme of spike detection. Whenever the trace reaches the threshold value, the fitting procedure starts in a range, denoted by the solid green line. Fitting curve \textit{f(t)} is set to a composition of rise and decay exponential factors and spiking amplitude \textit{A}, where{ t\textsubscript{0}}, {t\textsubscript{on}} and {t\textsubscript{off}} are fitting parameters. (\textbf{D}) Scheme of multiple spike detection. In case of tolerable goodness of fit (not less than 0.8), the event is  scored, and the fitting curve is subtracted from the original trace, allowing next peaks to be scored. (\textbf{E}) Spatial event distribution for putative place field detection. Solid black line denotes Gaussian mixture fit of the distribution and grey zones are putative place fields. (\textbf{F}) An example of a detected place field based on the distribution on the left. Trajectory of the mouse is unfolded in the axial direction for better readability and colored with respect to raw activity of the correspondent place cell. To check the consistency of putative place field, we calculated selectivity score each time the animal attended place field zone (in the depicted case, selectivity score equals 1). \label{fig2}}
+\end{figure}
+\vspace{12pt}
+
+Detection of calcium events was performed with a custom routine, which was described in our previous work \cite {ntnc}. First, a threshold of 4 or 5 median absolute deviations (MADs) was applied to extracted neural traces for animals injected with slow (GCaMP6s, NCaMP7 and FGCaMP7) or fast calcium sensors (GCaMP7f), respectively. Then, neighborhoods of each upward threshold crossing were fitted with a typical calcium event model function with fast rise and slow decay (Figure~\ref{fig2}C). This model utilizes precise spiking time\textit{ t\textsubscript{0}},  rise time \textit{t\textsubscript{on}}, decay time \textit{t\textsubscript{off}} and spiking amplitude\textit{ A} as the parameters to be optimized. The lower limit of {t\textsubscript{off}} was set to 200 ms for mice injected with the GCaMP7f indicator and 500 ms for the other ones.  In case of acceptable fit (goodness of fit $\geq$0.8), a calcium event was scored and the fit was locally subtracted from the original trace in order to let subsequent events be fitted and scored (Figure~\ref{fig2}D).
+
+Data for each session were processed separately; matching of cells and traces across sessions was performed with the CellReg routine \cite {cellreg} with default parameters (maximum angle of 30 degrees, maximum translation of 14 microns, registration threshold P\_same of 0.5). Exact amounts of matched cells across sessions and their contours can be seen in Table \ref{tab2} and in Figure \ref{figA2} of \hl{Appendix A}.  Positions of animals were extracted from behavioral video recording with the open-source Bonsai visual programming media \cite {bonsai}. All obtained time series were synchronized and aligned to the beginning of the imaging session. 
+\subsection{Place Cell Detection}
+Given some uncertainty that exists in the procedure of place cell detection \cite {Grijseels} and that the commonly used approach based on spatial information \cite {Markus} requires a high running speed of animals and does not consider the repeatability of place cell firing each time the animal visits the place field, we used a conservative approach, where we checked both the spatial and temporal persistence of place cell firing.
+The entire track space was divided into 20 sectorial bins sized \mbox{5 $\times$ 7.5 cm}. For each cell, an overall number of calcium events was calculated for each bin and the distribution of calcium events was smoothed with a Gaussian kernel (\mbox{sigma = 1.25}), normalized and thresholded by a value of 0.5. Then, centroids of all subthreshold peaks were considered putative place field centers. Width of place fields was evaluated as width of subthreshold peaks + 1 bin from each side. Place fields wider than a half of the track were excluded from further analysis.
+Next, for each place field, we checked whether the correspondent cell fired in all epochs when the animal attended a given place field. For this purpose, for each attendance of a given place field, we calculated the selectivity score as a ratio of the number of events within the attendance epoch over the total number of events within this epoch and adjacent epochs between visits
+ (Figure~\ref{fig2}F). For each place field,  we smoothed the selectivity score sequence with a Gaussian filter (sigma = 1). Only epochs of attendance with smoothed selectivity scores more than 0.5 were considered relevant; place cells without at least three subsequent relevant epochs were discarded from the analysis. 
+The tuning latency for each place field was calculated as the number of epochs (or as  time in seconds) before the beginning of the first sequence of three or more relevant epochs.
+We considered that the cognitive map retained between sessions in case of significant similarity of the distribution of place field location shifts between sessions to a normal distribution around zero (\emph{p} < 0.05, Chi-square~test). 
+\subsection{Dimensionality Reduction}
+In this paper, we used the Laplacian eigenmaps method, which constructs a discrete approximation to a continuous low-dimensional representation that naturally arises from the geometry of the manifold \cite{lem}.
+Before dimensionality reduction, the calcium data for each animal were presented in the form of the matrix $D_{N \times T}$, where $N$ is the number of selected cells and $T$ is the total duration of recording. Therefore, $D_{ij}$ stands for the calcium activity of the neuron $i$ at the timeframe $j$. Only neurons with 5 or more calcium events during the recording were considered.
+
+We built a similarity graph $G$ based on the data in the original high-dimensional space. Each vector $V_{t}$ was considered a point in $\mathbb{R}^N$. Thus, each column of the matrix $D_{N \times T}$ was treated as a single $N$-dimensional vector of neural activity at a certain timeframe. Hence, we obtained $T$ multidimensional vectors in $\mathbb{R}^N$, representing neural activity in different moments in time: $\{V_{t}\}, t \in [0,T]$. To simplify the graph construction procedure and reduce the computation time, we applied mean filtering to the initial time series of calcium activity with window size $w=2,4,8$. We made sure that the choice of the window size did not qualitatively affect our results. This is because the calcium signal hardly changes during the time corresponding to the window sizes of 40, 80, or 160 ms, respectively. All results here were obtained for window size $w=8$. Thus, the effective signal length and number of nodes in G was $T_{eff}=T/w$.
+
+For each of the $T_{eff}$ similarity graph nodes, exactly $k$ nearest neighbors were calculated using Euclidean distance. The number of nearest neighbors $k$ was the only free parameter in our dimensionality reduction procedure. It tended to be chosen as small as possible (however, its value should have ensured the integrity of the resulting graph). Keeping $k$ small is motivated by the local linearity assumption: if $k$ becomes sufficiently large, the Euclidean distance may not reflect the proximity relations between data points because of the possible nonlinear curvature of the underlying manifold. The situation is also complicated by the dimensionality curse in the initial space \cite{dimcurse}.
+
+The resulting graph adjacency matrix was explicitly made symmetric to preclude directed edge formation. This means that the ``nearest neighbor'' relation is made mutual: if some node $i$ is connected to a node $j$, the reverse is also true. It should be noted that, due to the symmetrization procedure, the number of nearest neighbors $k$ sets only the minimal number of edges for a given node, but not a precise one. The similarity graph was ensured to be connected. If it had more than one connected component after the construction procedure, the largest one was taken (if the total share of discarded points did not exceed 5\%; otherwise, dimensionality reduction for a given $k$ was considered unsuccessful). The time moments corresponding to the excluded points were not considered further in the~analysis.
+
+Once a similarity graph was constructed, it was presented in the form of an adjacency matrix $A = \{a_{ij}\}$ with matrix elements $a_{ij}=a_{ji}$ taking non-negative values. The absence of self-loops implies the vanishing of the diagonal elements: $a_{ii}=0$. The matrix elements were considered binary: $a_{ij}=1$, if the nodes $i$ and $j\neq i$ are connected, and $a_{ij}=0$ otherwise.
+The next step was constructing a discrete Laplacian---a symmetric, positive semidefinite matrix that can be considered a diffusion operator on the graph $G$. The spectral decomposition of the graph Laplacian matrix can be used to optimally embed the graph in a low-dimensional space \cite{lem}. According to the Laplacian eigenmaps algorithm, we considered the following generalized eigenvalue problem: 
+
+\be
+L\textbf{v} = \lambda D\textbf{v}
+\label{eq:genL}
+\ee
+
+Here, $D$ is the degree matrix of the network, whose elements are defined as $d_{ij}=deg(n_i)$ if $i$ = $j$ and $d_{ij}=0$ otherwise, where $deg(n_i)$ is the degree of the node $i$: $deg(n_i)= \sum\limits_{j}^{} a_{ij}$.
+$L$ stands for the graph Laplacian matrix, which is defined as
+\be
+L = D-A
+\label{eq:L}
+\ee
+
+The algorithm utilizes first $m+1$ solutions $\{\textbf{f}_{i}\}, i \in [0,m]$ of the generalized eigenvalue problem \eqref{eq:genL} (ordered by the associated eigenvalues $\{\lambda_{i}\}$ in the ascending order) to construct an optimal embedding of the graph in $\mathbb{R}^m$. To be precise, the $k$-th component of an eigenvector $\textbf{u}_i$ defines an $i$-th coordinate of a low-dimensional embedding for a data point $\textbf{v}_k \in \mathbb{R}^N$. Since the dimensionality of $\textbf{u}_i$ is equal to the number of nodes in the graph, the first $m$ non-trivial eigenvectors are enough to construct a $m$-dimensional embedding for each data point.
+
+The first eigenvector $\textbf{v}_0$ corresponding to $\lambda_0 = 0$ was left out because its components were constant. It is known that a Laplacian matrix of a graph with $c$ connected components has $c$ zero eigenvalues \cite{chung}. However, we restricted ourselves to the case of connected graphs, which was ensured by the construction procedure. Hereinafter, we assume that, for our graph, the problem \eqref{eq:genL} has a single zero eigenvalue.
+
+To measure the reconstruction error of the track geometry, we calculated the residual variance ($RV$) \cite{isomap} between real mouse coordinates and points in the latent space. The residual variance was calculated as $RV=1-\rho^2(D_h, D_l)$, where $\rho$ defines the Pearson correlation, and elements of $T_{eff} \times T_{eff}$ matrices $D_h$ and $D_l$ denote the pairwise Euclidean distances calculated over the original trajectory points over the low-dimensional embedding points, respectively. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Results}
+
+In the previous studies \cite {ntnc, NCaMP7, FGCaMP7, springer}, we developed a non-rewarded paradigm, where mice with a head-mounted NVista HD miniscope explored a custom-made O-shaped circular track surrounded by curtains with distinctive visual cues (Figure \ref{fig1}B). Mice demonstrated vigorous exploratory behavior, making on average 19 laps across the track during a 15 min imaging session. It should be noted that since mice were able to arbitrarily change the moving direction, the number of laps varied significantly from session to session, and some of the laps were not full.
+
+The mice were transfected with AAV vectors carrying different calcium indicators (namely GCaMP6s, GCaMP7f, NCaMP7 and FGCaMP7; detailed information can be seen in Table ~\ref{tab1} \hl{of Appendix A}). All mice underwent identical surgical, imaging and behavioral protocols. Mice explored the track at one, two or three consequent sessions, and the first time the context was absolutely novel for them. We isolated neuron locations, calcium traces and detected place-selective cells. For this, we selected candidate cells by the presence of distinct peaks in the overall (across entire session time) spatial distribution of calcium events of a given cell, and then checked if this cell fired or not each time the animal entered its putative place field. Only candidate cells with stable firing statistics throughout the session were considered place-selective (for more details, see Methods). We allowed each cell to have multiple place fields; however, the majority (85\% on average) of place cells had single place fields.
+
+On the first day, all animals demonstrated a uniform distribution of place fields across the track, without any distinct fluctuations in the vicinity of visual cues or other locations in the track. We matched cell activity across days and monitored the place selectivity of the same cell on all days. It turned out that, on the second day, 3 of 8 imaged mice had cognitive maps similar to the first day (Figure~\ref{fig3}).  In the other five mice, cognitive maps were not preserved, which may have been partially due to cells that were not active on the first day.
+
+\begin{figure}[H]
+\includegraphics[width=13.5 cm]{Definitions/Fig3}
+\caption{\hl{(\textbf{A}) Distribution of place fields across days} %Hyphen should be minus sign in the figure.
+ in a case of retained representation (left) and in a case of remapping (right). Each line in a block corresponds to overall activation rate across the track space of each individual place cell in three consequent sessions. Upper row: cells sorted by their peak firing locations on the 1st day. Lower row:  cells sorted by their peak firing locations on the 3rd day. (\textbf{B}) Heat maps of place cells that changed their place field locations between days. Multiple place fields of the same place cell are scored as fractions. N, not a place cell.  Between-day transitions with the retention of the map result in heat maps with distinct diagonals, while remapping transitions do not. (\textbf{C}) Distribution of place field shifts for single-place-field place cells (between 1st and 2nd days and between 2nd and 3rd days). Between-day transitions with the retention of the map show sharp peaks in such distributions while remapping transitions show uniform distributions. \label{fig3}}
+\end{figure}
+\subsection{Selectivity Score and Tuning Latency}
+To assess the spatial selectivity of place cells to their fields, we used the selectivity score: for each place field, it was calculated whenever the animal attended the place field as the ratio of the number of in-field calcium events of the place cell over the total number of calcium events across the current lap (which may be not full). A selectivity score of 1 corresponded to a cell that fired exclusively in its place field and a score of 0 took place when the place cell did not fire at its place field during this visit. The time and the number of attendances when the smoothed selectivity score hits the threshold value of 0.5 are considered as the tuning latency or time of specialization. Since each mouse had its own trajectory and some mice explored the track faster than others, the number of visits appeared to be a more universal parameter for the estimation of the tuning dynamics of individual place cells rather than time itself. 
+The distributions of tuning latency both in the time and number-of-visits domains are shown in  Figure~\ref{fig4}A. On the first day, a notable percentage (25.1\%) of place fields were established at the very first attendance, while an average place field was formed at the 7th attendance. In the time domain, 23.1\% of fields appeared within the first minute in the environment, while the average tuning latency equaled 247 s.  On the second and third days, the average tuning latency of place fields decreased to values of 193 and 159 s, respectively, values that correspond to the 5th attendance of the place field. The improvement of tuning latency nominated in visits on the 2nd day was found significant (Figure~\ref{fig4}C).
+
+\subsection {Selectivity Score Dynamics within Session and across Days}
+Regarding the selectivity score itself, its evolution was distributed in a similar manner (\mbox{Figure~\ref{fig4}B}) across all animals, characterized by strong decay of the rate of cells with longer tuning latency. The mean selectivity score significantly increased from the first to the last attendance on each day of the experiment, but the between-days difference in selectivity score at the first and the last attendance appeared to be not significant (Figure~\ref{fig4}D,E). Moreover, no significant difference in selectivity score improvement was observed on the 2nd day between mice with a retained cognitive map versus mice in which the map was not retained.
+Since we did not observe any cumulation of average selectivity score between days, we searched for it at the level of individual place cells. Importantly, the improvement in tuning latency appeared to be independent of the place field shift between sessions, i.e., cells that preserved their place field did not improve their tuning latency better than cells whose place field shifted
+(Figure~\ref{fig4}F--H). 
+
+Taken together, these data suggest that the selectivity of place cell firing rose faster with each new day of the experiment, but without any significant cumulation. The retaining or remapping of the spatial representation in mice does not correlate with significantly higher selectivity scores or faster tuning dynamics. However, since these results are based only on individual place cell firing statistics, and since not only place cells can contribute to spatial coding \cite {Meshulam, Rubin}, we performed a population analysis to confirm our results.
+
+\begin{figure}[H]
+\includegraphics[width=13.5 cm]{Definitions/Fig4}
+\caption{\textls[-15]{(\textbf{A}). %Hyphen should be minus sign in the figure.
+ Distribution of tuning latency both in the number-of-visits domain and in the time domain. (\textbf{B}).  Sample of selectivity score distribution in one individual mouse on three consequent days (place fields are sorted independently for each session). Red triangles denote the number of visits where the specialization occurred (n\_spec). (\textbf{C})  Tuning latency significantly decreases on the second day, while no} \label{fig4}}
+\end{figure}
+{\captionof*{figure}{ difference is observed between retained-map and remapped mice.  Two-way ANOVA, * \emph{p} = 0.0488 factor day, ns---not significant  (\emph{p} > 0.05). (\textbf{D}) Evolution of mean selectivity score across days in all mice. Mean scores for each animal are represented in thin lines. (\textbf{E}) Mean selectivity score significantly rises within the first and the second day from the first to the last visit to a place field, while no difference is observed between starting or ending selectivity score on the 1st versus that on the 2nd day. Two-way ANOVA and post hoc Bonferroni test, \mbox{** \emph{p} = 0.0261}, \hl{***} %Please confirm if the *** should be ****. Cause there is no *** in the figure. %Corrected
+ \emph{p} = 0.0006, ns---\emph{p} > 0.05. (\textbf{F}) Scatter plot of individual cell variance between 2nd and 1st days in n\_spec (n\_spec shift) versus place field shift for retained-map mice (above) and remapping mice (below). Only one-field place cells were taken into account. (\textbf{G}) Shifts in n\_spec do not differ significantly between retained-map and remapped mice. Unpaired Student's t-test, \emph{p} = 0.2544. (\textbf{H}) Distribution of n\_spec shifts across all one-field place cells for mice with the retention of the map and for mice with remapping.}}
+\vspace{12pt}
+
+
+\subsection{Nonlinear Dimensionality Reduction Reveals Track Geometry from Multidimensional Place Cell Activity}
+
+We performed a populational analysis of the neural data of the first six mice with a sufficient (>200) number of detected cells on the 1st day and reduced the dimensionality of the data with Laplacian eigenmaps (see Methods). The first two axes of the low-dimensional space coincided with the coordinates of the mouse in the physical environment that it was exploring (with the accuracy of rotation by a fixed angle: Figure~\ref{fig5}A,B). It is important to note that the algorithm did not receive any information about the real position of the mouse as an input. This result could not be reproduced with PCA, indicating the nonlinear nature of the problem (Figure~\ref{fig5}C). The best result was achieved using low-energy Laplacian eigenmodes of the similarity graph of neuronal activity vectors (Figure~\ref{fig5}D).
+\begin{figure}[H]
+\includegraphics[width=12.5 cm]{Definitions/Fig5}
+\caption{(\textbf{A}) Round track with visual cues, (\textbf{B}) pointwise track representation, (\textbf{C}) first two axes of PCA embedding, (\textbf{D}) first two axes of LE embedding (eigenvectors of the graph Laplacian).\label{fig5}}
+\end{figure}
+
+\subsection{Dependence of Geometry Coding Quality on Population Size}
+Next, we estimated the quality of the decoding of the space. The reconstruction error of the track space in the embedding (residual variance, RV) decreased with the number of registered cells (Figure~\ref{fig6}A). We attribute this to the fact that nonlinear dimensionality reduction is able to distinguish ``population'' variables from the aggregate activity of many~cells.
+
+\subsection{Representation Quality Dynamics over Time}
+The residual variance of track representation decreased over time as the mice became familiar with the environment explored (Figure~\ref{fig6} B). This effect was stronger the more cells were recorded for a given animal. We attribute this to the gradual formation of a population code in which information about the environment is distributed among many neurons. We compared these data with the negated average selectivity score for each mouse. The mousewise distributions of mean reconstruction error and of mean selectivity score demonstrate cosine similarity of 0.968 (Figure~\ref{fig6}D). This result shows the consistency of different measures of quality of spatial coding.
+
+\begin{figure}[H]
+\includegraphics[width=12 cm]{Definitions/Fig6}
+\caption{(\textbf{A}) Negated mean selectivity score plus one (unselectivity score), which was interpolated,  \label{fig6}}
+\end{figure}
+{\captionof*{figure}{smoothed with running average filter (window length 250 s) and plotted in the time domain. (\textbf{B})~Evolution of reconstruction error within the timeline of the 1st day session. Dimensionality reduction was performed for a sliding time window of length 250 s. Shadings represent standard deviations for LE with different graph construction parameters. NC stands for the number of cells registered. (\textbf{C}) Residual variance of the embedding depends on the number of detected cells. (\textbf{D})~Distribution of mean 1-selectivity score and of mean reconstruction error across different animals. These distributions demonstrate cosine similarity of 0.968 ± 0.047.}}
+\vspace{12pt}
+
+\section{Discussion}
+The main finding of this study is that place representations are promptly formed in mice during free exploration in a completely novel environment. This is consistent with the previous study by Muller et al. \cite {Muller1}, where it was shown that place-selective cell firing began within a few minutes in rats exploring a novel environment. Moreover, recent data~\cite {dong} show a similar distribution of place field forming times, nominated in laps, for mice navigating in a regular manner in a virtual environment. Here, we extend these results to a natural environment with completely free navigation conditions, where mice were capable of arbitrarily choosing the moving direction.
+
+It is known that several types of spatial representation remapping may occur between different navigating sessions, including full, partial and rate remapping \cite{Latuske, Lee}. However, the retention of the cognitive maps was also observed \cite {Mankin, Ziv}. The ratio of animals with preserved cognitive maps on the 2nd day in our experiments appeared to be  consistent with the previous study \cite {Sheintuch}, where it was shown that the global remapping is a stochastic process and several distinct cognitive maps can coexist in the same animal. Importantly, multiple visual cues, distal and proximal, were used in this study, which also is consistent with our experimental design. This could serve as an additional verifier that the mice trained in our paradigm demonstrated normal parameters of spatial representations even in the absence of reinforcement and goal-directed behavior. 
+
+The selectivity score dynamics that we observed suggest that the strength of place coding of the imaged CA1 population increases within each session, but without significant cumulation on further sessions. Nevertheless, we observed a reduction in average tuning latency on the second day, when the environment was familiar to the animals. This can be interpreted in the following manner: the strength of place coding starts from similar levels each session but increases faster in a familiar environment than in a novel one. Such dynamics can be associated with a gradual improvement in place coding between trials \cite {Karlsson}. However, in this case, one could expect a more robust rise in the selectivity score in mice with retained representations or at least in place cells preserving their place fields, but we have not observed any significant difference. This implies that faster tuning of cognitive maps may be conditioned by some mechanisms not at the level of individual place cells but at the level of the whole CA1 population. Additional research should be done to clarify this~question.
+
+It is known that not only place cells may contribute to spatial coding \cite { Meshulam, Rubin, preprint}. By means of a population analysis, we demonstrated that a population of all registered cells as a whole can encode the space of the environment and that the quality of such encoding complements the average selectivity score. This can provide a basis for the estimation of the exact contribution of non-place cells to spatial code by excluding the activity of place cells from population activity, which will be a subject of further analysis.
+
+We have not considered the direction specificity of place cells. It is known that, in one-dimensional tracks, there are direction-specific place fields and one cell can have place fields that are specific in different directions \cite {McNaughton, Muller2}. However, given the complete arbitrariness of the animals' trajectories in our paradigm, it is difficult to take the direction into account due to unequal statistics of directions. Given this, we targeted our procedure of place cell detection to omnidirectional place cells,  taking into account only continuous statistics of selective cell firing during sequential animals' entrances in the place field in any direction.
+
+One could expect some improvement in spatial code stability evoked by edge, border and object-specific cells \cite {Scaplen}. There are no distinct edges and borders within our behavior paradigm, though some cells may be specifically tuned at distal and proximal visual cues around the circular track. However, the evaluation of the exact contribution of such putative cue-specific cells to spatial coding, as well as their precise identification, are obstructed by the overlap of their activity with the activity of “regular” place cells, since cues are integral parts of the environment. Additional modifications to the experimental setup will be required to isolate the contribution of cue-specific cells in further studies.
+
+Due to the dispersion in the number of cells detected across different animals, we checked the consistency of our statistical comparison by excluding mice \#8--9 with the lowest number of detected neurons (see Table~\ref{tab1} of \hl{Appendix A}). As a result, the \emph{p}-value of the factor day for the comparison of t\_spec  decreased from a value of \emph{p} = 0.0488 to a value of \emph{p} = 0.0436 (Figure~\ref{fig4}C), and the \emph{p}-values of the comparison of selectivity score between the first and the second visit to a field changed from values of \emph{p} = 0.0261 and \emph{p} = 0.0006  to values \emph{p} = 0.0153 and \emph{p} = 0.0003 for the first and the second session, respectively (Figure~\ref{fig4}E). This change did not alter the statistical significance of the results, and therefore we retained mice \#8 and 9 in the analysis.
+
+According to \cite {frank,kentros}, place codes can be modulated by the exploratory behavior of animals. We did not find any clear behavioral triggers or environmental cues that could activate place cell tuning. Given the relatively high (25\%) fraction of immediate early-tuned (at the first visit to a field) place fields, special attention should be paid to the precise registration of all behavior parameters from the first seconds of the mouse's entry into the environment. Nevertheless, at the level of discrete behavior acts, no behavior acts can be completed within such time, which poses a question about some internal states of the network activity leading to the rapid emergence of observed specializations.
+
+Such mechanisms were suggested in studies by Dragoi and Tonegawa \cite {dragoi1, dragoi2}, which reported a possibility that some pre-existing representations supply immediate place coding in a novel environment. However, the contribution of such representations to overall place coding may be accomplished by hippocampal replays between consequent sessions, which may lead to the engagement of so-called "slowly-firing cells" of higher plasticity \cite {grosmark}. Taken together, these approaches may explain the further distinction and completion of novel and familiar environments.
+
+Despite the clear geometric and physical meaning of the LE algorithm utilized in our study, this approach has several drawbacks, which are common for many manifold learning methods. In particular, this method does not scale well with increasing amounts of accumulated data, because its implementation relies on the spectral decomposition of the affinity matrix or related operators, such as the Laplacian or the transition matrix. In general, this leads to a computational complexity of O(n$^{a}$), 2.4  <  a <  3, 
+%Attention AE: please correct layout.
+depending on the particular implementation. There is also no natural method for constructing a low-dimensional embedding for the neural activity vector, which was not represented in the initial data and, therefore, did not contribute to the formation of the graph. For this purpose, one has to construct special approximate nonlinear operators~\cite{bengio}, which is not always possible. This limits the possibility of using the constructed embedding to analyze new data. To address this issue, we are working on new robust neural network-based methods for the dimensionality reduction of calcium signal data.
+
+\section {Conclusions}
+We have estimated the basic parameters of place cell selectivity within an imaging session at the first and second days of circular maze exploration. On the first day, the mean tuning latency of all place fields in all mice equaled 247 s. On average, place specialization was attained at the seventh visit of an animal to a place field, while 25.1\% of place fields were established at their first attendance.  On the second day, 3 of 8 mice demonstrated retention of their spatial representation, while 5 of 8 mice did not. In both cases, tuning latency on the second day was significantly lower than on the first day.  On each day, the mean selectivity score significantly rose within the session. However, no cumulation was observed on the second day, and the initial and ultimate selectivity scores did not differ significantly between the first and the second day. Moreover, no difference in selectivity score or tuning latency dynamics was detected between the mice that had map retention or underwent remapping, neither at the level of individual cells nor at the level of average values.
+
+Additionally, our nonlinear dimensionality reduction performed on CA1 neuronal activity data revealed the geometry of the environment explored by the mice. The reconstruction error for the six most informative mice on the first day of exploration corresponded to the negated mean selectivity score of these mice.
+
+Taken together, these results reveal the fast emergence and tuning dynamics of place cell codes and demonstrate the applicability of novel calcium indicators NCaMP7 and FGCaMP7 for the light-controlled analysis of neural functions in behaving mice.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{6pt} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% optional
+%\supplementary{The following are available online at \linksupplementary{s1}, Figure S1: title, Table S1: title, Video S1: title.}
+
+% Only for the journal Methods and Protocols:
+% If you wish to submit a video article, please do so with any other supplementary material.
+% \supplementary{The following are available at \linksupplementary{s1}, Figure S1: title, Table S1: title, Video S1: title. A supporting video article is available at doi: link.} 
+\supplementary{\hl{The following supporting information can be downloaded at: } \linksupplementary{s1}, \hl{Video S1-S3}: Samples of raw calcium signal captured with an NVista HD miniscope from different animals. Scale bars, 100 µm } %Please add this part if there have supplementary materials. And also add the citation of it in text.
+%Our supplementary material contains three videos zipped into a single file, which was uploaded via the link at the revision stage, and which we are referring to as Videos S1-S3 in line 185.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\authorcontributions{V.P.S. and K.V.A. designed the experiment; V.P.S. and V.V.P. carried out surgical preparations, in vivo calcium imaging and place cell detection; V.P.S. preprocessed calcium imaging data and behavior data and analyzed selectivity score and tuning dynamics at the level of individual place cells; V.V.P. performed statistical analysis; N.A.P. carried out dimensionality reduction analysis; V.P.S., N.A.P. and K.V.A. wrote the manuscript. All authors revised the manuscript. All authors have read and agreed to the published version of the manuscript.}
+
+\funding{This work was supported by the Russian Ministry of Science and Higher Education Project № 075-15-2020-801. The analysis of miniscope calcium activity recordings from the mouse hippocampal neurons during new memory acquisition was supported by the Russian Science Foundation Project № 20-15-00283.}
+
+\institutionalreview{All methods for animal care and all experimental protocols were approved by the National Research Center “Kurchatov Institute” Committee on Animal Care (NG-1/109PR of 13 February 2020) and were in accordance with the Russian Federation Order Requirements N 267 M3 and the National Institutes of Health Guide for the Care and Use of Laboratory~Animals.}
+
+%\informedconsent{\hl{   } %Any research article describing a study involving humans should contain this statement. Please add ``Informed consent was obtained from all subjects involved in the study.'' OR ``Patient consent was waived due to REASON (please provide a detailed justification).'' OR ``Not applicable'' for studies not involving humans. You might also choose to exclude this statement if the study did not involve humans. Written informed consent for publication must be obtained from participating patients who can be identified (including by the patients themselves). Please state ``Written informed consent has been obtained from the patient(s) to publish this paper'' if applicable.
+%}
+%This study did not involve humans so we'd prefer to exclude this statement.
+
+\dataavailability{The data that support the findings of this study and any custom written code are available from the corresponding author upon reasonable request.} 
+
+\acknowledgments{We kindly acknowledge Fedor V. Subach and Natalia V. Barykina for providing the AAV particles for this study. We are grateful to Sergey K. Nechaev, Alexander S. Gorsky and Ksenia A. Toropova for fruitful discussions. We thank the reviewers for their thorough analysis and quality-improving comments on the manuscript.}
+
+\conflictsofinterest{The authors declare no conflicts of interest.} 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Only for journal Encyclopedia
+%\entrylink{The Link to this entry published on the encyclopedia platform.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Optional
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Optional
+\appendixtitles{yes} % Leave argument "no" if all appendix headings stay EMPTY (then no dot is printed after "Appendix A"). If the appendix sections contain a heading then change the argument to "yes".
+%\appendixstart
+%\appendix
+%\section{Extended data tables and figures}
+%\appendixtitles{no} % Leave argument "no" if all appendix headings stay EMPTY (then no dot is printed after "Appendix A"). If the appendix sections contain a heading then change the argument to "yes".
+\appendixstart
+\appendix
+\section[\appendixname~\thesection.]{\highlighting{Extended Data Tables and Figures} %Appendix A has not been referred to within the text of the manuscript. %We have added references, see lines 185,188,205,249,313.
+}
+%\subsection[\appendixname~\thesubsection]{}
+
+\vspace{-9pt}
+\begin{table}[H] 
+
+\caption{Mousewise statistics for each registered session. 1PF Cells, single-field place cells. N spec and T spec, the average number of visit to a place field and correspondent time in seconds, since which this place field is considered tuned. First visit and Last visit sel.sc., the average values of selectivity score at the first and at the last attendance of a place field.\label{tab1}}
+%\scriptsize
+%\begin{tabular}{|c|c|c|c|c{0.3c}|c{0.3cm}|c{0.3cm}|c{0.3cm}|c{0.5cm}|c{0.5cm}|c{0.5cm}|}
+%\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+
+\begin{adjustwidth}{-\extralength}{0cm}
+%\centering %% If there is a figure in wide page, please release command \centering
+\setlength{\cellWidtha}{\fulllength/11-2\tabcolsep-0in}
+\setlength{\cellWidthb}{\fulllength/11-2\tabcolsep-.1in}
+\setlength{\cellWidthc}{\fulllength/11-2\tabcolsep+.2in}
+\setlength{\cellWidthd}{\fulllength/11-2\tabcolsep-0in}
+\setlength{\cellWidthe}{\fulllength/11-2\tabcolsep+0in}
+\setlength{\cellWidthf}{\fulllength/11-2\tabcolsep-0in}
+\setlength{\cellWidthg}{\fulllength/11-2\tabcolsep-0in}
+\setlength{\cellWidthh}{\fulllength/11-2\tabcolsep+0in}
+\setlength{\cellWidthi}{\fulllength/11-2\tabcolsep-0in}
+\setlength{\cellWidthj}{\fulllength/11-2\tabcolsep+0in}
+\setlength{\cellWidthk}{\fulllength/11-2\tabcolsep-.1in}
+\scalebox{1}[1]{\begin{tabularx}{\fulllength}{>{\PreserveBackslash\raggedright}m{\cellWidtha}>{\PreserveBackslash\centering}m{\cellWidthb}>{\PreserveBackslash\raggedright}m{\cellWidthc}>{\PreserveBackslash\raggedright}m{\cellWidthd}>{\PreserveBackslash\raggedright}m{\cellWidthe}>{\PreserveBackslash\raggedright}m{\cellWidthf}>{\PreserveBackslash\raggedright}m{\cellWidthg}>{\PreserveBackslash\raggedright}m{\cellWidthh}>{\PreserveBackslash\raggedright}m{\cellWidthi}>{\PreserveBackslash\raggedright}m{\cellWidthj}>{\PreserveBackslash\raggedright}m{\cellWidthk}}
+\toprule
+ \textbf{Mouse}  & \textbf{Session}  & \textbf{Calcium sensor} & \textbf{Cells}  & \textbf{Place cells} & \textbf{Place fields} & \textbf{1PF Cells} & \textbf{N spec} & \textbf{T  spec}  & \textbf{First visit sel.sc.} & \textbf{Last visit sel.sc.}\\
+\midrule
+\multirow{3}{4em}{Mouse 1} & 1 & \multirow{3}{4em}{GCaMP6s} & 207 & 59 & 63 & 55 & \hl{8.63} %We revised such the 8,63 to 8.63. Please confirm. %That's correct, thank you.
+ & 217.8 & 0.23 & 0.38 \\
+& 2 & & 235 & 24 & 28 & 21 & 8.79 & 219.2 & 0.10 & 0.30\\
+& 3 & & 233 & 30 & 34 & 26 & 5.59 & 177.8 & 0.06 & 0.38\\
+\midrule
+\multirow{3}{4em}{Mouse 2} & 1 & \multirow{3}{4em}{GCaMP6s} & 263 & 90 & 101 & 79 & 10.10 & 237.3 & 0.20 & 0.30\\
+& 2 & & 297 & 88 & 102 & 74 & 5.69 & 146.5 & 0.23 & 0.38\\
+& 3 & & 228 & 80 & 92 & 68 & 7.37 & 196.4 & 0.19 & 0.41\\
+\midrule
+\multirow{3}{4em}{Mouse 3} & 1 & \multirow{3}{4em}{GCaMP6s} & 320 & 121 & 135 & 107 & 4.83 & 170.4 & 0.34 & 0.45\\
+& 2 &  & 315 & 106 & 114 & 98 & 2.21 & 152.2 & 0.41 & 0.44\\
+& 3 & & 301 & 113 & 127 & 99 & 2.14 & 127.0 & 0.41 & 0.36\\
+\midrule
+\multirow{2}{4em}{Mouse 4} & 1 & \multirow{2}{4em}{GCaMP6s} & 562 & 257 & 298 & 218 & 3.90 & 256.4 & 0.32 & 0.49\\
+& 2 & & 487 & 247 & 294 & 202 & 4.07 & 246.6 & 0.30 & 0.49\\
+\midrule
+\multirow{2}{4em}{Mouse 5} & 1 & \multirow{2}{4em}{NCaMP7} & 283 & 74 & 82 & 66 & 7.99 & 252.1 & 0.20 & 0.35\\
+& 2 & & 317 & 86 & 96 & 77 & 6.58 & 186.0 & 0.09 & 0.46\\
+\midrule
+\multirow{2}{4em}{Mouse 6} & 1 & \multirow{2}{4em}{NCaMP7} & 200 & 26 & 30 & 22 & 6.63 & 245.1 & 0.15 & 0.33\\
+& 2 & & 189 & 11 & 13 & 9 & 4.62 & 208.8 & 0.09 & 0.58\\
+\midrule
+\multirow{2}{4em}{Mouse 7} & 1 & \multirow{2}{4em}{GCaMP7f} & 292 & 130 & 174 & 87 & 11.26 & 305.6 & 0.16 & 0.31\\
+& 2 & & 239 & 72 & 81 & 63 & 6.70 & 153.9 & 0.21 & 0.35\\
+\midrule
+\multirow{2}{4em}{Mouse 8} & 1 & \multirow{2}{4em}{FGCaMP7} & 95 & 10 & 10 & 10 & 6.10 & 144.4 & 0.31 & 0.31\\
+& 2 & & 123 & 35 & 38 & 32 & 5.68 & 102.4 & 0.30 & 0.47\\
+\midrule
+Mouse 9 & 1 & NCaMP7 & 103 & 12 & 19 & 7 & 7.26 & 271.5 & 0.23 & 0.35 \\
+\midrule
+
+\end{tabularx}}
+\end{adjustwidth}
+\end{table}
+
+
+\vspace{-9pt}
+\begin{table}[H] 
+\caption{Cell matching and remapping rate statistics between sessions. We considered that the cognitive map retained between sessions in case of the significant similarity of the distribution of place field location shifts between sessions to a normal distribution around zero (\emph{p} < 0.05, Chi-square test). \label{tab2}}
+%\scriptsize
+%\begin{tabular}{|c|c|c|c|c{0.3c}|c{0.3cm}|c{0.3cm}|c{0.3cm}|c{0.5cm}|c{0.5cm}|c{0.5cm}|}
+%\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+\setlength{\cellWidtha}{\columnwidth/5-2\tabcolsep-00in}
+\setlength{\cellWidthb}{\columnwidth/5-2\tabcolsep-00in}
+\setlength{\cellWidthc}{\columnwidth/5-2\tabcolsep-00in}
+\setlength{\cellWidthd}{\columnwidth/5-2\tabcolsep-00in}
+\setlength{\cellWidthe}{\columnwidth/5-2\tabcolsep-00in}
+\scalebox{1}[1]{\begin{tabularx}{\columnwidth}{>{\PreserveBackslash\centering}m{\cellWidtha}>{\PreserveBackslash\centering}m{\cellWidthb}>{\PreserveBackslash\centering}m{\cellWidthc}>{\PreserveBackslash\centering}m{\cellWidthd}>{\PreserveBackslash\centering}m{\cellWidthe}}
+\toprule
+ \textbf{Mouse}  & \textbf{Sessions Compared}  & \textbf{Cells Matched} & \textbf{Retention \emph{p}-Value} & \textbf{Retention of Map} \\
+\midrule
+\multirow{3}{4em}{Mouse 1} & {1 vs. 2}  & 157 & 0.886 & {no} \\
+& {2 vs. 3} & 179 & 0.657 & {no}\\
+& {1 vs. 3} & 153 & 0.839 & {no} \\
+\midrule
+\multirow{3}{4em}{Mouse 2} & {1 vs. 2}  & 127 & 0.839 & {no} \\
+& {2 vs. 3} & 138 & 0.552 & {no}\\
+& {1 vs. 3} & 116 & 0.006 & {yes} \\
+\midrule
+\multirow{3}{4em}{Mouse 3} & {1 vs. 2}  & 229 & <0.001 & {yes} \\
+& {2 vs. 3} & 217 & <0.001 & {yes}\\
+& {1 vs. 3} & 116 & <0.001 & {yes} \\
+\midrule
+{Mouse 4} & {1 vs. 2}  & 396 & <0.001 & {yes} \\
+\midrule
+{Mouse 5} & {1 vs. 2}  & 208 & <0.001 & {yes} \\
+\midrule
+{Mouse 6} & {1 vs. 2}  & 120 & 0.456 & {no} \\
+\midrule
+{Mouse 7} & {1 vs. 2}  & 69 & 0.457 & {no} \\
+\midrule
+{Mouse 8} & {1 vs. 2}  & 77 & 0.237 & {no} \\
+\bottomrule
+\end{tabularx}}
+\end{table}
+
+\begin{figure}[H]
+\includegraphics[width=13.5 cm]{Definitions/Fig A1}
+\caption{(\textbf{A}) Samples of histology sections indicating GRIN lens implantation locations stained with Hoechst. (\textbf{B}) Samples of raw NVista HD video screenshots. Scale bars, 100 µm. \label{figA1}}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics[width=13.5 cm]{Definitions/Fig A2}
+\caption{%\hl{\textbf{A.} } %There is no A in the figure. Please confirm.%Indeed, there is no A, thanks a lot.
+Samples of cell matching between sessions. Matched population is marked in green.\label{figA2}}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\begin{adjustwidth}{-\extralength}{0cm}
+%\centering %% If there is a figure in wide page, please release command \centering
+\reftitle{References}
+
+% Please provide either the correct journal abbreviation (e.g. according to the “List of Title Word Abbreviations” http://www.issn.org/services/online-services/access-to-the-ltwa/) or the full name of the journal.
+% Citations and References in Supplementary files are permitted provided that they also appear in the reference list here. 
+
+%=====================================
+% References, variant A: external bibliography
+%=====================================
+%\externalbibliography{yes}
+%\bibliography{your_external_BibTeX_file}
+
+%=====================================
+% References, variant B: internal bibliography
+%=====================================
+\begin{thebibliography}{999}
+
+% Reference 1
+
+\bibitem[O'Keefe(1971)]{Okeefe1}
+O'Keefe, J.; Dostrovsky, J. The hippocampus as a spatial map. Preliminary evidence from unit activity in the freely-moving rat. {\em Brain Res.} {\bf 1971}, {\em 4}, 171--175.
+
+% Reference 2
+\bibitem[O'Keefe(1976)]{Okeefe2}
+O'Keefe, J. Place units in the hippocampus of the freely moving rat. {\em Exp. Neurol.} {\bf 1976}, {\em 51}, 78--109.
+
+% Reference 3
+\bibitem[Ziv(2013)]{Ziv}
+Ziv, Y.; Burns, L.; Cocker, E.; Hamel, E.; Ghosh, K.; Kitch, L.; El Gamal, A.; Schnitzer, M. Long-term dynamics of CA1 hippocampal place codes. {\em Nat. Neurosci.} {\bf 2013}, {\em 16}, 264--266.
+
+% Reference 4
+\bibitem[Rubin(2015)]{Rubin}
+Rubin, A.; Geva, N.; Sheintuch, L.; Ziv, Y. Hippocampal ensemble dynamics timestamp events in long-term memory. {\em Elife} {\bf 2015}, {\em 4},~e12247.
+
+% Reference 5
+\bibitem[Kinski(2018)]{kinsky}
+Kinsky, N.; Sullivan, D.; Mau, W.; Hasselmo, M.; Eichenbaum, H. Hippocampal Place Fields Maintain a Coherent and Flexible Map across Long Timescales. {\em Curr. Biol.} {\bf 2018}, {\em 28}, 3578--3588.
+
+% Reference 6
+\bibitem[Barnes(1997)]{barnes}
+Barnes, C.; Suster, M.; Shen, J.; McNaughton, B. Multistability of cognitive maps in the hippocampus of old rats. {\em Nature} {\bf 1997}, {\em 388}, 272--275.
+
+% Reference 7
+\bibitem[Sheintuch(2020)]{Sheintuch}
+Sheintuch, L.; Geva, N.; Baumer, H.; Rechavi, Y.; Rubin, A.; Ziv, Y. Multiple Maps of the Same Spatial Context Can Stably Coexist in the Mouse Hippocampus. {\em Curr. Biol.} {\bf 2020}, {\em 30}, 1467--1476.
+
+% Reference 8
+\bibitem[Dong(2016)]{dong}
+Dong, C.; Madar, A.; Sheffield, M. Distinct place cell dynamics in CA1 and CA3 encode experience in new environments. {\em Nat. Commun.} {\bf 2021}, {\em 12},  2977.
+
+% Reference 9
+\bibitem[Mehta(1997)]{Mehta}
+Mehta, M.; Barnes, C.; McNaughton, B. Experience-dependent, asymmetric expansion of hippocampal place fields. {\em Proc. Natl. Acad. Sci. USA} {\bf 1997}, {\em 94}, 8918--8921.
+
+% Reference 10
+\bibitem[Aoki(2019)]{Aoki}
+Aoki, Y.; Igata, H.; Ikegaya, Y.; Sasaki, T. The Integration of Goal-Directed Signals onto Spatial Maps of Hippocampal Place Cells. {\em Cell Rep.} {\bf 2019}, {\em 27}, 1516--1527.
+
+% Reference 11
+\bibitem[Hok(2007)]{poucet}
+Hok, V.; Lenck-Santini, P.; Roux, S.; Save, E.; Muller, R.; Poucet, B. Goal-related activity in hippocampal place cells. {\em J. Neurosci.} {\bf 2007}, {\em 27}, 472--482.
+
+% Reference 12
+\bibitem[Ghosh(2011)]{Ghosh}
+Ghosh, K.; Burns, L.; Cocker, E.; Nimmerjahn, A.; Ziv, Y.; Gamal, A.; Schnitzer, M. Miniaturized integration of a fluorescence microscope. {\em Nat. Methods} {\bf 2011}, {\em 8}, 871--878.
+
+% Reference 13
+\bibitem[Barykina(2020)]{FGCaMP7}
+Barykina, N.; Sotskov, V.; Gruzdeva, A.; Wu, Y.; Portugues, R.; Subach, O.; Chefanova, E.; Plusnin, V.; Ivashkina, O.; Anokhin, K.;et al. FGCaMP7, an Improved Version of Fungi-Based Ratiometric Calcium Indicator for In Vivo Visualization of Neuronal Activity. {\em Int. J. Mol. Sci.} {\bf 2020}, {\em 21}, 3012.
+
+% Reference 14
+\bibitem[Subach(2020)]{NCaMP7}
+Subach, O.; Sotskov, V.; Plusnin, V.; Gruzdeva, A.; Barykina, N.; Ivashkina, O.; Anokhin, K.; Nikolaeva, A.; Korzhenevskiy, D.; Vlaskina, A.; et al. Novel Genetically Encoded Bright Positive Calcium Indicator NCaMP7 Based on the mNeonGreen Fluorescent Protein. {\em Int. J. Mol. Sci.} {\bf 2020}, {\em 21}, 1644.
+
+% Reference 15
+\bibitem[Gallego(2017)]{gallego1}
+Gallego, J.; Perich, M.; Miller, L.; Solla, S. Neural Manifolds for the Control of Movement. {\em Neuron} {\bf 2017}, {\em 94}, 978--984.
+% Reference 16
+\bibitem[Gallego(2018)]{gallego2}
+Gallego, J.; Perich, M.; Naufel, S.; Ethier, C.; Solla, S.; Miller, L. Cortical population activity within a preserved neural manifold underlies multiple motor behaviors. {\em Nat. Commun.} {\bf 2018}, {\em 9}, 4233.
+
+% Reference 17
+\bibitem[Yu(2009)]{yu}
+Yu, B.; Cunningham, J.; Santhanam, G.; Ryu, S.; Shenoy, K.; Sahani, M. Gaussian-process factor analysis for low-dimensional single-trial analysis of neural population activity. {\em J. Neurophysiol.} {\bf 2009}, {\em 102}, 614--635.
+
+% Reference 18
+\bibitem[Barykina(2016)]{ntnc}
+Barykina, N.; Subach, O.; Doronin, D.; Sotskov, V.; Roshchina, M.; Kunitsyna, T.; Malyshev, A.; Smirnov, I.; Azieva, A.; Sokolov, I.; et al. A new design for a green calcium indicator with a smaller size and a reduced number of calcium-binding sites. {\em Sci. Rep.} {\bf 2016}, {\em 6}, 34447.
+
+% Reference 19
+\bibitem[Barykina(2018)]{ytnc}
+Barykina, N.; Doronin, D.; Subach, O.; Sotskov, V.; Plusnin, V.; Ivleva, O.; Gruzdeva, A.; Kunitsyna, T.; Ivashkina, O.; Lazutkin, A.; et al. NTnC-like genetically encoded calcium indicator with a positive and enhanced response and fast kinetics. {\em Sci. Rep.} {\bf 2018}, {\em 8},~15233.
+
+% Reference 20
+\bibitem[Pnevmatikakis(2017)]{normcorre}
+Pnevmatikakis, E.; Giovannucci, A. NoRMCorre: An online algorithm for piecewise rigid motion correction of calcium imaging data. {\em J. Neurosci. Methods} {\bf 2017}, {\em 291}, 83--94.
+
+% Reference 21
+\bibitem[Lu(2018)]{min1pipe}
+Lu, J.; Li, C.; Singh-Alvarado, J.; Zhou, Z.; Fröhlich, F.; Mooney, R.; Wang, F. MIN1PIPE: A Miniscope 1-Photon-Based Calcium Imaging Signal Extraction Pipeline. {\em Cell Rep.} {\bf 2018}, {\em 23}, 3673--3684.
+
+% Reference 22
+\bibitem[Sheintuch(2017)]{cellreg}
+Sheintuch, L.; Rubin, A.; Brande-Eilat, N.; Geva, N.; Sadeh, N.; Pinchasof, O.; Ziv, Y. Tracking the Same Neurons across Multiple Days in Ca2+ Imaging Data. {\em Cell Rep.} {\bf 2017}, {\em 21}, 1102--1115.
+
+% Reference 23
+\bibitem[Lopes(2015)]{bonsai}
+Lopes, G.; Bonacchi, N.; Frazão, J.; Neto, J.; Atallah, B.; Soares, S.; Moreira, L.; Matias, S.; Itskov, P.; Correia, P.; et al. Bonsai: An event-based framework for processing and controlling data streams. {\em Front. Neuroinform.} {\bf 2015}, {\em 9}, 7.
+
+% Reference 24
+\bibitem[Grijseels(2021)]{Grijseels}
+Grijseels, D.; Shaw, K.; Barry, C.; Hall, C. Choice of method of place cell classification determines the population of cells identified. {\em PLoS Comput. Biol.} {\bf 2021}, {\em 17}, e1008835.
+% Reference 25
+\bibitem[Markus(1994)]{Markus}
+Markus, E.; Barnes, C.; McNaughton, B.; Gladden, V.; Skaggs, W. Spatial information content and reliability of hippocampal CA1 neurons: effects of visual input. {\em Hippocampus} {\bf 1994}, {\em 4}, 410--421.
+
+% Reference 26
+\bibitem[Belkin(2003)]{lem}
+Belkin, M.; Niyogi, P. Laplacian eigenmaps for dimensionality reduction and data representation. {\em Neural Comput.} {\bf 2003}, {\em 15}, 1373--1396.
+% Reference 27
+\bibitem[Altman(2018)]{dimcurse}
+Altman, N.; Krzywinski, M. The curse(s) of dimensionality. {\em Nat. Methods} {\bf 2018}, {\em 15}, 399--400.
+
+% Reference 28
+\bibitem[Chung(1997)]{chung}
+Chung, F. \textit{Spectral Graph Theory}; American Mathematical Society: Philadelphia, PA, USA, 1997.
+
+% Reference 29
+\bibitem[Tenenbaum(2000)]{isomap}
+Tenenbaum, J.; De Silva, V.; Langford, J. A global geometric framework for nonlinear dimensionality reduction. {\em Science} {\bf 2000}, {\em 290}, 2319--2323.
+
+% Reference 30
+\bibitem[Sotskov(2021)]{springer}
+Sotskov, V.; Plusnin, V.; Pospelov, N.; Anokhin, K. The Rapid Formation of CA1 Hippocampal Cognitive Map in Mice Exploring a Novel Environment. In {\em Advances in Cognitive Research, Artificial Intelligence and Neuroinformatics. Intercognsci 2020. Advances in Intelligent Systems and Computing}; Velichkovsky, B., Balaban, P., Ushakov, V., Eds.; Springer: Cham, Switzerland, 2021; pp. 452--457.
+
+% Reference 36
+\bibitem[Meshulam(2017)]{Meshulam}
+Meshulam, L.; Gauthier, J.L.; Brody, C.D.; Tank, D.; Bialek, W. Collective Behavior of Place and Non-place Neurons in the Hippocampal Network. {\em Neuron} {\bf 2017}, {\em 96}, 1178--1191.
+% Reference 31
+\bibitem[Muller(1987)]{Muller1}
+Muller, R.; Kubie, J.; Ranck, J. Spatial firing patterns of hippocampal complex-spike cells in a fixed environment. {\em J. Neurosci.} {\bf 1987}, {\em 7}, 1935--1950.
+
+% Reference 32
+\bibitem[Latuske(2018)]{Latuske}
+Latuske, P.; Kornienko, O.; Kohler, L.; Allen, K. Hippocampal Remapping and Its Entorhinal Origin. {\em Front. Behav. Neurosci.} {\bf 2018}, {\em 11},~253.
+
+% Reference 33
+\bibitem[Lee(2018)]{Lee}
+Lee, J.Q.; LeDuke, D.O.; Chua, K.; McDonald, R.J.; Sutherland, R.J. Relocating cued goals induces population remapping in CA1 related to memory performance in a two-platform water task in rats. {\em Hippocampus} {\bf 2018} {\em 28}, 431–440.
+
+% Reference 34
+\bibitem[Mankin(2012)]{Mankin} 
+Mankin, E.A.; Sparks, F.T.; Slayyeh, B.; Sutherland, R.J.; Leutgeb, S.; Leutgeb, J.K. Neuronal code for extended time in the hippocampus. {\em Proc. Natl. Acad. Sci. USA} {\bf 2012}, {\em 109}, 19462--19467. 
+
+% Reference 35
+\bibitem[Karlsson(2008)]{Karlsson}
+Karlsson, M.; Frank, L. Network dynamics underlying the formation of sparse, informative representations in the hippocampus. {\em J. Neurosci.} {\bf 2008}, {\em 28}, 14271--14281.
+
+
+
+% Reference 37
+\bibitem[Chang(2021)]{preprint}
+Chang, C.; Guo, W.; Zhang, J.; Newman, J.; Sun, S.; Wilson, M. Behavioral clusters revealed by end-to-end decoding from microendoscopic imaging. \textit{bioRxiv} \emph{under review}.
+
+% Reference 38
+\bibitem[Muller(1994)]{Muller2}
+Muller, R.; Bostock, E.; Taube, J.; Kubie, J. On the directional firing properties of hippocampal place cells. {\em J. Neurosci.} {\bf 1994}, {\em 14}, 7235--7251.
+% Reference 39
+\bibitem[McNaughton(1983)]{McNaughton}
+McNaughton, B.; Barnes, C.; O'Keefe, J. The contributions of position, direction, and velocity to single unit activity in the hippocampus of freely-moving rats. {\em Exp. Brain Res.} {\bf 1983}, {\em 52}, 41--49.
+
+% Reference 40
+\bibitem[Scaplen(2014)]{Scaplen}
+Scaplen, K.M.; Gulati, A.A.; Heimer-McGinn, V.L.; Burwell, R.D. Objects and landmarks: hippocampal place cells respond differently to manipulations of visual cues depending on size, perspective, and experience. {\em Hippocampus} {\bf 2014}, {\em24}, 1287--1299. 
+
+% Reference 41
+\bibitem[Kentros(2004)]{kentros}
+Kentros, C.; Agnihotri, N.; Streater, S.; Hawkins, R.; Kandel, E. Increased attention to spatial context increases both place field stability and spatial memory. {\em Neuron} {\bf 2004}, {\em 42}, 283--295.
+
+% Reference 42
+\bibitem[Frank(2000)]{frank}
+Frank, L.; Brown, E.; Wilson, M. Trajectory encoding in the hippocampus and entorhinal cortex. {\em Neuron} {\bf 2000}, {\em 27}, 169--178.
+
+% Reference 43
+\bibitem[Dragoi(2011)]{dragoi1}
+Dragoi, G.; Tonegawa, S. Preplay of future place cell sequences by hippocampal cellular assemblies. {\em Nature} {\bf 2011}, {\em 469}, 397--401.
+% Reference 44
+\bibitem[Dragoi(2013)]{dragoi2}
+Dragoi, G.; Tonegawa, S. Distinct preplay of multiple novel spatial experiences in the rat. {\em Proc. Natl. Acad. Sci. USA} {\bf 2013}, {\em 110}, 9100--9105.
+% Reference 45
+\bibitem[Grosmark(2016)]{grosmark}
+Grosmark, A.; Buzsáki, G. Diversity in neural firing dynamics supports both rigid and learned hippocampal sequences. {\em Science} {\bf 2016}, {\em 351}, 1440--1443.
+
+% Reference 46
+\bibitem[xx(2016)]{bengio}
+Bengio, Y., Paiement, J.-F., Vincent, P.,Delalleau, O.,  Le Roux, N., Ouimet, M. Out-of-sample extensions for LLE, Isomap, MDS, Eigenmaps, and Spectral Clustering. {\em Proceedings of the 16th International Conference on Neural Information Processing Systems (NIPS'03)} {\bf 2003} MIT Press, Cambridge, MA, USA, 177–184.
+%Please add the publisher, location and year.
+%Done, thank you!
+
+
+\end{thebibliography}
+\end{adjustwidth}
+
+% If authors have biography, please use the format below
+%\section*{Short Biography of Authors}
+%\bio
+%{\raisebox{-0.35cm}{\includegraphics[width=3.5cm,height=5.3cm,clip,keepaspectratio]{Definitions/author1.pdf}}}
+%{\textbf{Firstname Lastname} Biography of first author}
+%
+%\bio
+%{\raisebox{-0.35cm}{\includegraphics[width=3.5cm,height=5.3cm,clip,keepaspectratio]{Definitions/author2.jpg}}}
+%{\textbf{Firstname Lastname} Biography of second author}
+
+% The following MDPI journals use author-date citation: Arts, Econometrics, Economies, Genealogy, Humanities, IJFS, JRFM, Laws, Religions, Risks, Social Sciences. For those journals, please follow the formatting guidelines on http://www.mdpi.com/authors/references
+% To cite two works by the same author: \citeauthor{ref-journal-1a} (\citeyear{ref-journal-1a}, \citeyear{ref-journal-1b}). This produces: Whittaker (1967, 1975)
+% To cite two works by the same author with specific pages: \citeauthor{ref-journal-3a} (\citeyear{ref-journal-3a}, p. 328; \citeyear{ref-journal-3b}, p.475). This produces: Wong (1999, p. 328; 2000, p. 475)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% for journal Sci
+%\reviewreports{\\
+%Reviewer 1 comments and authors’ response\\
+%Reviewer 2 comments and authors’ response\\
+%Reviewer 3 comments and authors’ response
+%}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\end{paracol}
+\end{document}
+
