@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(export:*)",
+      "Bash(bash:*)",
+      "Bash(xelatex:*)",
+      "Bash(biber:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(pandoc:*)",
+      "Bash(mkdir:*)",
+      "Bash(cp:*)",
+      "Bash(mv:*)",
+      "Bash(cat:*)",
+      "Bash(git:*)",
+      "Bash(unzip:*)",
+      "Read",
+      "Grep",
+      "Glob",
+      "WebSearch",
+      "WebFetch"
+    ]
+  }
+}

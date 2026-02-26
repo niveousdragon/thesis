@@ -96,7 +96,9 @@ thesis/
 | Pospelov2025  | Neurocomputing                    | Activation maximization, SNN (MANGO)    |
 | Pospelov2023  | Genes & Cells                     | INTENSE, нейронная селективность        |
 | Plusnin2023   | Genes & Cells                     | Автоматический анализ поведения         |
-| Pospelov2024  | IEEE DCNA                         | Эффективная размерность (конференция)   |
+| Pospelov2024  | IEEE DCNA (Dynamics of Complex Networks and their Applications) | Эффективная размерность (конференция) |
+| intdim2025    | IEEE CNN (Neurotechnologies and Neurointerfaces) | Внутренняя размерность нейронной активности (конференция) |
+| Pospelov2024cns | J. Computational Neuroscience (CNS Meeting Abstract) | Мультиплексный сетевой анализ нейронной активности |
 | intsys        | Интеллектуальные системы          | Коллективные переменные, клетки места   |
 
 ## Связанные проекты
