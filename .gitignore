@@ -1,5 +1,6 @@
 # LaTeX build artifacts
 *.aux
+*.nlo
 *.bbl
 *.bcf
 *.blg
@@ -42,3 +43,11 @@ Desktop.ini
 
 # Temporary / cache
 Disser/images/cache/*.pdf
+
+# Загруженные исходники в корне (организованные копии в Disser/parts/)
+/intense_revised_v4.tex
+/paper.md
+/autoinspect_report_ru.docx
+/Algoritm_Obucheniya_Opredelyaet_Vychislitelnuyu_Strategiyu.docx
+/Отчет Идея *.docx
+/Отчет лаб *.docx
