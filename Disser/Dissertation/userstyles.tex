@@ -304,6 +304,19 @@
 \renewcommand{\omega}{\upomega}
 
 
+%%% Уменьшенные отступы вокруг заголовков секций
+%%% TODO: проверить перед защитой — ГОСТ Р 7.0.11-2011 (п. 5.3.5) требует
+%%% «три интервала» между заголовком и текстом. Шаблон интерпретирует это как
+%%% 3 × размер шрифта (42pt), но стандартная интерпретация «три интервала» при
+%%% полуторном межстрочном — это одна пустая строка (~21pt). Ставим 2 × размер
+%%% шрифта (28pt) как компромисс. Возможно, нужно будет вернуть к 3.
+\setbeforesecskip{2\curtextsize}
+\setaftersecskip{2\curtextsize}
+\setbeforesubsecskip{2\curtextsize}
+\setaftersubsecskip{2\curtextsize}
+\setbeforesubsubsecskip{2\curtextsize}
+\setaftersubsubsecskip{2\curtextsize}
+
 % FOR COLORED TEXT
 \usepackage{xcolor}
 \newcommand{\TODO}[1]{\textcolor{blue}{#1}}
