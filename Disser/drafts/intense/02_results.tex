@@ -1,0 +1,366 @@
+\section{Results}
+\label{sec:results}
+
+\subsection{Overview of INTENSE}
+\label{sec:overview_intense}
+
+The INTENSE framework
+detects which neurons encode specific behavioral or environmental variables from
+large-scale calcium imaging data (\fig{fig:method}). INTENSE works directly with
+raw calcium fluorescence, eliminating the need for spike deconvolution. It uses
+mutual information --- which captures any statistical dependency, linear or
+nonlinear, equaling zero if and only if variables are independent
+\cite{Shannon1948, Borst1999, Strong1998} --- as its core measure. Specifically,
+INTENSE employs the Gaussian Copula MI (GCMI) estimator
+\cite{gcmi, ma2011mutual}, which provides efficient closed-form MI computation
+(see Methods: Section~\ref{sec:mi_computation}), making it feasible to analyze
+thousands of neuron-behavior pairs across large populations.
+
+Statistical significance is assessed
+through circular-shift permutation testing with parametric p-value modeling
+(\fig{fig:method}E; see Methods: Section~\ref{sec:statistical_assessment}).
+Systematic delay optimization accounts for calcium indicator kinetics and
+prospective or retrospective encoding
+(Section~\ref{sec:temporal_alignment}).
+
+\begin{figure}
+  \centering
+  \includegraphics[width=1\linewidth]{figs/fig1_delegated.png}
+  \caption{\textbf{A}: Examples of rescaled $dF/F$ calcium fluorescence traces (blue) with detected events (grey).
+\textbf{B}: Examples of behavioral/environmental
+variables used for correlation with neuronal activity: continuous (head direction, top),
+discrete (object interaction, middle), multidimensional (animal coordinates,
+bottom). \textbf{C}: Schematic overview of INTENSE pipeline for quantifying neuronal selectivity. \textbf{D}: Left: example object-interaction
+cell: fluorescence trace (blue) and interaction periods (green) . Right: distributions of scaled $dF/F$ values inside (green) vs
+outside (grey) object interaction periods. \textbf{E}: Distribution of
+neuron-behavior pairs in the ``significance-power'' space with
+marginal distributions. Pairs considered relevant are shown in green.}
+
+  \label{fig:method}
+\end{figure}
+
+Beyond detection, INTENSE provides tools for analyzing mixed selectivity
+(\fig{fig:results}F,G). Many hippocampal and cortical neurons show apparent
+selectivity to multiple behavioral variables \cite{mix2,mix3}, but distinguishing
+true mixed selectivity from correlations induced by covarying behaviors is essential
+for understanding neural coding principles and the true dimensionality of
+representations. The framework's disentanglement procedure uses conditional MI and interaction
+information \cite{ghassami2017} to separate genuine multi-variable encoding from
+spurious associations (Section~\ref{sec:disentangling_selectivity},
+Section~\ref{sec:intense_deciphers}).
+
+We validated INTENSE on synthetic datasets with known ground truth across a wide
+range of signal-to-noise ratios and response reliability conditions
+(\fig{fig:synthetics}, Section~\ref{sec:synthetic_validation}), and against
+classic event-based place cell detection methods
+(\fig{fig:pc}, Section~\ref{sec:intense_validates}), then applied it to
+hippocampal calcium imaging data from freely behaving mice, recovering diverse
+functional cell types including place cells, head direction cells, and neurons with
+genuine mixed selectivity (\fig{fig:results}A,B,D,E,
+Section~\ref{sec:intense_deciphers}).
+
+
+\subsection{INTENSE validates against established place cell detection methods}
+\label{sec:intense_validates}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.9\linewidth]{figs/fig2_delegated.png}
+  \caption{\textbf{A}: Upper -- Continuous Wavelet Transform map (CWT map) of a
+fluorescence signal. Cross-scale ridges correspond to detected events. Lower -- fluorescent trace (blue) and detected events (grey). \textbf{B}: Example animal
+trajectory, colors represent rescaled calcium activity of a single place
+cell. Stars represent detected events. \textbf{C}: Left -- intersection of
+identified PC populations from INTENSE (red) and classic analysis (blue) with
+$p<0.05$. Right: the same for all cells identified as PC by any method. \textbf{D}: Example of activity maps computed from
+raw calcium signals (left) and from detected events (right) with high SSIM score.
+\textbf{E}: Similarity metrics between activity maps computed from raw calcium
+signals and from detected events as functions of confidence (measured via
+$p$-value). Left: mean squared error, center: peak signal-to-noise ratio, right:
+structural similarity score. Shaded regions indicate confidence intervals.
+Vertical lines show the $p=0.001$ threshold, as in \fig{fig:pc}F. \textbf{F}: Relative intersection between PC populations computed
+via INTENSE and classic analysis as a function of confidence (measured via
+$p$-value). Intersection is computed on cells for which $p_{INTENSE} \leq p$ and
+$p_{classic} \leq p$ simultaneously. Neurons considered as ``non-PC'' by both
+analyses are excluded. Shown are intersections as fractions of respective
+populations (red for INTENSE, blue for classic); Jaccard coefficient
+$J$=(INTENSE $\bigcap$ Classic) / (INTENSE $\bigcup$ Classic), orange; proportion
+of all identified PCs (by any method) left after thresholding by $p$.}
+  \label{fig:pc}
+\end{figure}
+
+
+To verify the precision of INTENSE, we applied it to the well-established task of
+identifying place cells (PCs)---neurons that exhibit selectivity for specific locations in
+the environment \cite{o1971hippocampus}.
+
+PC detection provides a challenging validation benchmark, as the choice of
+classification method greatly determines the population of cells identified
+\cite{Grijseels2021}, with overlap as low as 30--40\% even for different
+event-based methods.
+
+We compared INTENSE, applied directly to calcium fluorescence signals and animal
+coordinates (see Methods: Section~\ref{sec:intense_pc_identification}), with a
+classic event-based method that constructs binarized activity maps from deconvolved
+calcium events \cite{skaggs1993information} (see Methods:
+Section~\ref{sec:classic_pc_identification}). To enable a direct, like-for-like comparison, we expressed both methods’ outputs as (i) a binary place-cell label and (ii) an associated confidence score (p-value) derived from each method’s native null model (see
+Methods: Section~\ref{sec:comparison_pc_populations}).
+
+Despite modest overlap ($\sim$40\%) when considering all cells identified by either
+method, the agreement increased dramatically when confidence thresholds were applied
+(\fig{fig:pc}C). The overlap grew monotonically with threshold stringency, reaching
+90\% at $p < 0.001$---a threshold that retained 95\% of the total place cell
+population (\fig{fig:pc}F). Further threshold increases yielded near-perfect
+agreement, though at the cost of excluding many putative place cells.
+
+Significant heterogeneity of PC firing rates and stability has been established both
+experimentally \cite{Mizuseki2012} and theoretically \cite{Lian2022}.
+Our results indicate that INTENSE and spike-based methods primarily differ in their
+treatment of ``weak'' place cells, but converge on the same ``core'' population when
+statistical confidence requirements are imposed. Thus, our general
+information-theoretic approach successfully captures the spatial coding properties
+identified by specialized algorithms.
+
+
+To verify that all matching PCs identified by both methods have the same pattern of
+spatial selectivity, we analyzed the coincidence of activity maps. There exists a
+wide variety of place field detection methods \cite{Grieves2017}, but they are
+highly dependent on the data type. To overcome this difficulty, we compared
+discretized activity maps (normalized by time spent in the bins; see Methods:
+Section~\ref{sec:comparison_spatial_selectivity} and \fig{fig:pc}D).
+
+We quantified the correspondence between activity maps using structural
+similarity (SSIM) and complementary metrics (see Methods:
+Section~\ref{sec:comparison_spatial_selectivity}).
+
+All spatial correspondence metrics improved with increasing confidence thresholds
+(\fig{fig:pc}E), confirming that place cells identified with high confidence by both
+methods exhibit highly similar spatial firing patterns. This multi-metric
+validation demonstrates that INTENSE not only identifies overlapping cell
+populations but also accurately captures their functional properties.
+
+
+\subsection{INTENSE reveals diverse neuronal selectivity}
+\label{sec:intense_deciphers}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=1\linewidth]{figs/fig3_delegated.png}
+  \caption{\textbf{A}: Example ``object interaction neuron'' and $dF/F$ distributions during interaction (green) and
+control periods (grey). \textbf{B}:
+Example ``rear neuron'' and $dF/F$ distributions during rearing (orange) and control periods (grey). \textbf{C}: Left -- distribution of neurons selective to 1–3 variables. Right -- distribution of optimal delays: negative ($-$), near-zero and positive
+($+$). Statistical comparisons are detailed in
+Methods. \textbf{D}: Head direction tuning map of a multi-selective neuron.
+\textbf{E}: 2D spatial activity map of this neuron. \textbf{F}: Heatmap of MI between
+significantly correlated behavioral features (behavior-behavior analysis). Connection strength is represented by color intensity.
+\textbf{G}: Schematic of the interdependencies between information measures in
+neurons with entangled selectivity.}
+
+  \label{fig:results}
+\end{figure}
+
+
+Having validated INTENSE against established methods, we applied it to discover
+novel neuron-behavior associations in our hippocampal recordings. We analyzed
+associations between neural activity and a comprehensive behavioral repertoire
+including spatial position, head direction, movement dynamics, and discrete
+behavioral states (see Methods: Section~\ref{sec:behavioral_analysis}). Following
+identification of significant neuron-behavior pairs, we performed
+``disentanglement'' analysis to distinguish true mixed selectivity from spurious
+associations arising from behavioral correlations (\fig{fig:results}A--E; see
+Methods: Section~\ref{sec:disentangling_selectivity}).
+
+The disentanglement procedure uses conditional mutual information (CMI) to
+separate primary from secondary selectivities, and interaction information (II) to
+classify feature pairs as redundant or synergistic (see Methods:
+Section~\ref{sec:disentangling_selectivity}).
+
+The results showed the presence of multiple neurons that are selective for various
+specific behavioral features (such as object interaction, rearing, etc., as
+shown in \fig{fig:results}A,B).
+% [AUTHOR: The following paragraph on probabilistic activation patterns needs review.
+% Consider whether this interpretive discussion belongs in Results or Discussion.]
+These behaviorally selective neurons showed
+probabilistic activation patterns---they neither fired deterministically during
+every instance of their preferred behavior nor remained completely silent otherwise.
+This can be explained by the probabilistic nature of neural coding and the need for
+more detailed identification of behavioral acts based on the behavioral context.
+Acts that may seem identical from the perspective of the researcher based on the
+kinematic characteristics of the reference points, may have different internal
+meanings for the animal.
+
+Alongside discrete behavior encoding, we found numerous cells selective for
+continuous variables: movement speed, head direction, and spatial position
+(\fig{fig:results}D,E). Cells selective for locomotion state, head direction or speed have been increasingly recognized in
+hippocampus \cite{kropff2015speed,Gois2018,Acharya2016}.
+
+\paragraph{Temporal alignment of neural activity and behavior.}
+\label{sec:temporal_results}
+To account for temporal offsets between neural activity and calcium
+fluorescence, INTENSE optimizes the delay between signals (see Methods:
+Section~\ref{sec:temporal_alignment}).
+Optimal delays were binned into three categories (negative, near-zero,
+and positive) for statistical analysis. The majority of significant associations
+occurred at positive delays (44.5\%), consistent with the expected temporal lag of
+calcium indicators, with 41.0\% at near-zero delays and only 14.5\% at negative
+delays (\fig{fig:results}C). Because our primary goal was to characterize associations consistent with calcium-indicator lag, we report delay distributions for all significant pairs and, unless stated otherwise, restrict downstream selectivity analyses to pairs with non-negative optimal delays. 
+
+\paragraph{Quantifying and disentangling mixed selectivity.}
+Of the 30{,}105 neuron-sessions analyzed across 16 mice and 4 sessions, 6{,}217
+(20.7\%) showed significant selectivity to at least one behavioral variable.
+Among these, 1{,}377 (22.1\% of selective neurons) responded to two or more
+variables before disentanglement (\fig{fig:results}C).
+
+Pairwise significance analysis of behavioral variables revealed tightly coupled
+clusters (\fig{fig:results}F). Locomotion-related variables (speed, rest,
+walk, locomotion state) showed significant co-selectivity in 82--100\% of
+mouse-session combinations, indicating strong behavioral correlations that could
+inflate apparent mixed selectivity. Similarly, spatial zone variables (corners,
+walls, center) formed a distinct cluster (77--91\% co-significance).
+
+The CMI-based disentanglement procedure resolved a substantial fraction of these
+multi-variable associations. After controlling for behavioral correlations, the
+number of multi-selective neurons decreased from 1{,}377 to 949 (15.7\% of
+selective), with approximately a third of multi-variable associations explained by
+behavioral redundancy. The effect was most dramatic for speed selectivity: of 201
+neurons initially classified as speed-selective, only 7 retained significance after
+conditioning on locomotion state---consistent with speed and locomotion sharing
+100\% co-selectivity across all sessions.
+
+Interaction information provided a complementary summary of behavioral variable associations.
+For the speed--locomotion pair, II was consistently negative (redundant), confirming
+that these variables carry overlapping information about neural activity.
+Conversely, pairs such as body direction and head direction showed near-zero or
+positive II in most sessions, consistent with these closely related variables
+carrying largely overlapping information about neural activity.
+
+Even after disentanglement, a substantial number of neurons retained significant
+associations with multiple variables. For example, the neuron illustrated in
+\fig{fig:results}D,E showed genuine mixed selectivity for speed, head direction, and
+position simultaneously. While such multiply-selective neurons comprise a minority
+of the population (\fig{fig:results}C), they may serve as crucial integration points
+linking different functional systems \cite{mix3}.
+
+\paragraph{Mutual information detects associations invisible to linear correlation.}
+\label{sec:mi_vs_corr}
+Replacing mutual information with Pearson correlation in the otherwise identical INTENSE pipeline detected 2.2 times fewer selective neurons and 2.9 times fewer significant neuron--feature pairs. The gap was largest for discrete behavioral variables (5--11$\times$) and remained substantial even for continuous variables such as speed (3.2$\times$). These results confirm that a model-free, information-theoretic metric substantially expands the repertoire of detectable neural selectivities.
+
+\subsection{Synthetic validation demonstrates INTENSE robustness}
+\label{sec:synthetic_validation}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=1\linewidth]{figs/fig4_delegated.png}
+  \caption{\textbf{A}: Stages of generating pseudo-calcium signal, associated with
+a continuous variable. 1 -- continuous behavioral time series with selected range of
+interest; 2 -- randomized binary time series (with $p_{skip}$); 3 -- heterogeneous
+Poisson process with two different rates; 4 -- resulting pseudo-calcium signal after
+convolution with a calcium indicator kernel. For discrete variables, the procedure
+starts from stage~2.
+\textbf{B}: $F_1$-score heatmaps for the continuous variable test across the whole
+parameter range. Methods shown: correlation-based, MI-based, correlation-based with
+shuffles, INTENSE. \textbf{C}: Same as B for discrete variables (generated starting
+from stage~2 of A). Methods shown: average-based, MI-based,
+average-based with shuffles, INTENSE. \textbf{D}: Precision-Recall maps for
+continuous variable test. Methods shown: correlation-based, MI-based,
+correlation-based with shuffles, INTENSE. Left -- precision-recall coordinates of
+all methods for different SNR values (taken at $p_{skip} = 0$). Right --
+precision-recall coordinates of all methods for different $p_{skip}$ values (taken
+at $SNR = 64$). Vertical lines represent random guesser precision ($PR_{random}
+=0.05$). \textbf{E}: Precision-Recall maps for discrete variable test. Methods
+shown: average-based, MI-based, average-based with shuffles, INTENSE. Left --
+precision-recall coordinates of all methods for different SNR values (taken at
+$p_{skip} = 0$). Right -- precision-recall coordinates of all methods for different
+$p_{skip}$ values (taken at $SNR = 64$). Vertical lines represent random guesser
+precision ($PR_{random} =0.05$).}
+  \label{fig:synthetics}
+
+\end{figure}
+
+
+To rigorously evaluate INTENSE's detection capabilities, we conducted systematic
+tests on synthetic datasets with known ground truth. We generated experiments
+containing 20 behavioral time series and 500 pseudo-calcium signals, with each
+calcium signal linked to exactly one behavioral variable (5\% prevalence of true
+associations).
+
+\subsubsection{Synthetic framework and the role of temporal controls}
+\label{sec:bio_synthetic}
+
+We generated realistic synthetic experiments where calcium signals were
+linked to behavioral variables through a biologically plausible process
+(\fig{fig:synthetics}A; see Methods: Section~\ref{sec:synthetic_data_generation}).
+The framework varied signal-to-noise ratio
+(SNR $\in \{2, 4, 8, 16, 32, 64\}$) and response reliability
+($p_{\text{skip}} \in [0.0, 0.8]$).
+
+A method comparison revealed a fundamental challenge: temporal autocorrelation
+creates overwhelming false positive rates without proper statistical controls
+(\fig{fig:synthetics}B--E). Methods using standard correlation or mutual information
+tests without shuffle controls achieved precision of only 8.7\% and 6.4\%
+respectively for continuous variables, barely exceeding the 5\% random baseline.
+This demonstrates why shuffle-based significance testing is essential---the slow
+dynamics of both calcium signals and behavioral variables create spurious
+correlations that appear highly significant under naive statistical tests.
+
+\subsubsection{INTENSE outperforms other shuffle-based approaches}
+\label{sec:intense_outperforms}
+
+Among methods employing shuffle controls, INTENSE demonstrated clear advantages over
+correlation-based approaches. Although the correlation-based method with shuffle controls achieved high
+precision (100.0\% at SNR = 64), it suffered from extremely poor recall
+(maximum 4.5\%) across
+---detecting less than 5\% of true associations even under optimal
+conditions. This pattern reveals a fundamental limitation: correlation-based
+methods, even with proper statistical controls, remain restricted to linear
+associations and miss the complex nonlinear dependencies often present in neural
+data.
+
+In contrast, INTENSE maintained strong performance across the full spectrum of
+signal strengths. With perfect response reliability ($p_{\text{skip}} = 0$),
+precision increased from 44.2\% at SNR = 2 to 85.5\% at SNR = 64, while recall
+improved from 6.8\% to 41.7\% for continuous variables.
+Discrete behavioral variables yielded substantially better results: precision rose from 73.5\% to
+94.6\%, with recall increasing dramatically from 24.3\% to 100.0\% across the same
+range.
+
+\subsubsection{Two-stage testing balances efficiency and power}
+\label{sec:two_stage_testing}
+
+The two-stage testing procedure (see Methods: Section~\ref{sec:statistical_assessment})
+proved highly effective at managing the
+computational burden of large-scale analysis. Stage 1 identified 3--6\%
+of all possible pairs as candidates.
+Precision improved from 62.0\% to 85.5\% for continuous variables and from 89.4\% to 94.6\%
+for discrete variables between stages, while recall decreased only modestly, demonstrating
+effective false discovery control.
+
+\subsubsection{Performance under biological variability}
+\label{sec:performance_variability}
+
+Real neurons show variable response reliability---they may skip responses due to
+adaptation, internal state changes, or stochastic factors. INTENSE demonstrated
+graceful performance degradation as response reliability decreased. At SNR = 64,
+precision for continuous variables decreased from 85.5\% at $p_{\text{skip}} = 0$ to
+74.1\% at $p_{\text{skip}} = 0.5$. Discrete variables showed greater robustness,
+maintaining 94.8\% precision with 99.7\% recall even at $p_{\text{skip}} = 0.5$,
+demonstrating robustness to moderate response unreliability commonly observed in real neural data.
+
+An intriguing phenomenon emerged at very high signal-to-noise ratios: raw mutual
+information and average-based metrics exhibited performance degradation due to calcium
+indicator saturation effects (\fig{fig:synthetics}B,C). When neurons fire frequently
+and strongly, slow decay dynamics cause fluorescence to remain elevated between events,
+merging individual episodes into sustained plateaus. For discrete variables, this caused
+raw MI precision to drop from 92.9\% at SNR = 4 to 70.0\% at SNR = 64, and
+average-based detection with shuffle controls to collapse from F1 = 51.9\% to just
+10.1\% over the same range. INTENSE proved robust to these effects, with F1 improving
+monotonically from 95.2\% to 97.2\%. This robustness arises because circular-shift
+shuffles construct the null distribution from the same saturated signals, so saturation
+elevates both true and null MI values equally, preserving the validity of the
+significance test.
+
+These synthetic results demonstrate that INTENSE successfully addresses the key
+challenges in detecting neuron-behavior associations: controlling false discoveries
+from temporal structure, capturing complex associations beyond linear correlation,
+and maintaining sensitivity despite biological variability. The framework's robust
+performance across diverse conditions establishes confidence for its application to experimental data where ground truth is unknown. 
+

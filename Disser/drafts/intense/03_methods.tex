@@ -1,0 +1,774 @@
+\section{Methods}
+\label{sec:methods}
+
+\subsection{Experimental setup}
+\label{sec:experimental_setup}
+We identified behaviorally selective neurons in mice during free exploration of a square open field arena enriched with a variety of contextual cues. Mice were repeatedly placed into the environment for exploration while their neural activity was recorded using miniscope in vivo calcium imaging.
+
+\subsubsection{Animals}
+\label{sec:animals}
+We used C57BL/6 mice (both sexes, n=16), aged 3--5 months. Before surgery, animals were housed in standard laboratory cages (2--7 per cage) under a 12-hour light/dark cycle, with free access to food and water. After surgery, mice were housed individually, other housing conditions remained unchanged. All experiments were performed during the light phase of the day (10:00 a.m. to 6:00 p.m.).
+
+\subsubsection{Surgeries and viral delivery}
+\label{sec:surgeries}
+All procedures were approved by the Commission of Bioethics of Lomonosov Moscow State University (Application № 159-g, approved during Bioethics Commission meeting № 154-d-r held on 17.08.2023), and followed the Russian Federation Order N 267 MЗ  and the NIH Guide for the Care and Use of Laboratory Animals.
+Surgical procedures were carried out in three stages: viral injection, GRIN lens implantation, and baseplate installation. Anesthesia was induced by intraperitoneal injection of Zoletil (40 mg/kg) and xylazine (5 mg/kg). Dexamethasone (4 mg/kg) was administered subcutaneously 5 minutes before surgery to reduce inflammation and prevent cerebral edema. To prevent eye drying, we applied moisturizing gel. Mice were positioned in a stereotaxic frame (Kopf, USA), and body temperature was maintained with a heated pad (Physitemp, USA). For virus injection, 300 nL of AAV1.CAG.GCaMP6s was delivered unilaterally into the dorsal CA1 region (coordinates: AP -1.94 mm, ML +1.46 mm, DV -1.2 mm, \cite{Paxinos2019}). One week later, a 1-mm-diameter GRIN lens (GrinTech, Germany) was implanted 200 µm above CA1. The lens was attached to the skull using cyanoacrylate glue (Henkel, Germany) and dental cement (Stoelting, USA), and covered with Kwik-Sil (World Precision Instruments, USA). In the third surgery, performed one week later, an aluminum baseplate was placed over the implant site to allow miniscope mounting and fixed in place using dental cement. A plastic cap was added to protect the lens. After the final surgery, mice were returned to their home cages and given three weeks to recover.
+
+\subsubsection{Behavioral procedure}
+\label{sec:behavioral_procedure}
+Two weeks after the final surgery, mice were gradually habituated to handling and wearing a miniscope. For three consecutive days, each mouse was placed in its home cage with a connected but non-recording miniscope for 5 minutes per session. This step helped animals adapt to the weight and presence of the device without additional stress. Following habituation, animals were tested in a square open field arena (44×44×44 cm, gray plastic; Open Science, Russia) for four consecutive days. Each session lasted 10 minutes. The arena was designed to provide a rich contextual environment, including a semi-transparent bubble silicone floor mat and a distinct arrangement of four floor objects: a white Styrofoam cone, a cell culture flask filled with bedding, a blue wooden cylinder, and a yellow plastic construction block shaped like a parallelepiped with a hole. Each wall of the arena featured a unique visual cue: (1) a yellow circle with five small blue dots, (2) a blue triangle, (3) a black square with wide white stripes, and (4) a composite figure consisting of blue trapezoids with a black inverted triangle and a white circle in the center. Throughout each trial, animal behavior was recorded using a top-mounted video camera (Flir Chameleon3, KVR, UK), while CA1 calcium activity was simultaneously acquired via the miniscope. Behavioral video and miniscope streams were synchronized in Bonsai (Bonsai Foundation, UK) using shared timestamps, yielding aligned time bases for delay-dependent analyses.
+
+\subsubsection{Behavioral analysis}
+\label{sec:behavioral_analysis}
+Behavioral tracking and annotation were performed using the Sphynx package for exploratory behavior analysis \cite{Plusnin1}. For each video, the positions of key body parts were estimated frame-by-frame using a DeepLabCut-trained neural network \cite{Mathis}. Coordinates with confidence scores below 0.95 were excluded and reconstructed by piecewise cubic interpolation using neighboring high-confidence frames. The resulting trajectories were smoothed with a third-degree Savitzky--Golay filter, applied with a 0.25-second window for the body center and tail base, and 0.1 seconds for all other body parts. The arena was segmented into functionally distinct spatial zones: a 7-cm-wide wall zone along the perimeter, a 30 × 30 cm center zone, 7 × 7 cm corner zones, and 2.5-cm object zones surrounding each object. Both continuous and discrete behavioral variables were calculated based on the animal's movement and position relative to these areas. Continuous variables included:
+Cartesian coordinates of the body center;
+Absolute velocity, calculated from body center displacement and smoothed with a 0.25-second window;
+Body direction (BD), defined as the angle from body center to head center;
+Head direction (HD), defined as the angle from head center to nose tip.
+Discrete behavioral acts were classified based on movement dynamics and spatial transitions. Locomotor states were defined by current speed: fast locomotion (>5 cm/s), slow locomotion (1--5 cm/s), and rest (<1 cm/s). Freezing was defined as simultaneous decrease of both body center velocity (<1 cm/s) and nose tip velocity
+(<2 cm/s). Rearing was detected by a transient reduction in the distance between the
+hind limbs and the tail base. Zone entries and object interactions were determined
+by the position of the body center and nose tip, respectively. All discrete
+variables were smoothed using a 0.25-second median filter to remove noise and
+enforce minimal event duration.
+
+
+\subsubsection{Processing of calcium imaging data}
+\label{sec:calcium_processing}
+Calcium imaging data were processed using BEARMIND, a custom analysis pipeline
+developed by the authors (see Code Availability), built on the CaImAn framework
+\cite{Pnevmatikakis2016}. The software was designed to support end-to-end processing of multi-session miniscope recordings.
+Each session began with visual inspection to define cropping boundaries.
+Preprocessing steps included background correction and motion artifact removal using the NoRMCorre algorithm \cite{Pnevmatikakis2017}. Videos were then decomposed into spatial footprints and temporal activity traces using constrained non-negative matrix factorization (CNMF-E) \cite{Zhou2018}. CNMF-E hyperparameters were selected using predefined quality criteria (spatial footprint compactness, trace SNR, and residual structure) and verified by visual inspection.  The main parameters ranges were:
+\begin{itemize}
+\item \texttt{gSig} (estimated neuron size): 3--6 pixels
+(with resolution 3 µm/pixel),
+\item \texttt{min-corr} (local correlation threshold):
+0.85 --0.95,
+\item \texttt{min-pnr} (peak-to-noise ratio): 3--15.
+\end{itemize}
+Key downstream results were qualitatively stable across this parameter range (robustness analysis), and all final components were manually curated to exclude artifacts and duplicates. 
+After decomposition, putative components were automatically filtered using
+thresholds \texttt{rval-thr} = 0.95 and \texttt{min-SNR} = 3, following the
+\href{https://caiman.readthedocs.io/en/latest/CaImAn\_Tips.html}{CaImAn guidelines}.
+All retained components were visually inspected using BEARMIND to identify and
+exclude artifacts and duplicates. Only components verified by this manual step were
+classified as neurons.
+
+Fluorescence traces were normalized as $dF/F$, and spatial maps were registered
+across sessions using CellReg \cite{Sheintuch2017} to track individual neurons
+longitudinally.
+
+\subsubsection{Calcium event detection}
+\label{sec:calcium_event_detection}
+To extract discrete calcium transients from the $dF/F$ traces, we used a
+wavelet-based approach previously described in \cite{Neugornet2021}, with minor
+modifications. This method was chosen for its robustness to noise and its ability to
+detect multiscale features in fluorescence data.
+
+The $dF/F$ trace was first smoothed by convolution with a Gaussian kernel ($\sigma =
+8$), then transformed using a continuous wavelet transform (CWT), yielding a
+two-dimensional array of wavelet coefficients across time and scale. Significant
+events appeared as ``ridges'' of local maxima across adjacent scales (\fig{fig:pc}A).
+
+We used generalized Morse wavelets $\Psi_{\beta,\gamma}(\omega) =
+\alpha_{\beta,\gamma}\omega^{\beta}e^{-\omega^{\gamma}}$ with parameters $\gamma =
+3$ and $\beta = 2$, corresponding to so-called Airy wavelets, which offer a minimal
+Heisenberg area and good temporal localization.
+For each scale, local maxima in wavelet amplitude were detected. Maxima at the
+largest scale initiated ridges, which were then extended across smaller scales based
+on temporal overlap. When multiple candidates were presented at a given step, only
+the highest local maximum was retained within each ridge, while others initiated new
+ridges. This process continued down to the smallest scale, where ridges that did
+not span all scales were discarded.
+Once all ridges were constructed, a significance filter was applied based on ridge
+duration, peak amplitude, and the scale at which the maximum occurred. Ridges that
+passed this filtering step were classified as calcium events.
+
+\subsection{INTENSE pipeline}
+\label{sec:intense_pipeline}
+
+\subsubsection{MI computation}
+\label{sec:mi_computation}
+
+We used the Gaussian Copula Mutual Information (GCMI) method
+\cite{gcmi, ma2011mutual} to estimate MI. This method takes advantage of the
+property that mutual information depends only on the dependency structure (copula)
+of the variables, rather than on their individual marginal distributions, enabling
+efficient closed-form computation through rank-based transformation. Unlike
+histogram-based estimators, GCMI avoids the bin selection problem \cite{Ross2014};
+unlike k-nearest neighbor estimators \cite{Kraskov2004}, it does not require large
+sample sizes. It allows for reliable MI estimation for both continuous--continuous
+and discrete--continuous variable pairs.
+For two random variables $X$ and $Y$, mutual information is defined as:
+\begin{equation}
+\label{eq:mi_def}
+I(X;Y) = H(X) + H(Y) - H(X,Y)
+\end{equation}
+GCMI first transforms the variables into a Gaussian copula space:
+\begin{equation}
+\label{eq:gcmi_transform}
+\tilde{X} = \Phi^{-1}(F_X(X)), \quad \tilde{Y} = \Phi^{-1}(F_Y(Y))
+\end{equation}
+where $F_X$ and $F_Y$ are empirical cumulative distribution functions (ECDFs), and
+$\Phi^{-1}$ is the inverse CDF of the standard normal distribution.
+\textbf{Continuous-Continuous Case}
+For two continuous variables, MI is estimated using the correlation matrix
+$\mathbf{R}$ of the transformed variables:
+\begin{equation}
+\label{eq:gcmi_continuous}
+I_{GCMI}(X;Y) = -\frac{1}{2}\log_2|\mathbf{R}|
+\end{equation}
+\textbf{Discrete-Continuous Case}
+For a discrete variable $X$ with $K$ distinct values and a continuous variable $Y$,
+MI is computed via the entropy decomposition:
+\begin{equation}
+\label{eq:gcmi_discrete}
+I_{GCMI}(X;Y) = H(Y) - \sum_{k=1}^{K} p(X=k) \, H(Y | X=k)
+\end{equation}
+% matching code (gcmi.py:mi_model_gd).
+where $H(Y)$ is the differential entropy of $Y$ estimated via GCMI, and each
+class-conditional entropy $H(Y|X=k)$ is estimated from the subset of data where
+$X = k$ using the Gaussian copula assumption.
+For each neuron--behavioral variable pair, the strength of selectivity was quantified
+as:
+\begin{equation}
+\label{eq:selectivity_strength}
+S = I(X_{neural}; Y_{behavior})
+\end{equation}
+
+
+\subsubsection{Statistical assessment and identification of behaviorally selective
+neurons}
+\label{sec:statistical_assessment}
+
+To evaluate the significance of mutual information (MI) between calcium activity and
+behavior, we compared the observed value to a null distribution generated from
+randomly time-shifted data \cite{skaggs1993information}.
+Specifically, the neural signal $X(t)$ was
+circularly shifted by a random lag $\tau_i$, and MI was recalculated:
+
+$MI_{\text{shuffle}}^{(i)} = I(X(t + \tau_i); Y(t))$
+
+This procedure was repeated multiple times (referred to as ``shuffles'' throughout)
+to construct a null distribution of MI values expected by chance. The circular time
+shifting preserves the temporal
+autocorrelation structure inherent in both neural calcium signals and behavioral
+variables while destroying their temporal association \cite{Lancaster2018}.
+This is
+critical because calcium indicators produce signals with slow dynamics (decay time
+constants of 1-2 seconds for GCaMP6s) \cite{Chen2013}, and behavioral variables often
+show strong autocorrelations (e.g., spatial position during continuous locomotion).
+Simple random shuffling would destroy these autocorrelations, creating an
+unrealistically low null distribution.
+
+
+The resulting null distribution was modeled using a zero-inflated gamma distribution,
+which explicitly accounts for the probability mass at zero that commonly occurs in
+MI null distributions:
+
+$P(MI = 0) = \pi, \quad P(MI = x \mid x > 0) = (1 - \pi) \cdot f_\Gamma(x; \alpha, \beta)$
+
+where $\pi$ is the zero-inflation parameter estimated as the fraction of shuffled MI
+values at or near zero, and $\alpha$ (shape) and $\beta$ (scale) are estimated by
+maximum likelihood from the non-zero shuffled MI values only. The gamma component
+was chosen because MI is strictly non-negative and shuffled MI distributions from
+neural data consistently show right-skewed profiles.
+
+Significance of the observed MI was assessed using the survival function of the
+fitted model:
+
+$p\text{-value} = (1 - \pi) \cdot [1 - F_\Gamma(MI_{\text{observed}}; \hat{\alpha}, \hat{\beta})]$
+
+where $F_\Gamma$ is the gamma CDF. The zero mass does not contribute to tail
+probability for positive observed values. This parametric method provides a smoother
+and more reliable estimate of tail probabilities than direct empirical quantiles,
+which is particularly important when the number of shuffles is limited.
+
+We employed a two-stage procedure to identify neuron-behavior pairs with
+statistically significant information content, balancing computational efficiency
+with false positive control:
+
+\textbf{Stage 1: Screening}
+
+For each neuron-behavior pair, we generated 100 random shuffles and retained pairs
+where:
+
+$MI_{\text{observed}} > \max_{i=1}^{100} MI_{\text{shuffle}}^{(i)}$
+
+This initial screening excludes non-informative pairs early, reducing computational
+demands and the number of hypotheses for multiple comparison correction.
+
+\textbf{Stage 2: Validation}
+
+For retained pairs, we performed 10,000 additional shuffles and applied two
+criteria:
+
+(a) \textbf{Non-parametric criterion}: The observed MI must exceed the 99.95th percentile
+of the shuffled distribution:
+
+$MI_{\text{observed}} > Q_{0.9995}(MI_{\text{shuffle}})$
+
+(b) \textbf{Parametric criterion}: The p-value derived from the fitted gamma
+distribution (described above) must fall below the corrected significance threshold:
+
+$p\text{-value} = (1 - \pi) \cdot [1 - F_\Gamma(MI_{\text{observed}}; \hat{\alpha}, \hat{\beta})]
+< p_{\text{threshold}}$
+
+The p-value threshold was determined using the Holm-Bonferroni method to control
+family-wise error rate (FWER) at $\alpha = 0.01$:
+
+$p_{\text{threshold}}^{(k)} = \frac{\alpha}{m - k + 1}$
+
+where $m$ is the number of hypotheses (pairs passing Stage 1) and $k$ is the rank of
+the ordered p-values.
+
+Despite statistical significance, some neuron-behavior pairs showed temporal
+alignments too weak for meaningful interpretation. To exclude these cases, we
+applied an additional fixed threshold:
+
+$MI_{\text{observed}} > MI_{\text{threshold}}$
+
+where $MI_{\text{threshold}}$ was held constant across all sessions in a given
+experiment. For the hippocampal dataset analyzed here,
+$MI_{\text{threshold}} = 0.04$ bits.
+
+The dual use of non-parametric (rank-based) and parametric criteria provides
+robustness: the rank-based criterion guards against distribution fitting failures
+common with outliers in biological recordings, while the parametric p-value offers
+greater statistical power for detecting weak but consistent associations.
+This conservative approach reduces false positives in exploratory
+analyses of high-dimensional neural data.
+
+\paragraph{FFT-accelerated permutation testing.}
+
+The two-stage procedure described above requires evaluating MI at thousands of
+circular shifts per neuron-behavior pair. A naive implementation would recompute
+MI independently for each shift, yielding a per-pair cost of $O(n_{\text{sh}}
+\cdot n)$ where $n$ is the number of time frames and $n_{\text{sh}}$ the number
+of shuffles. For a typical experiment with $N$ neurons, $M$ behavioral features,
+$D$ delay steps, and $n_{\text{sh}} = 10{,}000$ shuffles, this becomes
+prohibitive.
+
+We exploit the fact that circular time shifts correspond to circular
+cross-correlations, which can be computed for \emph{all} $n$ possible shifts
+simultaneously via the convolution theorem:
+%
+\begin{equation}
+\label{eq:fft_xcorr}
+C_{XY}[s] = \sum_{i=0}^{n-1} X[i] \, Y[(i+s) \bmod n]
+           = \mathcal{F}^{-1}\!\bigl[\mathcal{F}[X] \cdot \mathcal{F}[Y]^{*}\bigr][s]
+\end{equation}
+%
+where $\mathcal{F}$ denotes the discrete Fourier transform and $^{*}$ complex
+conjugation. This reduces the cost from $O(n_{\text{sh}} \cdot n)$ to
+$O(n \log n)$ for computing MI at all shifts, after which any specific shift is
+an $O(1)$ array lookup. The particular form of MI at each shift depends on the
+variable types:
+
+\textit{Continuous--continuous case.}
+For copula-normalized Gaussian variables, MI reduces to
+$I(X; Y_s) = -\tfrac{1}{2}\log_2(1 - r(s)^2)$ where $r(s)$ is the Pearson
+correlation at shift $s$. The correlation for all shifts is obtained from
+Eq.~\ref{eq:fft_xcorr} as $r(s) = C_{XY}[s] / [(n-1)\,\sigma_X \sigma_Y]$,
+requiring a single pair of real-valued FFTs.
+
+\textit{Continuous--discrete case.}
+For a continuous variable $Z$ and a discrete variable $X$ with $K$ classes,
+class-conditional sums at every shift are circular correlations with indicator
+functions:
+$\sum_i Z[i] \cdot \mathbb{1}[X_{(i+s)} = k] = \mathcal{F}^{-1}[\mathcal{F}[Z]
+\cdot \mathcal{F}[\mathbb{1}_{X=k}]^{*}][s]$.
+From these sums and the analogous sums of $Z^2$, class-conditional variances and
+Gaussian entropies are computed for all shifts simultaneously, yielding MI via
+$I = H(Z) - \sum_k p(k)\,H(Z | X\!=\!k)$. This requires $2K+2$ FFTs
+(for $Z$, $Z^2$, and $K$ indicator functions), independent of the number of
+shuffles.
+
+\textit{Discrete--discrete case.}
+Contingency tables for all shifts are obtained via indicator cross-correlations:
+$n_{ij}(s) = \mathcal{F}^{-1}[\mathcal{F}[\mathbb{1}_{X=i}] \cdot
+\mathcal{F}[\mathbb{1}_{Y=j}]^{*}][s]$, requiring $K_X \cdot K_Y$ FFT pairs.
+
+\textit{Multivariate case.}
+For $d$-dimensional behavioral features (e.g., 2D spatial position), the joint
+covariance matrix separates into shift-invariant within-variable blocks and
+shift-dependent cross-covariance blocks computed via $d$ FFTs. MI is then
+evaluated through closed-form vectorized determinant formulas ($d \leq 3$).
+
+INTENSE precomputes MI for all $n$ shifts once per neuron-feature pair and stores
+the result in an FFT cache. This cache is reused across delay optimization
+(Section~\ref{sec:temporal_alignment}), Stage~1 screening, and Stage~2
+validation without recomputation. The total cost is $O(N \cdot M \cdot n \log n)$
+for the cache build plus $O(N \cdot M \cdot n_{\text{sh}})$ for shift lookups,
+compared to $O(N \cdot M \cdot n_{\text{sh}} \cdot n)$ without acceleration ---
+a speedup of $100$--$2{,}500\times$ depending on pair types, which makes the
+10,000-shuffle Stage~2 validation computationally tractable for large-scale
+datasets. In practice, the full two-stage pipeline for 500 neurons and 20 features
+over a 10-minute recording at 20~fps with 10{,}000 circular shifts completes in
+approximately 15 seconds (Intel~i9, multicore parallelization via joblib).
+
+\subsubsection{Temporal alignment and delay optimization}
+\label{sec:temporal_alignment}
+
+To compute optimal delays between signals, we tested a range of delays between -2
+and +2 seconds in 0.05-second increments and selected the delay that maximized
+mutual information between the calcium signal and the behavioral variable. All
+subsequent calculations were then performed as described for the zero-delay case,
+with the only difference being that the ``true'' mutual information was defined as the
+value computed at the optimal time shift.
+
+GCaMP6s shows $\sim$100ms rise time and 1--2s decay time, creating systematic delays
+between spikes and fluorescence \citep{Zhang2023}. Different behavioral variables
+may have distinct optimal delays for the same neuron.
+
+The $\pm2$ second search window is justified by: (1) maximum predictive horizon
+observed in navigation tasks (~2 seconds) \citep{Lian2022}; (2) complete decay of
+GCaMP calcium transients (~2 seconds) \citep{Zhang2023}; (3) behavioral timescales
+in rodent decision-making; (4) computational tractability while capturing relevant
+timescales.
+
+For each neuron--feature pair, the delay maximizing mutual information is selected
+from the candidate grid; statistical significance is then assessed at this fixed
+delay using circular-shift permutation testing, with multiple-comparison correction
+applied across neuron--feature pairs rather than across delays.
+
+
+\subsubsection{Disentangling multiple neuronal selectivity}
+\label{sec:disentangling_selectivity}
+
+
+When multiple behavioral variables are correlated, apparent neuronal selectivity
+for one variable may arise from its association with another \citep{mix,mix3}.
+To determine whether overlap in selectivity reflected genuine joint encoding or
+variable redundancy, we applied the same MI-based significance testing procedure
+(Section~\ref{sec:statistical_assessment}) to pairs of behavioral variables. If no significant MI was detected between two behavioral
+variables, neurons selective for both were considered independently informative
+about each.
+
+Conversely, if the behavioral variables were significantly related, we further
+analyzed the selectivity of corresponding neuronal activity using conditional mutual
+information.
+Let $A$ denote neuronal activity, and $X$ and $Y$ two behavioral variables. The
+conditional mutual information $I(A,X|Y)$ was computed depending on the types of $X$
+and $Y$:
+
+1. \textbf{$X$ and $Y$ continuous}:
+\begin{equation*}
+I(A,X|Y) = H(A,Y) + H(X,Y) - H(A,X,Y) - H(Y)
+\end{equation*}
+Entropy terms were estimated via the GCMI method, using Cholesky decomposition on
+rank-normalized data.
+
+2. \textbf{$X$ continuous, $Y$ discrete}:
+
+We computed $I(A,X)$ for each discrete value of $Y$ using:
+\begin{equation*}
+I(A,X) = H(A) + H(X) - H(A,X)
+\end{equation*}
+The resulting values were weighted by the empirical probabilities of each value of
+$Y$.
+
+3. \textbf{$Y$ continuous, $X$ discrete}:
+\begin{equation*}
+I(A,X|Y) = I(A,X) - (I(A,Y) - I(A,Y|X))
+\end{equation*}
+Here, $I(A,X)$ and $I(A,Y)$ were computed via GCMI for mixed-type variables, and
+$I(A,Y|X)$ was computed as in case 2.
+
+4. \textbf{$X$ and $Y$ discrete}:
+\begin{equation*}
+I(A,X|Y) = H(A,Y) + H(X,Y) - H(A,X,Y) - H(Y)
+\end{equation*}
+$H(A,Y)$ was computed separately for each value of $Y$ and averaged; $H(X,Y)$ and
+$H(Y)$ were computed using standard discrete entropy formulas, while $H(A,X,Y)$ was
+estimated via the sum of conditional entropies across all $X$, $Y$ combinations.
+We then calculated the interaction information (II) \cite{McGill1954,ghassami2017},
+which quantifies redundancy or synergy in the triplet $A$, $X$, and $Y$:
+\begin{equation*}
+II(A,X,Y) = I(A;X) - I(A;X|Y)
+\end{equation*}
+This quantity is symmetric with respect to the three variables and was averaged
+across different permutations of their order. A nonzero $|II|$ indicates that the
+three pairwise associations are not independent: positive values arise when
+conditioning reduces mutual information (redundancy), while negative values
+indicate that conditioning increases it (synergy) \cite{Bell2003}.
+
+Following \cite{ghassami2017}, we used $|II|$ as a threshold to identify weak
+information pathways in a directed acyclic graph framework. A pairwise connection
+is considered ``weak'' if its mutual information is smaller than $|II|$. Under this
+constraint, at most one of the three pairwise pathways can be weak, limiting the
+interaction topology to two possible configurations (see \fig{fig:graphs}).
+\begin{figure}
+\centering
+\includegraphics[width=0.5\linewidth]{figs/cycles.png}
+\caption{Two possible acyclic
+interaction graphs between the three considered variables under the condition of
+weak connection between A and Y (taken from \cite{ghassami2017}).
+}
+\label{fig:graphs}
+\end{figure}
+Our procedure was as follows:
+1. Compute II for the triplet $A$, $X$, $Y$.
+2. Compare MI($A,X$) and MI($A,Y$) to the absolute value of II.
+3. If one of these connections is weak, the other two are considered strong. In this
+case, one behavioral variable effectively subsumes the other, and the stronger MI
+is interpreted as meaningful (case 1).
+4. If neither connection is weak, the variables are likely redundant and expert
+judgment is required to decide which variable to retain (case 2).
+
+For example, if two behavioral variables $X$ and $Y$ are correlated, the procedure
+determines which one the neuron primarily encodes (case 1), or the pair is labeled as ambiguous under the current variable set (case 2). In this case, we retain both variables for reporting and recommend adding disambiguating covariates or experimental manipulations to resolve the dependency. 
+
+\subsubsection{Statistical analysis of delay and selectivity distributions}
+\label{sec:statistical_analysis_delays}
+
+Statistical analysis of delay distributions and selectivity counts was
+performed in GraphPad Prism 10.4.0 (GraphPad Software, USA) using
+one-way ANOVA with Tukey's post hoc test.
+Significance levels are indicated by asterisks:
+$*$\,$p<0.05$, $**$\,$p<0.01$, $***$\,$p<0.001$, $****$\,$p<0.0001$;
+non-significant pairs are omitted.
+Bars show mean $\pm$ SEM across mouse-session combinations.
+
+\subsection{Place cells analysis}
+\label{sec:place_cells_analysis}
+
+\subsubsection{Classic place cells analysis}
+\label{sec:classic_pc_identification}
+Place cells were identified using a previously described custom MATLAB routine
+\cite{Plusnin2021}. The arena was divided into 8 × 8 cm square bins. For each neuron
+with at least $n=5$ calcium events, a spatial activity map was constructed by
+dividing the smoothed number of calcium events by the smoothed occupancy time in
+each bin. The resulting maps were segmented into distinct spatial regions using a
+watershed-based thresholding approach, and the spatial information content was
+calculated for each region.
+To assess the significance of spatial tuning, 1000 shuffled trials were generated by
+randomly shifting each neuron's calcium activity trace relative to the animal's
+trajectory. The spatial information for each shuffled trial was recomputed, and the
+empirical distribution was used to calculate a $p$-value for the observed
+information. Regions where spatial information exceeded the 95th percentile of the
+shuffled distribution were considered candidate place fields. Within each of these,
+place fields were defined as subregions where the calcium event rate exceeded 50\%
+of the peak firing rate in the respective region.
+
+
+\subsubsection{Identification of place cells using INTENSE}
+\label{sec:intense_pc_identification}
+To assess spatial selectivity using the INTENSE framework, we treated the animal's
+joint spatial coordinates $C={X,Y}$ as a behavioral variable. All
+information-theoretic measures were computed for the combined coordinate pair,
+including entropy $H(C) = H(X,Y)$ and mutual information $I(A,C) = I(A; X,Y)$.
+During the shuffling procedure, both components of $C$ were jointly shifted using
+the same temporal offset to preserve their coordinate structure.
+
+
+\subsubsection{Comparison of PC populations}
+\label{sec:comparison_pc_populations}
+To compare place cell populations identified by INTENSE and classical methods, we
+computed overlap metrics across all recording sessions. The classical method
+identified place cells using spatial information content with z-score thresholding
+($z>3$) on spatially-binned firing rates derived from calcium events detected via
+continuous wavelet transform \cite{Neugornet2021}. INTENSE identified
+place cells through mutual information between calcium fluorescence signals and
+spatial position (x, y coordinates) with statistical significance assessed via
+two-stage shuffle testing.
+
+We quantified population overlap using three complementary metrics. The first
+metric, intersection over INTENSE, represented the percentage of INTENSE-identified
+place cells also identified by the classical method, calculated as $|A \cap B| /
+|A|$ where $A$ represents INTENSE place cells and $B$ represents classical place
+cells. The second metric, intersection over classical, measured the percentage of
+classically-identified place cells also identified by INTENSE, calculated as $|A
+\cap B| / |B|$. The third metric, the Jaccard coefficient, provided a symmetric
+measure of agreement by computing the ratio of intersection to union, $|A \cap B| /
+|A \cup B|$.
+
+To understand how statistical confidence affected population overlap, we evaluated
+these metrics across a range of significance thresholds from $p = 1.0$ to $p =
+10^{-5}$. For each threshold value, we first applied the threshold to both INTENSE
+p-values obtained from the fitted zero-inflated gamma distribution and classical p-values computed
+from z-scores using a one-sided normal distribution. We then included only neurons
+with p-values below the threshold in both methods and calculated all three overlap
+metrics on this filtered population. Additionally, we tracked the percentage of
+neurons retained after filtering to assess the stringency of each threshold.
+
+For the analysis, we concatenated place cell labels and statistics from all 64
+recording sessions, applied consistent thresholds across the merged dataset, and
+computed global overlap metrics.
+
+\subsubsection{Comparison of spatial selectivity}
+\label{sec:comparison_spatial_selectivity}
+
+We compared spatial activity patterns between INTENSE and classical methods
+to assess methodological convergence.
+
+The comparison of spatial activity patterns required constructing place field maps
+from both calcium fluorescence and detected spike events. We divided the behavioral
+arena into a $7 \times 7$ grid of spatial bins, a resolution that balances spatial
+detail with adequate sampling per bin given typical recording durations. For each
+spatial bin, we calculated the average neural activity when the animal occupied that
+location, weighted by occupancy time to account for non-uniform spatial sampling
+common in freely-behaving experiments.
+
+For calcium-based activity maps, we first applied a threshold at the 80th percentile
+of the fluorescence trace to isolate periods of elevated activity. This percentile
+threshold adapts to the dynamic range of each neuron while focusing on
+suprathreshold responses most likely to represent action potential-related calcium
+transients. The thresholded signal was then averaged within each spatial bin during
+occupancy periods. Event-based activity maps were constructed similarly but using
+the discrete spike times detected through wavelet-based event detection
+(Section~\ref{sec:calcium_event_detection}).
+
+To quantify the similarity between calcium and event-based place fields, we employed
+the Structural Similarity Index (SSIM), a perceptually-motivated metric originally
+developed for image quality assessment \cite{Wang2004ssim}. Both activity maps were
+normalized to the range [0, 1] before comparison. The SSIM combines information
+about luminance, contrast, and structural similarity, making it more robust than
+simple pixel-wise comparisons for capturing the overall correspondence of spatial
+patterns. We computed SSIM with a data range of 1.0, appropriate for normalized
+maps.
+
+Additionally, we calculated complementary metrics to provide a comprehensive
+assessment of place field similarity. The mean squared error (MSE) quantified the
+average squared difference between normalized activity maps, providing a
+straightforward measure of pixel-wise deviation. The peak signal-to-noise ratio
+(PSNR) expressed this difference relative to the maximum possible signal, offering a
+scale-invariant metric.
+
+\subsubsection{Feature generation}
+\label{sec:synthetic_data_generation}
+
+To systematically evaluate INTENSE performance and compare it with existing methods,
+we generated synthetic neural datasets with known ground truth connectivity between
+neurons and behavioral features.
+
+We generated two types of behavioral features to model realistic experimental
+conditions:
+
+\textbf{Discrete features:} Binary time series representing discrete behavioral
+states (e.g., rearing, object interaction) were generated with controlled temporal
+structure. For each feature, we created islands of activity (1s) interspersed with
+inactive periods (0s) using:
+\begin{itemize}
+\item Average number of active periods: 10 per feature
+\item Average duration per active period: 5 seconds (100 frames at 20 Hz)
+\item Exponentially distributed gaps between active periods
+\item Active period durations drawn from normal distribution ($\sigma =
+\text{duration}/3$)
+\end{itemize}
+
+\textbf{Continuous features:} Continuous behavioral variables (e.g., speed, head
+direction analogs) were generated using fractional Brownian motion (fBM) with:
+\begin{itemize}
+\item Hurst parameter $H = 0.3$ (sub-diffusive, anti-persistent behavior)
+\item Length matching experiment duration (1200 seconds)
+\item Davies-Harte method for computationally efficient generation
+\item Each feature initialized with unique random seed to ensure independence
+\end{itemize}
+
+\subsubsection{Signal generation}
+\label{sec:signal_generation}
+
+\textbf{Feature-neuron coupling:} Each synthetic neuron was randomly assigned to
+exactly one behavioral feature, creating a sparse ground truth connectivity matrix.
+For continuous features, we selected a region of interest (ROI) comprising 15\% of
+the value range, centered at a randomly chosen percentile, to define the neuron's
+``receptive field.''
+
+\textbf{Event generation with controlled reliability:} Neural events were generated
+using a two-state heterogeneous Poisson process \citep{Borst1999}:
+\begin{itemize}
+\item Baseline rate: $r_0 = 0.1$ Hz during inactive/out-of-ROI periods
+\item Active rate: $r_1 = 1.0$ Hz during active/within-ROI periods
+\item Skip probability: $p_{\text{skip}} \in [0, 1)$ to model response variability
+\item Events sampled at the imaging frame rate (20 Hz)
+\end{itemize}
+
+The skip probability parameter $p_{\text{skip}}$ controls neuronal response
+reliability by randomly deleting active periods with probability $p_{\text{skip}}$,
+simulating the stochastic nature of neural responses observed in vivo
+\citep{Grijseels2021}.
+
+\textbf{Calcium dynamics:} Discrete spiking events were convolved with a
+double-exponential calcium kernel to generate fluorescence traces
+\citep{Zhang2023}:
+\begin{equation}
+\label{eq:calcium_dynamics}
+F(t) = \sum_i A_i \left(1 - \exp\!\left(-\frac{t - t_i}{\tau_r}\right)\right)
+\exp\!\left(-\frac{t - t_i}{\tau_d}\right) \Theta(t - t_i) + \eta(t)
+\end{equation}
+where:
+\begin{itemize}
+\item $t_i$ are event times from the Poisson process
+\item $A_i \sim \mathcal{U}(0.5, 2.0)$ are event amplitudes in $\Delta F/F$ units
+\item $\tau_r = 0.25$ seconds (rise time constant)
+\item $\tau_d = 2.0$ seconds (decay time constant), matching GCaMP6s kinetics
+\item $\Theta$ is the Heaviside step function
+\item $\eta(t) \sim \mathcal{N}(0, \sigma_{\text{noise}}^2)$ is additive Gaussian
+noise
+\end{itemize}
+
+\textbf{Noise levels:} To evaluate robustness, we varied the signal-to-noise ratio
+(SNR), which is defined as the ratio of firing rates inside versus outside the
+neuron's target regions:
+
+$\text{SNR} = \frac{r_1}{r_0}$
+
+where:
+- $r_0$ = baseline firing rate outside the region of interest (0.1 Hz)
+- $r_1$ = firing rate within the region of interest ($r_1 = r_0 \times \text{SNR}$)
+
+For example, an SNR of 8 means neurons fire at 0.8 Hz when the behavioral variable
+is within their receptive field, compared to 0.1 Hz baseline firing. This definition
+allows us to systematically vary the strength of neural selectivity from weak
+(SNR = 2, 0.2 Hz peak firing) to very strong (SNR = 64, 6.4 Hz peak firing
+rate).
+
+We used SNR values spanning $\{2, 4, 8, 16, 32, 64\}$ to cover the range
+from heavily corrupted to nearly noiseless conditions.
+
+\subsubsection{Validation dataset composition}
+\label{sec:validation_dataset}
+
+Each synthetic dataset comprised:
+\begin{itemize}
+\item 500 neurons total (250 discrete-selective, 250 continuous-selective)
+\item 20 behavioral features (10 discrete, 10 continuous)
+\item Ground truth connectivity: 5\% (500 true connections out of 10,000 possible
+pairs)
+\item Recording duration: 1200 seconds (24,000 frames at 20 Hz)
+\item Parameter grid: 6 SNR values $\times$ 9 $p_{\text{skip}}$ values = 54
+conditions
+\end{itemize}
+
+\subsubsection{Performance evaluation metrics}
+\label{sec:performance_metrics}
+
+To quantify detection performance, we computed standard binary classification
+metrics by comparing detected significant neuron-feature pairs against ground truth:
+
+\textbf{Precision:} Fraction of detected connections that are true positives:
+\begin{equation}
+\label{eq:precision}
+\text{Precision} = \frac{\text{TP}}{\text{TP} + \text{FP}}
+\end{equation}
+
+\textbf{Recall:} Fraction of true connections that were detected:
+\begin{equation}
+\label{eq:recall}
+\text{Recall} = \frac{\text{TP}}{\text{TP} + \text{FN}}
+\end{equation}
+
+\textbf{F1-score:} Harmonic mean of precision and recall:
+\begin{equation}
+\label{eq:f1score}
+\text{F1} = 2 \cdot \frac{\text{Precision} \times \text{Recall}}{\text{Precision} +
+\text{Recall}}
+\end{equation}
+
+where TP = true positives, FP = false positives, and FN = false negatives.
+
+\textbf{Random baseline:} Given the 5\% ground truth connectivity, a random guesser
+would achieve:
+\begin{equation}
+\label{eq:random_baseline}
+\text{Precision}_{\text{random}} = 0.05
+\end{equation}
+
+\subsubsection{Comparison methods}
+\label{sec:comparison_methods}
+
+We compared INTENSE against three categories of approaches for neuron-behavior
+association:
+
+\textbf{1. Simple criterion methods (without shuffles):}
+\begin{itemize}
+\item \textbf{For continuous features:} Pearson correlation coefficient with
+significance determined via Student's t-test. For samples of size $n$, the test
+statistic:
+\begin{equation}
+\label{eq:pearson_test}
+t = r\sqrt{\frac{n-2}{1-r^2}}
+\end{equation}
+follows a t-distribution with $n-2$ degrees of freedom under the null hypothesis of
+zero correlation \citep{Fisher1915}.
+
+\item \textbf{For discrete features:} Welch's t-test comparing mean calcium activity
+between active/inactive behavioral periods. This test accounts for unequal
+variances between groups and uses the Welch-Satterthwaite approximation for degrees
+of freedom \citep{Welch1947}:
+\begin{equation}
+\label{eq:welch_df}
+\nu = \frac{\left(\frac{s_1^2}{n_1} +
+\frac{s_2^2}{n_2}\right)^2}{\frac{s_1^4}{n_1^2(n_1-1)} + \frac{s_2^4}{n_2^2(n_2-1)}}
+\end{equation}
+\end{itemize}
+
+\textbf{2. MI-based methods (without shuffles):}
+\begin{itemize}
+\item \textbf{For discrete features:} we employed the plug-in estimator with
+adaptive binning. The number of bins was selected using Sturges' rule extension:
+$n_{\text{bins}} = \lceil \log_2(n) \rceil + 1$ \citep{Sturges1926}, with
+quantile-based binning to ensure equal sample sizes per bin.
+
+Statistical significance was assessed using the log-likelihood ratio test (G-test
+for independence) \citep{Sokal1995}:
+
+\begin{equation}
+\label{eq:gtest}
+G = 2 \sum_{i,j} O_{ij} \ln\left(\frac{O_{ij}}{E_{ij}}\right)
+\end{equation}
+
+where $O_{ij}$ are observed frequencies and $E_{ij}$ are expected frequencies under
+independence. The test statistic follows a $\chi^2$ distribution with $(r-1)(c-1)$
+degrees of freedom for $r$ rows and $c$ columns in the contingency table.
+
+\item \textbf{For continuous features:} we converted MI to effective correlation
+using the relationship \citep{Cover2006}:
+\begin{equation}
+\label{eq:mi_to_corr}
+\rho_{\text{eff}} = \text{sign}(\rho_{\text{sample}}) \cdot \sqrt{1 - \exp(-2 \cdot
+\text{MI})}
+\end{equation}
+This allows p-value computation via the standard t-test for correlation.
+\end{itemize}
+
+\textbf{3. INTENSE-like pipelines:}
+\begin{itemize}
+\item \textbf{correlation-based:} INTENSE pipeline using vectorized Pearson
+correlation as the similarity metric. While maintaining the full statistical rigor
+of the two-stage procedure, this test addresses the linear dependency between the
+signals.
+
+\item \textbf{average-based:} INTENSE pipeline using average difference as the
+metric for discrete features. The test statistic is the difference in mean calcium
+activity between behavioral states.
+
+\item \textbf{MI-based (INTENSE):} Full INTENSE pipeline with Gaussian Copula Mutual
+Information (GCMI) \citep{gcmi}. GCMI transforms variables to a Gaussian copula
+representation where MI has the closed form of Eq.~\ref{eq:gcmi_continuous}.
+This approach is robust to outliers and requires no binning parameters.
+\end{itemize}
+
+All INTENSE-like methods employed the two-stage testing procedure described in
+Section~\ref{sec:statistical_assessment}, with identical parameters (100 screening
+shuffles, 10,000 validation shuffles, FWER = 0.01).
+
+\subsubsection{Experimental protocol}
+\label{sec:experimental_protocol}
+
+For each parameter combination (SNR, $p_{\text{skip}}$), we performed 5 independent
+random initializations and averaged the resulting precision, recall, and F1-scores.
+This averaging reduces the impact of random fluctuations and provides more stable
+performance estimates. The comprehensive evaluation covered:
+\begin{itemize}
+\item 6 SNR values: $\{2, 4, 8, 16, 32, 64\}$
+\item 9 $p_{\text{skip}}$ values: $\{0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8\}$
+\item Total: $6 \times 9 \times 5 = 270$ synthetic datasets per feature type
+\end{itemize}
+
+Downsampling by factor 5 was applied to all methods to reduce computational load
+while maintaining sufficient temporal resolution to detect neuron-feature
+associations.
+
