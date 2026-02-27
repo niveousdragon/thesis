@@ -5,35 +5,98 @@
 
 ---
 
-## Единая таблица обозначений
+## Единая таблица обозначений и сокращений
 
-| Обозначение | Расшифровка | Где используется |
+> Канонический список. Все записи ниже используются в скомпилированном тексте диссертации.
+> Этот же список (раздел «Сокращения») продублирован в `Dissertation/acronyms.tex` через `nomencl`.
+
+### Русские сокращения
+
+| Сокращение | Расшифровка | Где |
 |---|---|---|
-| ЭР, $D_{eff}$ | Эффективная размерность | Гл. 2 (eff_dim, int_dim) |
-| ВР, $d$, ID | Внутренняя размерность | Гл. 2 (int_dim, fMRI) |
-| ЛР | Линейная размерность (PCA, 95% дисперсии) | Гл. 2 (int_dim) |
-| $\lambda_i$ | Собственные значения корреляционной матрицы | Гл. 2 (eff_dim, int_dim) |
-| $C$, $\hat{C}$ | Истинная / выборочная корреляционная матрица | Гл. 2 (eff_dim) |
-| $\mu_i$ | Отношение расстояний до 2-го и 1-го соседа (2-NN) | Гл. 2 (int_dim) |
-| $\alpha$ | Критический показатель степенного масштабирования $d \sim N^\alpha$ | Гл. 2 (int_dim) |
-| $N$ | Число нейронов | Гл. 2 |
+| БПФ | Быстрое преобразование Фурье | Гл. 3 (INTENSE) |
+| ВИ | Взаимная информация (mutual information) | Гл. 2 (RNN), Гл. 3 (INTENSE) |
+| ВР | Внутренняя размерность | Гл. 2 (int_dim, fMRI) |
+| КМ | Клетки места (place cells) | Гл. 2, Гл. 3 (INTENSE) |
+| ЛР | Линейная размерность | Гл. 2 (int_dim) |
+| МА | Максимизация активации (activation maximization) | Гл. 3 (MANGO) |
+| ОП | Обучение с подкреплением (reinforcement learning) | Гл. 2 (RNN) |
+| ОУ | Обучение с учителем (supervised learning) | Гл. 2 (RNN) |
+| РНС | Рекуррентная нейронная сеть | Гл. 2 (RNN) |
+| УВИ | Условная взаимная информация | Гл. 3 (INTENSE) |
+| ЭР | Эффективная размерность | Гл. 2 (eff_dim, int_dim) |
+| ЭЭГ | Электроэнцефалография | Гл. 1 |
+
+### Латинские сокращения
+
+| Сокращение | Расшифровка | Где |
+|---|---|---|
+| ANOVA | Analysis of Variance — дисперсионный анализ | Гл. 2 (eff_dim, int_dim) |
+| BOLD | Blood Oxygen Level Dependent — сигнал фМРТ | Гл. 2 (fMRI) |
+| CA1, CA3 | Поля гиппокампа (Cornu Ammonis) | Гл. 2 |
+| CtxDM | Context-Dependent Decision Making — контекстно-зависимое принятие решений | Гл. 2 (RNN) |
+| dF/F | Нормализованная кальциевая флуоресценция | Гл. 2 |
+| DRIADA | Dimensionality Reduction for Integrated Activity Data Analysis | Гл. 3 |
+| DWT | Discrete Wavelet Transform — дискретное вейвлет-преобразование | Гл. 2 (fMRI) |
+| фМРТ (fMRI) | Функциональная магнитно-резонансная томография | Гл. 2 (fMRI) |
+| GAN | Generative Adversarial Network — генеративно-состязательная сеть | Гл. 3 (MANGO) |
+| GCaMP | Генетически кодируемый кальциевый индикатор | Гл. 2 |
+| GCMI | Gaussian Copula Mutual Information | Гл. 2 (RNN), Гл. 3 (INTENSE) |
+| ИНС (SNN) | Импульсная нейронная сеть (Spiking Neural Network) | Гл. 3 (MANGO) |
+| INTENSE | INformation-Theoretic Evaluation of Neuronal SElectivity | Гл. 3 |
+| LE | Laplacian Eigenmaps — лапласовы собственные карты | Гл. 2 (fMRI) |
+| LIF | Leaky Integrate-and-Fire — модель нейрона с утечкой | Гл. 3 (MANGO) |
+| MANGO | Maximization of Activation of Neurons through Gradient-free Optimization | Гл. 3 |
+| MEI | Most Exciting Images — наиболее возбуждающие изображения | Гл. 3 (MANGO) |
+| PCA | Principal Component Analysis — анализ главных компонент | Гл. 2 |
+| PPO | Proximal Policy Optimization | Гл. 2 (RNN) |
+| PROTES | PRobabilistic Optimization with TEnsor Sampling | Гл. 3 (MANGO) |
+| ROI | Region of Interest — область интереса | Гл. 2 (fMRI) |
+| TT | Tensor Train — тензорный поезд | Гл. 3 (MANGO) |
+| VAE | Variational Autoencoder — вариационный автокодировщик | Гл. 3 (MANGO) |
+
+### Математические обозначения
+
+| Обозначение | Расшифровка | Где |
+|---|---|---|
+| $D_{eff}$ | Эффективная размерность (= ЭР) | Гл. 2 (eff_dim) |
+| $d$ | Внутренняя размерность (= ВР) | Гл. 2 (int_dim) |
+| $N$ | Число нейронов / размерность пространства | Гл. 2 |
 | $T$ | Длина записи (кадры) | Гл. 2 |
 | $w$ | Размер скользящего окна (500 кадров = 25 с) | Гл. 2 (eff_dim) |
-| МА | Максимизация активации (activation maximization) | Гл. 3 (neurotrain) |
-| MEI | Наиболее активирующие изображения (most exciting images) | Гл. 3 (neurotrain) |
-| ИНС | Импульсные нейронные сети (SNN) | Гл. 3 (neurotrain) |
-| TT | Разложение тензорного поезда (Tensor Train) | Гл. 3 (neurotrain) |
-| MANGO | Фреймворк безградиентной МА | Гл. 3 (neurotrain) |
-| INTENSE | Информационно-теоретический анализ нейронной селективности | Гл. 3 |
-| DRIADA | Фреймворк: снижение размерности + индивидуальный анализ | Гл. 3 |
-| BEARMIND | Пакет для анализа кальциевого имиджинга | Гл. 2 (eff_dim, int_dim) |
-| dF/F | Нормализованная флуоресценция | Гл. 2 |
-| BOLD | Сигнал фМРТ, зависящий от оксигенации крови | Гл. 2 (fMRI) |
-| ROI | Область интереса (region of interest) | Гл. 2 (fMRI) |
-| RS | Состояние покоя (resting state) | Гл. 2 (fMRI) |
-| LE | Лапласовы собственные карты (Laplacian Eigenmaps) | Гл. 2 (fMRI) |
+| $\lambda_i$ | Собственные значения корреляционной матрицы | Гл. 2 |
+| $C$, $\hat{C}$ | Истинная / выборочная корреляционная матрица | Гл. 2 (eff_dim) |
+| $\mu_i$ | Отношение расстояний до 2-го и 1-го соседа (2-NN) | Гл. 2 (int_dim) |
+| $\alpha$ | Критический показатель масштабирования $d \sim N^\alpha$ | Гл. 2 (int_dim) |
+| $I(X;Y)$ | Взаимная информация между $X$ и $Y$ | Гл. 2 (RNN), Гл. 3 (INTENSE) |
+| $\mathrm{G}_s, \mathrm{G}_+, \mathrm{G}_-, \mathrm{G}_a$ | Функциональные популяции РНС | Гл. 2 (RNN) |
+
+### Эксперименты и данные
+
+| Сокращение | Расшифровка | Где |
+|---|---|---|
+| NOF | Novel Object/Field — мыши в новой арене | Гл. 2 (eff_dim, int_dim), Гл. 3 (INTENSE) |
+| RS | Resting State — состояние покоя | Гл. 2 (fMRI) |
 | IID | Межклассовое/внутриклассовое расстояние | Гл. 2 (fMRI) |
-| NOF | Эксперимент Novel Object/Field — мыши в новой арене | Гл. 2 (eff_dim, int_dim) |
+| BEARMIND | Пакет для анализа кальциевого имиджинга | Гл. 2 |
+
+### Переводческие конвенции (англ → рус)
+
+| English | Русский |
+|---|---|
+| activation maximization | максимизация активации |
+| gradient-free | безградиентный |
+| spike trains | импульсные последовательности |
+| membrane potential | мембранный потенциал |
+| surrogate gradient | суррогатный градиент |
+| receptive field | рецептивное поле |
+| population coding | популяционное кодирование |
+| manifold | многообразие |
+| embedding | вложение |
+| feature visualization | визуализация признаков |
+| mixed selectivity | смешанная селективность |
+| attractor | аттрактор |
+| winner-take-all | «победитель получает всё» |
 
 ---
 
@@ -244,7 +307,7 @@ ROI играют роль отдельных нейронов, коллекти�
 | Гл. 1: Обзор литературы | part1.tex | Раздел про размерности написан, остальное СКЕЛЕТ | диплом, реферат, статьи |
 | Гл. 2.1: Геометрия гиппокампа | part2.tex | СКЕЛЕТ | Sotskov2022, диплом |
 | Гл. 2.2: фМРТ | part2.tex | СКЕЛЕТ | Pospelov2021 |
-| Гл. 2.3: RNN | part2.tex | СКЕЛЕТ, \future | черновик RNN |
+| Гл. 2.3: RNN | part2.tex → drafts/ch2/draft_sec23_rnn.tex | НАПИСАНО (драфт) | Kononov2025 |
 | Гл. 2.4: Эфф. размерность | part2.tex | НАПИСАНО | Pospelov2024 |
 | Гл. 2.4: Внутр. размерность | part2.tex | НАПИСАНО | int_dim |
 | Гл. 2.5: Развитие методов | part2.tex | СКЕЛЕТ, \future | отчёты |

@@ -20,6 +20,9 @@ run_xelatex
 echo "=== biber ==="
 biber dissertation || { echo "ОШИБКА: biber упал"; exit 1; }
 
+echo "=== makeindex (nomenclature) ==="
+makeindex dissertation.nlo -s nomencl.ist -o dissertation.nls 2>/dev/null || echo "(nomenclature: нет записей или .nlo пуст — пропуск)"
+
 echo "=== xelatex (2/3) ==="
 run_xelatex
 

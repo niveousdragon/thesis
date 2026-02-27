@@ -1,10 +1,17 @@
 % Листинги с исходным кодом программ
 \usepackage{fancyvrb}
 \usepackage{listings}
+
+% Алгоритмы (для секции 3.3 MANGO)
+\usepackage[ruled]{algorithm2e}
+\RestyleAlgo{ruled}
 \lccode`\~=0\relax %Без этого хака из-за особенностей пакета listings перестают работать конструкции с \MakeLowercase и т. п. в (xe|lua)latex
 
 % Русская традиция начертания греческих букв
 \usepackage{upgreek} % прямые греческие ради русской традиции
+
+% Математические операторы
+\DeclareMathOperator*{\argmin}{argmin}
 
 %%% Микротипографика
 %\ifnumequal{\value{draft}}{0}{% Только если у нас режим чистовика
