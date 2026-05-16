@@ -44,6 +44,10 @@ Desktop.ini
 # Temporary / cache
 Disser/images/cache/*.pdf
 
+# Тяжёлые результаты вычислений (регенерируются скриптами)
+Disser/drafts/ch2/recurrence/results/
+mango_data/__pycache__/
+
 # Загруженные исходники в корне (организованные копии в Disser/parts/)
 /intense_revised_v4.tex
 /paper.md

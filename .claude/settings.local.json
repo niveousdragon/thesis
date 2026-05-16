@@ -18,7 +18,19 @@
       "Grep",
       "Glob",
       "WebSearch",
-      "WebFetch"
+      "WebFetch",
+      "Bash(grep:*)",
+      "Bash(python:*)",
+      "Bash(wc:*)",
+      "Bash(conda:*)",
+      "Bash(find C:UsersUserPycharmProjectsdriada -type f \\\\\\(-name *.tex -o -name *.md -o -name *.bib \\\\\\))",
+      "Bash(for d:*)",
+      "Bash(do echo:*)",
+      "Read(//c/Users/User/PycharmProjects/thesis/**)",
+      "Bash(sed 's|.*/||')",
+      "Bash(done)",
+      "Bash(tasklist //FI 'IMAGENAME eq python.exe' //FO CSV)",
+      "Bash(curl -s \"https://zenodo.org/api/records?q=Kuchibhotla+auditory+cortex+learning&size=5\")"
     ]
   }
 }
