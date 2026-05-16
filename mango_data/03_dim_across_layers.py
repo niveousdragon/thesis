@@ -55,22 +55,24 @@ def plot_dim_across_layers():
 
     fig, axes = plt.subplots(2, 1, figsize=(16, 12))
 
-    for ax_idx, (dim_data, title) in enumerate([
-        (ed, 'Effective dimension (participation ratio)'),
-        (id_nn, 'Intrinsic dimension (2-NN)')
+    for ax_idx, (dim_data, title, ylabel) in enumerate([
+        (ed, 'Эффективная размерность (participation ratio) по слоям',
+         'Эффективная размерность'),
+        (id_nn, 'Внутренняя размерность (2-NN) по слоям',
+         'Внутренняя размерность')
     ]):
         ax = make_beautiful(axes[ax_idx])
         for ci, (ei, ep) in enumerate(zip(epoch_indices, SHOW_EPOCHS)):
             vals = dim_data[:, ei]
             mask = ~np.isnan(vals)
             ax.plot(x[mask], vals[mask], 'o-', c=clrs[ci], lw=2.5, ms=6,
-                    label=f'epoch {ep}', alpha=0.85)
+                    label=f'эпоха {ep}', alpha=0.85)
         ax.set_xticks(x)
         ax.set_xticklabels(SHORT_LABELS, rotation=45, ha='right', fontsize=9)
-        ax.set_ylabel(title, fontsize=12)
-        ax.set_xlabel('Layer (input → output)', fontsize=11)
+        ax.set_ylabel(ylabel, fontsize=12)
+        ax.set_xlabel('Слой (вход → выход)', fontsize=11)
         ax.legend(fontsize=9, ncol=4, loc='upper left')
-        ax.set_title(title + ' across layers', fontsize=13)
+        ax.set_title(title, fontsize=13)
 
         # Разделители между группами слоёв
         for sep in [0.5, 4.5, 8.5, 12.5]:

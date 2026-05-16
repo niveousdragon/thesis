@@ -1,0 +1,59 @@
+==============================================================================
+Dequantization correction (cov += I/12) on H_gauss
+==============================================================================
+
+Per-sublayer summary across 26 epochs:
+
+sublayer            N   mean H_raw mean H_deq mean delta   min delta max delta
+------------------------------------------------------------------------------
+layer2.1.sn1      128       382.95     388.34     5.3923      1.8963   43.2980
+layer2.1.sn2      128       380.43     385.90     5.4738      1.8349   41.3149
+layer3.0.sn1      256       749.12     758.24     9.1215      3.4909   37.0495
+layer3.0.sn2      256       856.54     861.54     5.0051      2.6865   22.9391
+layer3.1.sn1      256       617.64     635.52    17.8755     11.0371   37.1502
+layer3.1.sn2      256       615.83     631.46    15.6271     11.3271   31.5809
+layer4.0.sn1      512      1254.99    1288.38    33.3900     26.3706   53.6076
+layer4.0.sn2      512      1558.87    1572.67    13.7994     11.0696   18.3755
+layer4.1.sn1      512      1150.39    1196.47    46.0840     30.2958   80.3842
+layer4.1.sn2      512      1003.17    1071.26    68.0850     23.8966   80.7255
+
+Two-phase reversal check (peak vs end-of-training):
+
+  layer2.1.sn1:
+    raw      : peak=433.93 at e=700, end=431.62, drop=2.31 bits
+    dequant  : peak=435.82 at e=700, end=433.59, drop=2.23 bits
+  layer2.1.sn2:
+    raw      : peak=444.54 at e=700, end=443.43, drop=1.11 bits
+    dequant  : peak=446.38 at e=700, end=445.30, drop=1.07 bits
+  layer3.0.sn1:
+    raw      : peak=877.90 at e=900, end=877.90, drop=0.00 bits
+    dequant  : peak=881.39 at e=900, end=881.39, drop=0.00 bits
+  layer3.0.sn2:
+    raw      : peak=938.67 at e=700, end=934.18, drop=4.49 bits
+    dequant  : peak=941.35 at e=700, end=936.91, drop=4.44 bits
+  layer3.1.sn1:
+    raw      : peak=719.24 at e=900, end=719.24, drop=0.00 bits
+    dequant  : peak=730.27 at e=900, end=730.27, drop=0.00 bits
+  layer3.1.sn2:
+    raw      : peak=674.71 at e=700, end=671.26, drop=3.44 bits
+    dequant  : peak=686.04 at e=700, end=682.75, drop=3.29 bits
+  layer4.0.sn1:
+    raw      : peak=1325.86 at e=125, end=1183.05, drop=142.81 bits
+    dequant  : peak=1352.23 at e=125, end=1236.66, drop=115.57 bits
+  layer4.0.sn2:
+    raw      : peak=1633.68 at e=100, end=1475.19, drop=158.49 bits
+    dequant  : peak=1644.79 at e=100, end=1492.98, drop=151.81 bits
+  layer4.1.sn1:
+    raw      : peak=1266.10 at e= 70, end=944.97, drop=321.13 bits
+    dequant  : peak=1298.72 at e= 70, end=1025.36, drop=273.36 bits
+  layer4.1.sn2:
+    raw      : peak=1229.63 at e=  0, end=916.58, drop=313.05 bits
+    dequant  : peak=1253.53 at e=  0, end=996.53, drop=257.00 bits
+
+Question: does the leftward reversal in deep sublayers (L4.x)
+survive dequantization?
+
+  layer4.0.sn1: raw drop +142.81 bits, dequant drop +115.57 bits  -> reversal preserved: YES
+  layer4.0.sn2: raw drop +158.49 bits, dequant drop +151.81 bits  -> reversal preserved: YES
+  layer4.1.sn1: raw drop +321.13 bits, dequant drop +273.36 bits  -> reversal preserved: YES
+  layer4.1.sn2: raw drop +313.05 bits, dequant drop +257.00 bits  -> reversal preserved: YES

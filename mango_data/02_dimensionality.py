@@ -126,12 +126,12 @@ def plot_dim_curves(ed, id_nn):
 
     for ax, data, title in zip(axes,
                                 [ed, id_nn],
-                                ['Effective dim (PR)', 'Intrinsic dim (2-NN)']):
+                                ['ЭР (participation ratio)', 'ВР (2-NN)']):
         ax = make_beautiful(ax)
         for i in range(len(LAYERS)):
             ax.plot(xdata, data[i, :], c=clrs[i], lw=3,
                     label=LAYERS[i] if i % 4 == 0 else None)
-        ax.set_xlabel(r'$\log_{10}(\mathrm{epoch}+1)$')
+        ax.set_xlabel(r'$\log_{10}(\mathrm{эпоха}+1)$')
         ax.set_ylabel(title)
         ax.legend()
 

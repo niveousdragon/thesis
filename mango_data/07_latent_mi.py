@@ -374,14 +374,14 @@ def plot_by_layer(I_latent, I_ind, acc_z, acc_full):
         mask = ~np.isnan(vals)
         if mask.any():
             ax.plot(x[mask], vals[mask], 'o-', c=clrs[ci], lw=2.5, ms=6,
-                    label=f'epoch {show_ep[ci]}', alpha=0.85)
+                    label=f'эпоха {show_ep[ci]}', alpha=0.85)
     ax.axhline(np.log2(N_CLASSES), ls='--', c='grey', alpha=0.5, label='H(Y)')
     for sep in [0.5, 4.5, 8.5, 12.5]:
         ax.axvline(sep, c='grey', ls=':', alpha=0.3)
     ax.set_xticks(x)
     ax.set_xticklabels(SHORT, rotation=45, ha='right', fontsize=9)
-    ax.set_ylabel('bits')
-    ax.set_title('I(Z; Y) — latent MI (KSG)')
+    ax.set_ylabel('бит')
+    ax.set_title('I(Z; Y) — латентная ВИ (KSG)')
     ax.legend(fontsize=8, ncol=4, loc='upper left')
 
     # --- I_ind ---
@@ -391,13 +391,13 @@ def plot_by_layer(I_latent, I_ind, acc_z, acc_full):
         mask = ~np.isnan(vals)
         if mask.any():
             ax.plot(x[mask], vals[mask], 'o-', c=clrs[ci], lw=2.5, ms=6,
-                    label=f'epoch {show_ep[ci]}', alpha=0.85)
+                    label=f'эпоха {show_ep[ci]}', alpha=0.85)
     for sep in [0.5, 4.5, 8.5, 12.5]:
         ax.axvline(sep, c='grey', ls=':', alpha=0.3)
     ax.set_xticks(x)
     ax.set_xticklabels(SHORT, rotation=45, ha='right', fontsize=9)
-    ax.set_ylabel('bits')
-    ax.set_title(r'$I_{ind} = \Sigma\, I(t_i;\, Y)$ — sum per-neuron')
+    ax.set_ylabel('бит')
+    ax.set_title(r'$I_{ind} = \Sigma\, I(t_i;\, Y)$ — сумма по нейронам')
     ax.legend(fontsize=8, ncol=4, loc='upper left')
 
     # --- Accuracy (latent) ---
@@ -407,13 +407,13 @@ def plot_by_layer(I_latent, I_ind, acc_z, acc_full):
         mask = ~np.isnan(vals)
         if mask.any():
             ax.plot(x[mask], vals[mask], 'o-', c=clrs[ci], lw=2.5, ms=6,
-                    label=f'epoch {show_ep[ci]}', alpha=0.85)
+                    label=f'эпоха {show_ep[ci]}', alpha=0.85)
     for sep in [0.5, 4.5, 8.5, 12.5]:
         ax.axvline(sep, c='grey', ls=':', alpha=0.3)
     ax.set_xticks(x)
     ax.set_xticklabels(SHORT, rotation=45, ha='right', fontsize=9)
-    ax.set_ylabel('accuracy')
-    ax.set_title('acc(Z → Y) — latent classifier')
+    ax.set_ylabel('точность')
+    ax.set_title('acc(Z → Y) — латентный классификатор')
     ax.legend(fontsize=8, ncol=4, loc='upper left')
 
     # --- Accuracy ratio ---
@@ -425,13 +425,13 @@ def plot_by_layer(I_latent, I_ind, acc_z, acc_full):
         mask = ~np.isnan(ratio)
         if mask.any():
             ax.plot(x[mask], ratio[mask], 'o-', c=clrs[ci], lw=2.5, ms=6,
-                    label=f'epoch {show_ep[ci]}', alpha=0.85)
+                    label=f'эпоха {show_ep[ci]}', alpha=0.85)
     ax.axhline(1.0, ls='--', c='grey', alpha=0.5)
     for sep in [0.5, 4.5, 8.5, 12.5]:
         ax.axvline(sep, c='grey', ls=':', alpha=0.3)
     ax.set_xticks(x)
     ax.set_xticklabels(SHORT, rotation=45, ha='right', fontsize=9)
-    ax.set_ylabel('ratio')
+    ax.set_ylabel('отношение')
     ax.set_title('acc(Z→Y) / acc(T→Y)')
     ax.legend(fontsize=8, ncol=4, loc='upper left')
 
@@ -504,12 +504,12 @@ def plot_info_plane(I_latent, H_gauss):
                         xytext=(4, 4), textcoords='offset points')
 
         ax.axhline(np.log2(N_CLASSES), ls='--', c='grey', alpha=0.5, label='H(Y)')
-        ax.set_xlabel(r'$H_{gauss}(T)$ (bits)')
-        ax.set_ylabel(r'$I(Z; Y)$ (bits)')
+        ax.set_xlabel(r'$H_{gauss}(T)$ (бит)')
+        ax.set_ylabel(r'$I(Z; Y)$ (бит)')
         ax.set_title(f'{group_name}')
         ax.legend(fontsize=8)
 
-    plt.suptitle('Information plane: H(T) vs I(T;Y)', fontsize=14, y=1.02)
+    plt.suptitle('Информационная плоскость: H(T) vs I(T;Y)', fontsize=14, y=1.02)
     plt.tight_layout()
     plt.savefig(OUT_DIR / 'information_plane.png', dpi=150, bbox_inches='tight')
     plt.close()
