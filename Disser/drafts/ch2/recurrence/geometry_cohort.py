@@ -56,11 +56,14 @@ def threshold_for_density(m_off, target_edges):
 
 
 def build_layout(jrp_sparse, seed=42):
+    """FA2 layout with sweep-optimised parameters
+    (sR=1.0, gravity=0.5; gives Mantel_s ≈ 0.5 on NOF_H32 vs 0.38 default)."""
     from fa2_modified import ForceAtlas2
     G = nx.from_scipy_sparse_array(jrp_sparse)
     fa2 = ForceAtlas2(outboundAttractionDistribution=True,
                       barnesHutOptimize=True, barnesHutTheta=1.2,
-                      scalingRatio=2.0, gravity=1.0, verbose=False)
+                      scalingRatio=1.0, gravity=0.5,
+                      strongGravityMode=False, verbose=False)
     pos = fa2.forceatlas2_networkx_layout(G, pos=None, iterations=200)
     layout = np.array([pos[i] for i in range(G.number_of_nodes())])
     return layout, G
