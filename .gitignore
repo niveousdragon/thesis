@@ -45,7 +45,11 @@ Desktop.ini
 Disser/images/cache/*.pdf
 
 # Тяжёлые результаты вычислений (регенерируются скриптами)
-Disser/drafts/ch2/recurrence/results/
+# В recurrence/results/ оставляем легкие фигуры/CSV, прячем большие .npz кэши
+Disser/drafts/ch2/recurrence/results/NOF_*_1D/
+Disser/drafts/ch2/recurrence/results/LNOF_*_1D/
+Disser/drafts/ch2/recurrence/results/synthetic*/
+Disser/drafts/ch2/recurrence/results/window_rqa_clustering*/data/
 mango_data/__pycache__/
 
 # Загруженные исходники в корне (организованные копии в Disser/parts/)
