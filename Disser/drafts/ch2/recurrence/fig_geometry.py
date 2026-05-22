@@ -113,8 +113,7 @@ def main():
     axA.scatter(x, y, c=colors, s=8, alpha=0.85, edgecolors='none')
     axA.set_aspect('equal', adjustable='box')
     axA.set_xlabel('x (см)'); axA.set_ylabel('y (см)')
-    axA.set_title('A. Траектория в арене',
-                  fontsize=12, loc='left')
+    axA.set_title('A', fontweight='bold', fontsize=15, loc='left')
 
     # Panel B: layout after Procrustes alignment to arena
     axB = fig.add_subplot(gs[0, 2:])
@@ -125,9 +124,7 @@ def main():
     # match axis limits with panel A so panels look identical in scale
     xlim = axA.get_xlim(); ylim = axA.get_ylim()
     axB.set_xlim(xlim); axB.set_ylim(ylim)
-    axB.set_title(
-        f'B. Layout мультиплексного графа, RMSE = {rmse_cm:.1f} см',
-        fontsize=12, loc='left')
+    axB.set_title('B', fontweight='bold', fontsize=15, loc='left')
 
     # Bottom row: 4 bar panels (mean ± 95% CI, paired Wilcoxon)
     def _ci95(a):
@@ -181,11 +178,8 @@ def main():
                 fontsize=11, fontweight='bold')
         # individual legends omitted; common figure-level legend appears below
 
-    # group title between rows
-    fig.text(0.5, 0.43,
-             f'C. Групповые показатели восстановления геометрии '
-             f'(n = {n_sess} сессий, 16 мышей × 4 дня, mean ± 95% ДИ; точки — сессии)',
-             ha='center', fontsize=12)
+    # panel label C in bold (left), no descriptive title
+    fig.text(0.09, 0.43, 'C', fontweight='bold', fontsize=15, ha='left')
 
     # common figure-level legend below the bar row
     from matplotlib.patches import Patch

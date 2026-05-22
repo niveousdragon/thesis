@@ -77,8 +77,7 @@ def main():
                      vmin=0, vmax=vmax, interpolation='none')
     axA.set_xlabel('время (с)')
     axA.set_ylabel('время (с)')
-    axA.set_title('A. Популяционная матрица $M_{t_1,t_2}$',
-                  fontsize=11, loc='left')
+    axA.set_title('A', fontweight='bold', fontsize=15, loc='left')
     # use axes_locatable so the colorbar does not shrink panel A
     divA = make_axes_locatable(axA)
     cax_A = divA.append_axes('right', size='4%', pad=0.06)
@@ -119,9 +118,7 @@ def main():
 
     axB.set_xlabel('время (с)')
     axB.set_ylabel('время (с)')
-    axB.set_title(f'B. Бинаризованный граф рекуррентности '
-                  f'(верхние {int(100-PERCENTILE)}%)',
-                  fontsize=11, loc='left')
+    axB.set_title('B', fontweight='bold', fontsize=15, loc='left')
     axB.set_xlim(t_axis[0], t_axis[-1])
     axB.set_ylim(t_axis[0], t_axis[-1])
     axB.set_aspect('equal')

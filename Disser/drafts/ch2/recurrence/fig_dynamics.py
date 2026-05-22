@@ -85,10 +85,7 @@ def main():
                      vmin=sp_lo, vmax=sp_hi)
     axA.set_xlabel(f'PC1 ({100*pc1_var:.1f}%)', fontsize=11)
     axA.set_ylabel(f'PC2 ({100*pc2_var:.1f}%)', fontsize=11)
-    axA.set_title(
-        f'A. PCA векторов RQA-окон, цвет — скорость '
-        f'({len(X)} окон, {n_sess} сессий)',
-        fontsize=12, loc='left')
+    axA.set_title('A', fontweight='bold', fontsize=15, loc='left')
     cb = fig.colorbar(sc, cax=cax)
     cb.set_label('скорость в окне (см/с)', fontsize=10)
 
@@ -139,10 +136,8 @@ def main():
         ax.text(0.5, ymax + rng_y * 0.11, mark, ha='center',
                 fontsize=11, fontweight='bold')
 
-    fig.text(0.5, 0.43,
-             f'B. Корреляции RQA-метрик со скоростью движения '
-             f'(n = {n_mice} сессий, 16 мышей × 4 дня, mean ± 95% ДИ)',
-             ha='center', fontsize=12)
+    # panel label B in bold (left), no descriptive title
+    fig.text(0.09, 0.43, 'B', fontweight='bold', fontsize=15, ha='left')
 
     from matplotlib.patches import Patch
     legend_handles = [
