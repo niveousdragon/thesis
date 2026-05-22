@@ -1,0 +1,45 @@
+% Standalone обёртка для ревью драфта draft_v2.tex.
+% Цитаты, перекрёстные ссылки на другие секции и cmd-маркеры заглушены —
+% это просто читаемый PDF, не часть диссертационной сборки.
+\documentclass[12pt,a4paper]{article}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\setmonofont{Consolas}
+\usepackage{polyglossia}
+\setdefaultlanguage{russian}
+\setotherlanguage{english}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{graphicx}
+\graphicspath{{../../../}}     % from drafts/ch2/recurrence/ to Disser/
+\usepackage{amsmath,amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue}
+
+% Stubs for cross-references and cite commands that won't resolve here
+\renewcommand{\cite}[1]{\textcolor{blue!60!black}{[#1]}}
+\let\origref\ref
+\renewcommand{\ref}[1]{\textcolor{red!70!black}{[\textit{#1}]}}
+\providecommand{\link}[1]{}
+\providecommand{\future}[1]{}
+\providecommand{\source}[1]{}
+\providecommand{\TODO}[1]{}
+
+\title{Секция 2.x: метод мультиплексного сетевого анализа коллективной\\
+       динамики нейронной активности \\ \large (драфт для ревью)}
+\author{}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\noindent\textit{Примечание для рецензента: ссылки в квадратных скобках —
+\textcolor{blue!60!black}{[Author Year]} — это библиографические цитаты, которые в полной сборке диссертации
+оформляются через biblatex (часть из них пока не добавлена в external.bib).
+Ссылки на другие секции — \textcolor{red!70!black}{[\textit{sec:...}]} — резолвятся только при сборке всей диссертации.}
+
+\vspace{1em}
+
+\input{draft_v2}
+
+\end{document}

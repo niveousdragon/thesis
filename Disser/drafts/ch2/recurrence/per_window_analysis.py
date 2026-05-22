@@ -50,9 +50,9 @@ OVERLAP = 0.5
 MEASURES = ['DET', 'LAM', 'ENTR', 'TT', 'L_mean', 'L_max', 'DIV']
 
 
-def list_nof_1d():
-    return sorted([p.stem.replace('_aligned', '')
-                   for p in NOF_DIR.glob('NOF_*_1D_aligned.npz')])
+def list_nof_1d(days='1D'):
+    pat = 'NOF_*_aligned.npz' if days == 'all' else f'NOF_*_{days}_aligned.npz'
+    return sorted([p.stem.replace('_aligned', '') for p in NOF_DIR.glob(pat)])
 
 
 def compute_windows(session, shuffled=False):
@@ -118,9 +118,9 @@ def compute_windows(session, shuffled=False):
     return rqa_vecs[valid], speeds[valid], times[valid]
 
 
-def gather_cohort():
-    """Compute per-window data for all NOF Day-1 sessions, cache to disk."""
-    sessions = list_nof_1d()
+def gather_cohort(days='1D'):
+    """Compute per-window data for all NOF sessions (filtered by days), cache to disk."""
+    sessions = list_nof_1d(days)
     cohort = []   # list of dicts: session, real, shuf
     for s in sessions:
         cache = DATA / f'per_window_{s}.npz'
@@ -324,8 +324,13 @@ def per_metric_speed(cohort):
 
 
 def main():
-    print('=== Per-window analysis: NOF Day-1 cohort ===')
-    cohort = gather_cohort()
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--days', default='1D',
+                    choices=['1D', '2D', '3D', '4D', 'all'])
+    args = ap.parse_args()
+    print(f'=== Per-window analysis: NOF cohort (days={args.days}) ===')
+    cohort = gather_cohort(args.days)
     cohort = [c for c in cohort if len(c['rqa_real']) > 0]
     print(f'\n{len(cohort)} sessions ready')
     plot_cohort_pca(cohort)

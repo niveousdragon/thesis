@@ -30,14 +30,13 @@ OUT = RESULTS / 'window_rqa_clustering'
 DATA = OUT / 'data'
 CSV = OUT / 'per_metric_speed.csv'
 
-MEASURES = ['DET', 'LAM', 'ENTR', 'TT', 'L_mean', 'L_max', 'DIV']
-# Plot DIV at the end since it's inverted (positive r with speed, opposite sign)
+MEASURES = ['DET', 'LAM', 'ENTR', 'TT', 'L_mean', 'L_max']
 
 
 def load_cohort_windows():
     """Stack RQA vectors and speeds across all per_window_*.npz."""
     Xs, ss = [], []
-    sessions = sorted(DATA.glob('per_window_NOF_*_1D.npz'))
+    sessions = sorted(DATA.glob('per_window_NOF_*.npz'))
     for p in sessions:
         d = np.load(p, allow_pickle=True)
         Xs.append(d['rqa_real'])
@@ -70,15 +69,16 @@ def main():
     n_mice = len(next(iter(metrics.values()))['real'])
 
     # === Figure ===
-    # 8 columns: A spans cols 0–6 (same width as 7 bars below), col 7 is colorbar
-    fig = plt.figure(figsize=(14, 9))
-    gs = fig.add_gridspec(2, 8, height_ratios=[1.5, 1],
-                          width_ratios=[1]*7 + [0.08],
+    # n_bars + 1 column for colorbar
+    n_bars = len(MEASURES)
+    fig = plt.figure(figsize=(13, 9))
+    gs = fig.add_gridspec(2, n_bars + 1, height_ratios=[1.5, 1],
+                          width_ratios=[1]*n_bars + [0.08],
                           wspace=0.55, hspace=0.55)
 
     # Panel A: PCA spans full bar width
-    axA = fig.add_subplot(gs[0, :7])
-    cax = fig.add_subplot(gs[0, 7])
+    axA = fig.add_subplot(gs[0, :n_bars])
+    cax = fig.add_subplot(gs[0, n_bars])
     sp_lo, sp_hi = np.percentile(speed, [2, 98])
     sc = axA.scatter(pc[:, 0], pc[:, 1], c=speed, cmap='plasma',
                      s=22, alpha=0.65, edgecolors='none',
@@ -86,11 +86,11 @@ def main():
     axA.set_xlabel(f'PC1 ({100*pc1_var:.1f}%)', fontsize=11)
     axA.set_ylabel(f'PC2 ({100*pc2_var:.1f}%)', fontsize=11)
     axA.set_title(
-        f'A. Window RQA-vector PCA, colored by speed '
-        f'({len(X)} windows, {n_sess} mice)',
+        f'A. PCA векторов RQA-окон, цвет — скорость '
+        f'({len(X)} окон, {n_sess} сессий)',
         fontsize=12, loc='left')
     cb = fig.colorbar(sc, cax=cax)
-    cb.set_label('window speed (cm/s)', fontsize=10)
+    cb.set_label('скорость в окне (см/с)', fontsize=10)
 
     # Panel B: per-metric bars
     rng = np.random.default_rng(0)
@@ -105,10 +105,10 @@ def main():
         m_s, ci_s = _ci95(s)
         ax.bar([0], [m_r], width=0.6, yerr=[ci_r],
                color='#2CA02C', edgecolor='black', linewidth=0.5,
-               capsize=4, label='Real')
+               capsize=4, label='Реальные')
         ax.bar([1], [m_s], width=0.6, yerr=[ci_s],
                color='#888888', edgecolor='black', linewidth=0.5,
-               capsize=4, label='Shuffled')
+               capsize=4, label='Перемеш.')
         jit_r = (rng.random(len(r)) - 0.5) * 0.22
         jit_s = (rng.random(len(s)) - 0.5) * 0.22
         ax.scatter(np.full(len(r), 0) + jit_r, r, s=18,
@@ -118,17 +118,15 @@ def main():
                    facecolor='white', edgecolor='black', linewidth=0.5,
                    alpha=0.85, zorder=3)
         ax.axhline(0, color='k', lw=0.6, alpha=0.5, ls='--')
-        ax.set_xticks([0, 1]); ax.set_xticklabels(['Real', 'Shuf'], fontsize=9)
+        ax.set_xticks([0, 1])
+        ax.set_xticklabels(['Реал.', 'Перем.'], fontsize=9)
         ax.set_title(m, fontsize=11)
         if col == 0:
-            ax.set_ylabel('Pearson r (vs speed)', fontsize=10)
-            ax.legend(loc='lower left', fontsize=8, frameon=False)
-        # significance: Wilcoxon on real values vs 0
-        if m == 'DIV':
-            alt = 'greater'   # DIV positively correlates with speed
-        else:
-            alt = 'less'      # other metrics negatively correlate
-        p = stats.wilcoxon(r, alternative=alt).pvalue
+            ax.set_ylabel('Пирсон $r$ (со скоростью)', fontsize=10)
+        # individual legends omitted; common figure-level legend appears below
+        # значимость: Уилкоксон real vs 0 (метрики характеризуют регулярность,
+        # которая отрицательно коррелирует со скоростью)
+        p = stats.wilcoxon(r, alternative='less').pvalue
         if p < 1e-4: mark = '***'
         elif p < 1e-2: mark = '**'
         elif p < 0.05: mark = '*'
@@ -141,9 +139,19 @@ def main():
         ax.text(0.5, ymax + rng_y * 0.11, mark, ha='center',
                 fontsize=11, fontweight='bold')
 
-    fig.text(0.5, 0.43, f'B. Per-metric cohort correlation (RQA ↔ window speed): '
-             f'real vs shuffled (n = {n_mice} mice, mean ± 95% CI)',
+    fig.text(0.5, 0.43,
+             f'B. Корреляции RQA-метрик со скоростью движения '
+             f'(n = {n_mice} сессий, 16 мышей × 4 дня, mean ± 95% ДИ)',
              ha='center', fontsize=12)
+
+    from matplotlib.patches import Patch
+    legend_handles = [
+        Patch(facecolor='#2CA02C', edgecolor='black', label='Реальные данные'),
+        Patch(facecolor='#888888', edgecolor='black', label='Перемешанные данные'),
+    ]
+    fig.legend(handles=legend_handles, loc='lower center',
+               bbox_to_anchor=(0.5, -0.01), ncol=2,
+               fontsize=10, frameon=False)
 
     fig.savefig(OUT / 'fig_dynamics.png', dpi=130, bbox_inches='tight')
     plt.close(fig)

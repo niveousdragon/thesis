@@ -43,12 +43,18 @@ MAX_DIM = 3
 SMOOTH_SIGMA = 2.0
 
 
-def list_1d_sessions(cohort='both'):
-    """All Day-1 sessions. cohort: 'nof', 'lnof', or 'both'."""
+def list_1d_sessions(cohort='both', days='1D'):
+    """Sessions filtered by cohort and recording day.
+    days='1D'|'2D'|'3D'|'4D'|'all'."""
+    if days == 'all':
+        nof_pat, lnof_pat = 'NOF_*_aligned.npz', 'LNOF_*_aligned.npz'
+    else:
+        nof_pat = f'NOF_*_{days}_aligned.npz'
+        lnof_pat = f'LNOF_*_{days}_aligned.npz'
     nof = sorted([p.stem.replace('_aligned', '')
-                  for p in NOF_DIR.glob('NOF_*_1D_aligned.npz')])
+                  for p in NOF_DIR.glob(nof_pat)])
     lnof = sorted([p.stem.replace('_aligned', '')
-                   for p in LNOF_DIR.glob('LNOF_*_1D_aligned.npz')])
+                   for p in LNOF_DIR.glob(lnof_pat)])
     if cohort == 'nof':
         return nof
     if cohort == 'lnof':
@@ -130,9 +136,10 @@ def build_one(session):
     return True
 
 
-def stage_cache(cohort='both'):
-    sessions = list_1d_sessions(cohort)
-    print(f'\n=== STAGE 1: build caches for {len(sessions)} Day-1 sessions ({cohort}) ===')
+def stage_cache(cohort='both', days='1D'):
+    sessions = list_1d_sessions(cohort, days)
+    print(f'\n=== STAGE 1: build caches for {len(sessions)} sessions '
+          f'({cohort}, days={days}) ===')
     print(f'Parameters: ds={DS}, k={K}, tau_method={TAU_METHOD}, max_dim={MAX_DIM}')
     t_total = time.time()
     ok, fail = 0, 0
@@ -175,13 +182,15 @@ def parse_args():
                    choices=['cache', 'cluster', 'all'])
     p.add_argument('--cohort', default='both',
                    choices=['nof', 'lnof', 'both'])
+    p.add_argument('--days', default='1D',
+                   choices=['1D', '2D', '3D', '4D', 'all'])
     return p.parse_args()
 
 
 def main():
     args = parse_args()
     if args.stage in ('cache', 'all'):
-        stage_cache(args.cohort)
+        stage_cache(args.cohort, args.days)
     if args.stage in ('cluster', 'all'):
         stage_cluster()
 

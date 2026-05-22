@@ -38,7 +38,10 @@ NOF = DRIADA / 'DRIADA data/NOF/SynchronizedData26_v1'
 HERE = Path(__file__).parent
 RESULTS = HERE / 'results'
 OUT = RESULTS / 'window_rqa_clustering'
-CSV_PATH = OUT / 'geometry_cohort_pct95.csv'
+# Prefer all-days CSV if available; fall back to 1D
+CSV_PATH = (OUT / 'geometry_cohort_pct95_all.csv'
+            if (OUT / 'geometry_cohort_pct95_all.csv').exists()
+            else OUT / 'geometry_cohort_pct95_1D.csv')
 
 
 def build_layout(jrp_sparse, seed=42):
@@ -109,8 +112,8 @@ def main():
     axA = fig.add_subplot(gs[0, :2])
     axA.scatter(x, y, c=colors, s=8, alpha=0.85, edgecolors='none')
     axA.set_aspect('equal', adjustable='box')
-    axA.set_xlabel('x (cm)'); axA.set_ylabel('y (cm)')
-    axA.set_title(f'A. Arena trajectory ({DEMO_SESSION.split("_")[1]})',
+    axA.set_xlabel('x (см)'); axA.set_ylabel('y (см)')
+    axA.set_title('A. Траектория в арене',
                   fontsize=12, loc='left')
 
     # Panel B: layout after Procrustes alignment to arena
@@ -118,12 +121,12 @@ def main():
     axB.scatter(layout[:, 0], layout[:, 1], c=colors, s=8, alpha=0.85,
                 edgecolors='none')
     axB.set_aspect('equal', adjustable='box')
-    axB.set_xlabel('x (cm)'); axB.set_ylabel('y (cm)')
+    axB.set_xlabel('x (см)'); axB.set_ylabel('y (см)')
     # match axis limits with panel A so panels look identical in scale
     xlim = axA.get_xlim(); ylim = axA.get_ylim()
     axB.set_xlim(xlim); axB.set_ylim(ylim)
     axB.set_title(
-        f'B. Recurrence-graph layout, RMSE = {rmse_cm:.1f} cm',
+        f'B. Layout мультиплексного графа, RMSE = {rmse_cm:.1f} см',
         fontsize=12, loc='left')
 
     # Bottom row: 4 bar panels (mean ± 95% CI, paired Wilcoxon)
@@ -133,10 +136,10 @@ def main():
         return m, 1.96 * sem
 
     metric_titles = [
-        ('mantel_p',   'Mantel Pearson',   'greater', 'higher better'),
-        ('mantel_s',   'Mantel Spearman',  'greater', 'higher better'),
-        ('procr',      'Procrustes disp.', 'less',    'lower better'),
-        ('knn_err',    'KNN error (cm)',   'less',    'lower better'),
+        ('mantel_p',   'Мандель (Пирсон)', 'greater', 'higher better'),
+        ('mantel_s',   'Мандель (Спирмен)', 'greater', 'higher better'),
+        ('procr',      'Procrustes',       'less',    'lower better'),
+        ('knn_err',    'Ошибка $k$-NN (см)', 'less',  'lower better'),
     ]
     rng = np.random.default_rng(0)
     for col, (k, name, alt, _) in enumerate(metric_titles):
@@ -146,10 +149,10 @@ def main():
         m_s, ci_s = _ci95(s)
         ax.bar([0], [m_r], width=0.6, yerr=[ci_r],
                color='#2CA02C', edgecolor='black', linewidth=0.5,
-               capsize=4, label='Real', zorder=1)
+               capsize=4, label='Реальные', zorder=1)
         ax.bar([1], [m_s], width=0.6, yerr=[ci_s],
                color='#888888', edgecolor='black', linewidth=0.5,
-               capsize=4, label='Shuffled', zorder=1)
+               capsize=4, label='Перемеш.', zorder=1)
         # per-mouse points overlaid
         jit_r = (rng.random(len(r)) - 0.5) * 0.22
         jit_s = (rng.random(len(s)) - 0.5) * 0.22
@@ -159,7 +162,8 @@ def main():
         ax.scatter(np.full(len(s), 1) + jit_s, s, s=18,
                    facecolor='white', edgecolor='black', linewidth=0.5,
                    alpha=0.85, zorder=3)
-        ax.set_xticks([0, 1]); ax.set_xticklabels(['Real', 'Shuf'], fontsize=10)
+        ax.set_xticks([0, 1])
+        ax.set_xticklabels(['Реал.', 'Перем.'], fontsize=10)
         ax.set_title(name, fontsize=11)
         p = stats.wilcoxon(r - s, alternative=alt).pvalue
         if p < 1e-4: mark = '***'
@@ -175,13 +179,23 @@ def main():
         ax.plot([0, 1], [ymax + rng_y * 0.08]*2, color='black', lw=0.8)
         ax.text(0.5, ymax + rng_y * 0.11, mark, ha='center',
                 fontsize=11, fontweight='bold')
-        if col == 0:
-            ax.legend(loc='best', fontsize=9, frameon=False)
+        # individual legends omitted; common figure-level legend appears below
 
-    # cohort title between rows (normal weight)
-    fig.text(0.5, 0.43, f'C. Cohort spatial-reconstruction metrics '
-             f'(n = {n_sess} mice, mean ± 95% CI, per-mouse points overlaid)',
+    # group title between rows
+    fig.text(0.5, 0.43,
+             f'C. Групповые показатели восстановления геометрии '
+             f'(n = {n_sess} сессий, 16 мышей × 4 дня, mean ± 95% ДИ; точки — сессии)',
              ha='center', fontsize=12)
+
+    # common figure-level legend below the bar row
+    from matplotlib.patches import Patch
+    legend_handles = [
+        Patch(facecolor='#2CA02C', edgecolor='black', label='Реальные данные'),
+        Patch(facecolor='#888888', edgecolor='black', label='Перемешанные данные'),
+    ]
+    fig.legend(handles=legend_handles, loc='lower center',
+               bbox_to_anchor=(0.5, -0.01), ncol=2,
+               fontsize=10, frameon=False)
 
     fig.savefig(OUT / 'fig_geometry.png', dpi=130, bbox_inches='tight')
     plt.close(fig)

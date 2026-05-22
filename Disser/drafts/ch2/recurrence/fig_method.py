@@ -75,15 +75,15 @@ def main():
     imA = axA.imshow(cut, cmap='viridis', aspect='equal', origin='lower',
                      extent=[t_axis[0], t_axis[-1], t_axis[0], t_axis[-1]],
                      vmin=0, vmax=vmax, interpolation='none')
-    axA.set_xlabel('time (s)')
-    axA.set_ylabel('time (s)')
-    axA.set_title('A. Population mean-matrix $M_{t_1,t_2}$',
+    axA.set_xlabel('время (с)')
+    axA.set_ylabel('время (с)')
+    axA.set_title('A. Популяционная матрица $M_{t_1,t_2}$',
                   fontsize=11, loc='left')
     # use axes_locatable so the colorbar does not shrink panel A
     divA = make_axes_locatable(axA)
     cax_A = divA.append_axes('right', size='4%', pad=0.06)
     cb = fig.colorbar(imA, cax=cax_A)
-    cb.set_label('fraction of recurring neurons', fontsize=9)
+    cb.set_label('доля рекуррирующих нейронов', fontsize=9)
 
     # Panel B (right): binarized JRP, with recurrent regions outlined
     axB = axes[1]
@@ -117,10 +117,10 @@ def main():
             linewidth=1.3, edgecolor='#d62728', facecolor='none')
         axB.add_patch(rect)
 
-    axB.set_xlabel('time (s)')
-    axB.set_ylabel('time (s)')
-    axB.set_title(f'B. Binarized JRP (top {int(100-PERCENTILE)}%) '
-                  f'with outlined recurrent regions',
+    axB.set_xlabel('время (с)')
+    axB.set_ylabel('время (с)')
+    axB.set_title(f'B. Бинаризованный граф рекуррентности '
+                  f'(верхние {int(100-PERCENTILE)}%)',
                   fontsize=11, loc='left')
     axB.set_xlim(t_axis[0], t_axis[-1])
     axB.set_ylim(t_axis[0], t_axis[-1])
@@ -131,11 +131,7 @@ def main():
     cax_B.axis('off')
     print(f'Outlined {len(bboxes)} off-diagonal recurrent regions')
 
-    fig.suptitle(
-        f'Population mean-matrix and its binarization '
-        f'(session {SESSION.split("_")[1]}, {CUT_SIZE} samples = '
-        f'{CUT_SIZE/FPS_EFF:.0f} s)',
-        fontsize=12, y=0.995)
+    # без suptitle — caption в .tex несёт всю информацию
     fig.savefig(OUT / 'fig_method.png', dpi=130, bbox_inches='tight')
     plt.close(fig)
     print(f'Saved: {OUT / "fig_method.png"}')

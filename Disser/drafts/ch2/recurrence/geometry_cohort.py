@@ -42,9 +42,10 @@ OUT = RESULTS / 'window_rqa_clustering'
 OUT.mkdir(parents=True, exist_ok=True)
 
 
-def list_nof_1d():
-    return sorted([p.stem.replace('_aligned', '')
-                   for p in NOF.glob('NOF_*_1D_aligned.npz')])
+def list_nof_1d(days='1D'):
+    """days='1D'|'2D'|'3D'|'4D'|'all'."""
+    pat = 'NOF_*_aligned.npz' if days == 'all' else f'NOF_*_{days}_aligned.npz'
+    return sorted([p.stem.replace('_aligned', '') for p in NOF.glob(pat)])
 
 
 def threshold_for_density(m_off, target_edges):
@@ -160,7 +161,12 @@ def process_session(session):
 
 
 def main():
-    sessions = list_nof_1d()
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--days', default='1D',
+                    choices=['1D', '2D', '3D', '4D', 'all'])
+    args = ap.parse_args()
+    sessions = list_nof_1d(args.days)
     print(f'=== Cohort geometry: {len(sessions)} NOF Day-1 sessions ===\n')
     rows = []
     t0 = time.time()
@@ -184,9 +190,10 @@ def main():
 
     print(f'\nTotal cohort time: {(time.time()-t0)/60:.1f} min')
 
-    # CSV (suffix encodes threshold mode for reproducibility)
+    # CSV (suffix encodes threshold mode AND day range)
     suffix = ('_k12' if THRESHOLD_MODE == 'target_degree'
               else f'_pct{int(PERCENTILE)}')
+    suffix += f'_{args.days}'
     csv = OUT / f'geometry_cohort{suffix}.csv'
     keys = list(rows[0].keys())
     with open(csv, 'w', encoding='utf-8') as f:
