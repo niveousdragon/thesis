@@ -1,0 +1,49 @@
+% Standalone-обёртка для ревью драфта draft_characteristic.tex.
+% Макросы \aim/\tasks/... в сборке приходят из шаблона (introduction.tex);
+% здесь определены как читаемые русские подписи только для рендера PDF.
+\documentclass[12pt,a4paper]{article}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\setmonofont{Consolas}
+\usepackage{polyglossia}
+\setdefaultlanguage{russian}
+\setotherlanguage{english}
+\usepackage[margin=2.4cm]{geometry}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage[dvipsnames]{xcolor}
+
+% Подписи структурных элементов (для читаемости; в диссертации — из шаблона)
+\newcommand{\aim}{\textbf{Целью}}
+\newcommand{\tasks}{\textbf{задачи}}
+\newcommand{\novelty}{\par\medskip\noindent\textbf{Научная новизна.}}
+\newcommand{\influence}{\par\medskip\noindent\textbf{Теоретическая и практическая значимость.}}
+\newcommand{\methods}{\par\medskip\noindent\textbf{Методология и методы исследования.}}
+\newcommand{\defpositions}{\par\medskip\noindent\textbf{Положения, выносимые на защиту:}}
+\newcommand{\reliability}{\par\medskip\noindent\textbf{Достоверность}}
+\newcommand{\contribution}{\par\medskip\noindent\textbf{Личный вклад автора.}}
+% не используемые в этом фрагменте, но на всякий случай:
+\newcommand{\actuality}{\textbf{Актуальность.}}
+\newcommand{\probation}{\textbf{Апробация.}}
+\newcommand{\publications}{\textbf{Публикации.}}
+
+\title{Общая характеристика работы\\\large (драфт заполнения characteristic.tex для ревью)}
+\author{}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\noindent\textit{В этом фрагменте показаны только заполняемые блоки
+(цель, задачи, новизна, значимость, методы, положения, достоверность, вклад).
+Актуальность, апробация (список конференций) и блок публикаций остаются без
+изменений и здесь не показаны. Пометки \texttt{[ПОДТВЕРДИТЬ]} — в исходном
+\texttt{.tex} как комментарии.}
+
+\vspace{1em}
+\hrule
+\vspace{1em}
+
+\input{draft_characteristic}
+
+\end{document}

@@ -1,0 +1,47 @@
+% Standalone обёртка для ревью драфта draft_population_involvement.tex.
+% Внешние секционные метки заданы фиктивными номерами через \newlabel;
+% внутренние ссылки (уравнение, рисунки) разрешаются нормально. Без hyperref.
+\documentclass[12pt,a4paper]{article}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\setmonofont{Consolas}
+\usepackage{polyglossia}
+\setdefaultlanguage{russian}
+\setotherlanguage{english}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{graphicx}
+\graphicspath{{../../}}     % from drafts/ch3/ to Disser/
+\usepackage{amsmath,amssymb}
+\usepackage[dvipsnames]{xcolor}
+
+% Цитаты и рабочие маркеры — заглушки (не часть сборки)
+\renewcommand{\cite}[1]{\textcolor{blue!60!black}{[#1]}}
+\providecommand{\link}[1]{\par\smallskip\noindent\textcolor{gray}{\textit{[связка] #1}}\par\smallskip}
+\providecommand{\future}[1]{}
+\providecommand{\source}[1]{}
+\providecommand{\TODO}[1]{}
+
+\title{Вовлечённость отдельных нейронов в популяционный код (NOF)\\
+       \large новый анализ на 64 сессиях --- драфт для ревью}
+\author{}
+\date{\today}
+
+\begin{document}
+% реальные метки для внешних секций (невидимо через счётчик), затем сброс
+\refstepcounter{section}\label{sec:nof_data}%
+\refstepcounter{section}\label{sec:dim}%
+\refstepcounter{section}\label{sec:v2}%
+\refstepcounter{section}\label{sec:intense}%
+\refstepcounter{section}\label{sec:driada}%
+\refstepcounter{section}\label{sec:mango}%
+\setcounter{section}{0}
+
+\maketitle
+
+\noindent\textit{Примечание: ссылки \textcolor{blue!60!black}{[Author Year]}~--- библиографические цитаты (оформляются biblatex в полной сборке); номера секций~--- условные (1--6), для чтения standalone. Числа и рисунки~--- по расчёту на 64 NOF-сессиях; статистика на уровне животных ($n=16$).}
+
+\vspace{1em}
+
+\input{draft_population_involvement}
+
+\end{document}
