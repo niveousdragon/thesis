@@ -17,14 +17,14 @@
 Среди методов оптимизации на основе TT наиболее эффективным в нашей задаче оказался метод PROTES (<<Probabilistic Optimization with Tensor Sampling>>)~\cite{PROTES-Chertkov-paper}. Его основная идея напоминает имитацию отжига~\cite{Simulated-annealing-what-is}: в отличие от градиентных методов, застревающих в локальных оптимумах, PROTES обладает вероятностным механизмом выхода из них. Схема метода описана в~\cite{PROTES-Chertkov-paper}.
 
 Для целевой функции $f(\mathbf{x})$ (минимизируемой; максимизация выполняется минимизацией $-f(\mathbf{x})$) вводится монотонное преобразование Ферми--Дирака:
-\begin{equation}\label{eq:fermi_dirac}
+\begin{equation*}
     F[f](x) = \frac{1}{
         \exp \bigl(
             (f(\mathbf{x}) - y_{\text{min}} - E) / T
         \bigr)
         + 1
     },
-\end{equation}
+\end{equation*}
 где $y_\text{min}$ --- точный или приближённый минимум $f$, $T>0$ --- параметр <<температуры>>, $E$ --- пороговое значение <<энергии>>. Функция $F$ играет роль, подобную функции распределения: максимум её математического ожидания $\max_\theta \mathbb{E}_{\xi_\theta} F[f](\xi_\theta)$ может быть найден стабильно для семейства случайных величин $\xi_\theta$ с параметрическим распределением $p_\theta(\mathbf{x})$. С помощью трюка REINFORCE~\cite{REINFORCE-trick} градиент этого ожидания оценивается методом Монте-Карло:
 \begin{equation}
     \nabla_\theta\mathbb{E}_{\xi_\theta}F[f](\xi_\theta)\approx \frac{1}{M}\sum_{i=1}^M
